@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123d35"><meta name="google" content="notranslate">
+<title>ferhan — Quran Arabic Learning · V6</title>
+<style>
+:root{--green:#123d35;--green2:#1d5a4b;--gold:#d6ad62;--cream:#f7f5ef;--ink:#1e2925;--muted:#66736d;--line:#e5e2d9;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
+header{background:var(--green);color:white;padding:18px max(22px,calc((100% - 1160px)/2));display:flex;align-items:center;justify-content:space-between;gap:18px;position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.08em}.brandmark{width:38px;height:38px;border:1px solid #d6ad62;border-radius:50%;display:grid;place-items:center;color:#e9c77f;font-size:22px}
+nav{display:flex;gap:8px;flex-wrap:wrap}nav button,.btn{border:0;border-radius:999px;padding:10px 15px;cursor:pointer;font-weight:700}nav button{background:transparent;color:#dce9e3}nav button.active,nav button:hover{background:#ffffff20;color:white}
+main{max-width:1160px;margin:auto;padding:30px 22px 70px}.hero{background:linear-gradient(120deg,#123d35,#1d5a4b);color:white;border-radius:26px;padding:34px;display:grid;grid-template-columns:1.5fr 1fr;gap:22px;align-items:center;overflow:hidden}
+.kicker{color:#e9c77f;font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.hero h1{font-size:clamp(32px,5vw,54px);line-height:1.08;margin:12px 0}.hero p{color:#d5e2dc;max-width:650px}.hero-art{font-family:serif;text-align:center;font-size:clamp(65px,10vw,115px);color:#e7c77f;direction:rtl}.hero-art small{display:block;font:600 12px system-ui;letter-spacing:.18em;color:#d5e2dc;margin-top:4px}
+.pill{display:inline-block;border:1px solid #ffffff55;border-radius:999px;padding:6px 11px;color:#f2dfb7;font-size:12px;font-weight:700}
+.section{margin-top:30px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:15px}.section h2{font-size:24px;margin:0}.sub{color:var(--muted);margin:4px 0 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:19px;box-shadow:0 5px 18px #253a3010}.card h3{margin:5px 0 7px;font-size:17px}.card p{color:var(--muted);margin:0 0 13px;font-size:14px}.tag{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--green2);text-transform:uppercase}.btn{background:var(--green);color:white}.btn.secondary{background:#edf2ee;color:var(--green)}.btn.gold{background:var(--gold);color:#2b281f}.btn:disabled{opacity:.45;cursor:not-allowed}
+.panel{background:white;border:1px solid var(--line);border-radius:20px;padding:22px}.lesson-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.arabic{font-family:"Noto Naskh Arabic","Amiri","Times New Roman",serif;direction:rtl;text-align:center;font-size:clamp(38px,6vw,60px);line-height:1.8;color:var(--green);margin:8px 0}.translit{text-align:center;color:#9a7735;font-weight:700;letter-spacing:.04em}.amharic{font-size:16px;color:#4e5d55}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.word{border:1px solid var(--line);border-radius:14px;padding:13px;text-align:center;background:#fff}.word .arabic{font-size:38px;margin:0}.word strong{display:block}.muted{color:var(--muted);font-size:13px}
+.video{aspect-ratio:16/9;width:100%;border:0;border-radius:14px;background:#111}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.tabs button{background:#e9ece7;color:var(--green);border:0;padding:9px 13px;border-radius:999px;font-weight:700;cursor:pointer}.tabs button.active{background:var(--green);color:white}
+.quiz-option{display:block;width:100%;text-align:left;border:1px solid var(--line);background:white;border-radius:12px;padding:13px;margin:8px 0;cursor:pointer;font-weight:600}.quiz-option:hover{border-color:var(--green2)}.quiz-option.correct{background:#e6f4e9;border-color:#4b9b62}.quiz-option.wrong{background:#fff0eb;border-color:#c66b52}.feedback{font-weight:700;margin-top:12px;min-height:25px}
+.progress{height:8px;background:#e7e8e1;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;background:var(--gold);width:0}
+
+input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;border:1px solid var(--line);border-radius:10px;background:white}
+.academy-stage{display:flex;gap:14px;align-items:flex-start}.stage-number{flex:0 0 42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#edf2ee;color:var(--green);font-weight:900}
+.academy-stage.done .stage-number{background:var(--green);color:white}.stage-copy{flex:1}.stage-copy h3{margin:0 0 4px}.stage-copy p{margin:0;color:var(--muted);font-size:14px}
+.word-by-word{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:15px}
+.wbw-word{background:white;border:1px solid var(--line);border-radius:15px;padding:12px;text-align:center;cursor:pointer;min-height:140px}
+.wbw-word.active{border:2px solid var(--gold);background:#fffaf0;box-shadow:0 0 0 3px #d6ad6220}.wbw-word.sync-active,.sync-word.active{border:2px solid #1d8a63!important;background:#e7f6ee!important;box-shadow:0 0 0 4px #1d8a6320!important;outline:2px solid #1d8a6340}
+.wbw-word .arabic{font-size:32px;line-height:1.5;margin:0 0 5px}.wbw-word .latin{font-size:12px;color:#9a7735;font-weight:700}.wbw-word .gloss{font-size:14px;color:var(--ink);margin-top:5px}
+.resource-card a{color:var(--green2);font-weight:800;text-decoration:none}.resource-card a:hover{text-decoration:underline}
+.notice{background:#fff8e9;border:1px solid #ead8ad;border-radius:14px;padding:13px 15px;color:#55482d;font-size:13px}
+
+
+.modal-backdrop{position:fixed;inset:0;background:#10251dcc;z-index:99;display:none;align-items:center;justify-content:center;padding:18px}.modal-backdrop.open{display:flex}.modal-card{background:#fff;border-radius:22px;max-width:560px;width:100%;padding:24px;max-height:88vh;overflow:auto;box-shadow:0 24px 80px #0004}.modal-close{float:right;border:0;background:#edf2ee;border-radius:50%;width:36px;height:36px;font-size:20px;cursor:pointer}.surah-verse{padding:16px;border:1px solid var(--line);border-radius:16px;background:#fff;margin:12px 0}.surah-verse .arabic{font-size:clamp(30px,5vw,44px);text-align:right;line-height:1.9}.surah-verse.current{border:2px solid var(--gold);background:#fffaf0}.surah-verse.sync-current{border:2px solid #1d8a63;background:#e7f6ee}.surah-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.checkline{display:flex;gap:10px;align-items:center;padding:10px;border-bottom:1px solid var(--line)}.checkline input{width:18px;height:18px;accent-color:var(--green)}@media(max-width:760px){.modal-card{padding:18px}}
+\nfooter{text-align:center;padding:25px;color:var(--muted);font-size:13px}
+@media(max-width:760px){header{align-items:flex-start;flex-direction:column}.hero,.lesson-layout{grid-template-columns:1fr}.hero-art{display:none}.grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}main{padding:18px 14px 50px}.hero{padding:25px}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="brandmark">ف</div><span>ferhan · فَرْحَان</span></div>
+<nav><button class="active" data-go="home">Home</button><button data-go="academy">Academy</button><button data-go="lessons">Lessons</button><button data-go="practice">Repeat & practise</button><button data-go="recitation">Qur’an practice</button><button data-go="tajweed">Tajweed</button><button data-go="quiz">Quizzes</button><button data-go="course">Video course</button><button data-go="resources">Resources</button></nav></header>
+<main>
+<section class="hero" id="home">
+<div><span class="pill">ferhan V6 · ARABIC + AMHARIC</span><div class="kicker" style="margin-top:18px">A calm, step-by-step path</div>
+<h1>Learn to read the<br>Qur’an with confidence.</h1>
+<p>Start with Arabic letters, build pronunciation and reading skills, then practise with short quizzes and guided repetition. Explanations are in Amharic, with Arabic examples.</p>
+<button class="btn gold" onclick="show('lessons')">Start learning →</button></div>
+<div class="hero-art">اقْرَأْ<small>READ · LISTEN · REPEAT</small></div>
+</section>
+<section class="section" id="resumePanel">
+<div class="panel" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px">
+<div><div class="tag">YOUR PERSONAL BOOKMARK</div><h2 style="margin:6px 0">Pick up where you left off</h2><p class="muted" id="bookmarkSummary">Your last lesson and reading position will be saved privately on this device.</p><p class="muted" style="font-size:12px">No account required · Stored in this browser only</p></div>
+<div class="controls"><button class="btn gold" onclick="resumeBookmark()">↗ Resume learning</button><button class="btn secondary" onclick="show('lessons')">Start from lessons</button><button class="btn secondary" onclick="exportBackup()">↓ Export backup</button><label class="btn secondary" style="cursor:pointer">↑ Import backup<input id="backupInput" type="file" accept="application/json,.json" hidden onchange="importBackup(event)"></label></div>
+</div>
+</section>
+<section class="section"><div class="section-head"><div><h2>Your learning path</h2><p class="sub">Short sessions designed for adult learners.</p></div><span class="tag" id="progressLabel">0 of 6 topics completed</span><button class="btn gold" onclick="openDaily()">✦ Daily practice</button></div><div class="progress"><span id="progressBar"></span></div>
+<div class="grid" style="margin-top:15px">
+<div class="card"><div class="tag">01 · FOUNDATIONS</div><h3>Arabic letters</h3><p>Recognise the shapes and names of the Arabic alphabet.</p><button class="btn secondary" onclick="show('lessons')">Open lesson</button></div>
+<div class="card"><div class="tag">02 · SOUND</div><h3>Short vowels</h3><p>Learn fatḥah, kasrah and ḍammah with listening practice.</p><button class="btn secondary" onclick="loadLesson(1);show('lessons')">Open lesson</button></div>
+<div class="card"><div class="tag">03 · READING</div><h3>Join the letters</h3><p>Blend sounds into simple syllables and words.</p><button class="btn secondary" onclick="loadLesson(2);show('lessons')">Open lesson</button></div></div></section>
+
+<section class="section" id="academy" hidden>
+<div class="section-head"><div><h2>ferhan learning academy</h2><p class="sub">A structured six-stage path from Arabic letters to confident Qur’an revision.</p></div><span class="tag" id="academyProgress">0 of 6 stages complete</span></div>
+<div class="progress"><span id="academyProgressBar"></span></div>
+<div class="grid" style="grid-template-columns:1fr;gap:12px;margin-top:16px">
+<div class="panel academy-stage" id="stage0"><div class="stage-number">01</div><div class="stage-copy"><h3>Alphabet & articulation</h3><p>Recognise all Arabic letters, their names, shapes and basic articulation points. Practise similar sounds slowly.</p><div class="controls"><button class="btn secondary" onclick="show('lessons');loadLesson(0)">Open alphabet lessons</button><button class="btn" onclick="completeStage(0)">Mark stage complete</button></div></div></div>
+<div class="panel academy-stage" id="stage1"><div class="stage-number">02</div><div class="stage-copy"><h3>Harakat & letter combinations</h3><p>Learn fatḥah, kasrah, ḍammah, tanwīn, sukūn, shaddah, and how letters join.</p><div class="controls"><button class="btn secondary" onclick="show('lessons');loadLesson(1)">Open vowel lessons</button><button class="btn" onclick="completeStage(1)">Mark stage complete</button></div></div></div>
+<div class="panel academy-stage" id="stage2"><div class="stage-number">03</div><div class="stage-copy"><h3>Reading fluency</h3><p>Blend syllables, read short words and phrases, and practise daily with a teacher checking pronunciation.</p><div class="controls"><button class="btn secondary" onclick="show('practice')">Open repeat practice</button><button class="btn" onclick="completeStage(2)">Mark stage complete</button></div></div></div>
+<div class="panel academy-stage" id="stage3"><div class="stage-number">04</div><div class="stage-copy"><h3>Tajweed foundations</h3><p>Study makhārij, ṣifāt, madd, ghunnah, qalqalah, nūn sākinah and stopping/starting. Apply rules with teacher feedback.</p><div class="controls"><button class="btn secondary" onclick="show('tajweed')">Open Tajweed lessons</button><button class="btn" onclick="completeStage(3)">Mark stage complete</button></div></div></div>
+<div class="panel academy-stage" id="stage4"><div class="stage-number">05</div><div class="stage-copy"><h3>Surah-by-surah study</h3><p>Begin with Al-Fātiḥah. Listen, read the words, review meanings, then progress to short surahs.</p><div class="controls"><button class="btn secondary" onclick="show('recitation')">Study Al-Fātiḥah</button><button class="btn" onclick="completeStage(4)">Mark stage complete</button></div></div></div>
+<div class="panel academy-stage" id="stage5"><div class="stage-number">06</div><div class="stage-copy"><h3>Memorisation & revision</h3><p>Use short daily portions, spaced revision, repeat settings and regular recitation checks with a qualified teacher.</p><div class="controls"><button class="btn secondary" onclick="show('recitation')">Open revision practice</button><button class="btn" onclick="completeStage(5)">Mark stage complete</button></div></div></div>
+</div>
+<div class="notice" style="margin-top:14px">Stage completion is a personal study tracker, not a certification of reading or Tajweed ability. Ask a qualified teacher to assess your recitation before moving to advanced material.</div>
+</section>
+
+<section class="section" id="lessons" hidden><div class="section-head"><div><h2>Guided lessons</h2><p class="sub">Read the Arabic, understand the Amharic explanation, then listen and repeat.</p></div></div>
+<div class="tabs" id="lessonTabs"></div><div class="lesson-layout"><div class="panel"><div class="tag" id="lessonTag">LESSON 1</div><h2 id="lessonTitle">Arabic letters</h2><p class="amharic" id="lessonAm">የዐረብኛ ፊደላትን በቅርጻቸውና በድምፃቸው ይለዩ።</p>
+<div class="arabic" translate="no" id="lessonArabic">ا ب ت ث</div><div class="translit" id="lessonTranslit">Alif · Bā · Tā · Thā</div>
+<div class="controls"><button class="btn" onclick="speakCurrent()">▶ Listen in Arabic</button><button class="btn secondary" onclick="markComplete()">✓ Mark complete</button></div><p class="muted" style="margin-top:13px">Tip: Listen once, say it aloud three times, then cover the transliteration and try again.</p></div>
+<div class="panel"><h3>Letter practice</h3><div class="grid" id="letterGrid" style="grid-template-columns:repeat(2,1fr)"></div></div></div>
+</section>
+
+<section class="section" id="practice" hidden><div class="section-head"><div><h2>Listen & repeat</h2><p class="sub">Hear a model pronunciation, record your own voice, then replay and compare.</p></div></div>
+<div class="panel"><div class="tag">SPEAKING PRACTICE</div><div class="arabic" translate="no" id="practiceArabic">بِسْمِ</div><div class="translit" id="practiceLatin">Bismi</div><p class="amharic" id="practiceAm">በአላህ ስም። ድምፁን ያዳምጡና ይድገሙ።</p>
+<div class="controls"><button class="btn" onclick="speakPractice()">▶ Hear Arabic voice</button><button class="btn secondary" id="recordBtn" onclick="recordVoice()">● Record my voice</button><button class="btn secondary" id="playRecord" onclick="playRecording()" disabled>▶ Play my recording</button><button class="btn secondary" onclick="nextPractice()">Next phrase →</button><label class="muted">Voice speed <select id="voiceRate" onchange="setVoiceRate(this.value)"><option value="0.65">Slow</option><option value="0.8" selected>Normal</option><option value="0.95">Fast</option></select></label></div>
+<p class="muted" id="recordStatus">Recording stays in this browser session. Your pronunciation is not automatically graded.</p></div></section>
+
+<section class="section" id="quiz" hidden><div class="section-head"><div><h2>Quick knowledge check</h2><p class="sub">Choose an answer. Review the explanation before moving on.</p></div><span class="tag" id="quizCount">Question 1 of 5</span></div><div class="panel"><h3 id="question">Which letter is Alif?</h3><div id="options"></div><div class="feedback" id="feedback"></div><div class="controls"><button class="btn" id="nextQuestion" onclick="nextQuestion()" disabled>Next question →</button><button class="btn secondary" onclick="resetQuiz()">Restart quiz</button></div></div></section>
+
+
+<section class="section" id="recitation" hidden><div class="section-head"><div><h2>Qur’an recitation practice</h2><p class="sub">Listen to each ayah, repeat it, and move at your own pace.</p></div></div>
+<div class="panel">
+<div class="notice"><strong>Live word highlighting:</strong> Connect a secure timing service once, then press “Play with word sync”. The highlighted Arabic word follows the reciter using published word timestamps.</div>
+<div class="controls"><button class="btn gold" onclick="configureTimingService()">⚙ Connect timing service</button><button class="btn secondary" onclick="playSyncedChapter(1)">▶ Play Al-Fātiḥah with word sync</button></div>
+<p class="muted" id="syncStatus">Timing service not connected. Configure the FERHAN timing Worker URL to enable synchronized playback.</p>
+<div class="tag">SURAH 1 · AL-FĀTIḤAH · الفاتحة</div>
+<h3>Verse-by-verse listening</h3>
+<p class="amharic">እያንዳንዱን አንቀጽ ያዳምጡ፣ በቀስታ ይድገሙ፣ ከዚያ ወደ ቀጣዩ ይሂዱ። የአማርኛ ማብራሪያዎቹ አጭር የትርጉም መመሪያዎች ናቸው፤ ለትክክለኛ ትርጉም የታመነ ተፍሲር ይጠቀሙ።</p>
+<div class="panel" style="margin:16px 0;background:#fbfaf6">
+<h3>Al-Fātiḥah · word-by-word study</h3>
+<p class="amharic">ቃሉን ይንኩ፤ የዐረብኛ ቃሉን፣ አጠራሩን እና አጭር የአማርኛ የመማሪያ ፍቺውን ይመልከቱ።</p>
+<label class="muted" for="wbwAyah">Choose an ayah</label> <select id="wbwAyah" onchange="renderWordStudy(Number(this.value))"><option value="0">Ayah 1</option><option value="1">Ayah 2</option><option value="2">Ayah 3</option><option value="3">Ayah 4</option><option value="4">Ayah 5</option><option value="5">Ayah 6</option><option value="6">Ayah 7</option></select>
+<div id="wordStudy" class="word-by-word"></div>
+<p class="muted" id="wordStudyHint">Select a word to focus it and hear a device-generated pronunciation. Device speech is only a practice aid, not Qur’anic recitation.</p><div class="notice">Word focus is currently tap-to-select, not automatically synchronised to the reciter. Accurate timed highlighting needs verified word timestamps matched to the chosen recording; ferhan does not estimate those timings.</div>
+<div class="controls"><button class="btn secondary" onclick="speakFocusedWord()">▶ Pronounce selected word</button><a class="btn secondary" href="https://quran.com/al-fatihah" target="_blank" rel="noopener" style="text-decoration:none">Quran.com word-by-word audio ↗</a></div>
+</div>
+<div id="ayahList" class="grid" style="grid-template-columns:1fr;gap:10px"></div>
+<div class="controls"><button class="btn" onclick="playAllFatiha()">▶ Play all verses</button><button class="btn secondary" onclick="stopAyahAudio()">■ Stop</button></div><div class="controls"><button class="btn secondary" onclick="saveBookmark(true)">🔖 Save this place</button></div>
+<p class="muted" id="ayahStatus">Audio: Mishary Rashid Alafasy · EveryAyah streaming source. Internet connection required.</p><p class="muted">Qur’an text reference: <a href="https://quran.com/al-fatihah" target="_blank" rel="noopener" style="color:#1d5a4b;font-weight:700">Quran.com — Surah Al-Fatihah</a>. Open each verse there for its word-by-word view, translations and tafsir.</p>
+</div>
+
+<div class="panel" id="shortSurahPanel" style="margin-top:16px">
+<div class="tag">NEW IN ferhan V6 · SURAH 112–114</div><h3>Short surah study & memorisation</h3>
+<p class="amharic">አል-ኢኽላስ፣ አል-ፈለቅ እና አን-ናስን በአንቀጽ ያዳምጡ፣ ይድገሙ፣ ከዚያ የማስታወሻ ምልክት ያድርጉ። የአማርኛ ማስታወሻዎች የመማሪያ መመሪያዎች ናቸው።</p>
+<div class="surah-tools"><label class="muted">Choose surah <select id="shortSurahSelect" onchange="chooseShortSurah(this.value)"><option value="112">112 · Al-Ikhlas (4 ayat)</option><option value="113">113 · Al-Falaq (5 ayat)</option><option value="114">114 · An-Nas (6 ayat)</option></select></label><label class="muted">Repeat each verse <select id="surahRepeat" onchange="surahRepeatCount=Number(this.value)"><option value="1">Once</option><option value="2">2 times</option><option value="3" selected>3 times</option><option value="5">5 times</option><option value="10">10 times</option></select></label></div>
+<div id="shortSurahMeta" class="tag" style="margin-top:14px">SURAH 112</div><div id="shortSurahVerses"></div>
+<div class="controls"><button class="btn" onclick="playShortSurah()">▶ Play selected surah</button><button class="btn gold" onclick="playSyncedChapter(activeShortSurah)">▶ Play with word sync</button><button class="btn secondary" onclick="stopSyncedPlayback()">■ Stop sync</button><button class="btn secondary" onclick="stopShortSurah()">■ Stop</button><button class="btn secondary" onclick="markSurahReviewed()">✓ Mark surah reviewed</button></div><p class="muted" id="shortSurahStatus">Audio: EveryAyah · Mishary Alafasy. Internet connection required.</p>
+<div class="notice">Synchronized playback uses chapter audio and word timestamps from the FERHAN timing service. If timing data is unavailable for a chapter, the app reports that clearly and does not guess word positions.</div></div>
+<div class="panel" style="margin-top:14px"><h3>Memorisation checklist</h3><p class="muted">Tick each step as you complete it. Your checklist is stored on this device.</p><div id="memoriseChecklist"></div></div>
+<div class="panel" style="margin-top:14px"><h3>Daily study routine</h3><p class="amharic">በየቀኑ 15–20 ደቂቃ በቋሚነት መለማመድ ይረዳል።</p>
+<div class="grid">
+<div class="word"><strong>5 min</strong><span class="muted">Review letters</span></div><div class="word"><strong>5 min</strong><span class="muted">Listen & repeat</span></div><div class="word"><strong>5–10 min</strong><span class="muted">Read with a teacher</span></div>
+</div></div>
+</section>
+
+<section class="section" id="tajweed" hidden><div class="section-head"><div><h2>Tajweed foundations</h2><p class="sub">A gentle introduction to the rules that shape Qur’anic recitation.</p></div></div>
+<div class="panel"><p class="amharic">ተጅዊድ ቁርአንን በትክክለኛ የድምፅ መውጫ ቦታ፣ ባህሪ እና የንባብ ህጎች ማንበብ ነው። የሚከተሉት መግቢያዎች ብቻ ናቸው፤ ተግባራዊ ማረሚያን ከብቁ አስተማሪ ያግኙ።</p>
+<div class="grid" id="tajweedCards">
+<div class="card"><div class="tag">01 · MAKHĀRIJ</div><h3>مَخَارِجُ الْحُرُوفِ</h3><p>የፊደላት የድምፅ መውጫ ቦታዎች፤ ጉሮሮ፣ ምላስ፣ ከንፈር እና ሌሎች።</p></div>
+<div class="card"><div class="tag">02 · MADD</div><h3>الْمَدّ</h3><p>የረጅም ድምፅ ማራዘም። ርዝመቱ በህጉ እና በንባብ ሁኔታ ይወሰናል።</p></div>
+<div class="card"><div class="tag">03 · GHUNNAH</div><h3>الْغُنَّة</h3><p>ከአፍንጫ የሚመጣ የድምፅ መንቀጥቀጥ፤ በኑን እና ሚም ህጎች ውስጥ ይታያል።</p></div>
+<div class="card"><div class="tag">04 · QALQALAH</div><h3>الْقَلْقَلَة</h3><p>በق ط ب ج د ላይ ሱኩን ሲኖር የሚሰማ የተቀለበሰ ድምፅ።</p></div>
+<div class="card"><div class="tag">05 · NŪN SĀKINAH</div><h3>النُّونُ السَّاكِنَة</h3><p>Iz-hār, Idghām, Iqlāb እና Ikhfā’ የሚባሉ አራት ዋና ህጎች።</p></div>
+<div class="card"><div class="tag">06 · STOPPING</div><h3>الْوَقْفُ وَالِابْتِدَاء</h3><p>በትርጉም እና በንባብ ትክክለኛነት መሠረት ማቆምና እንደገና መጀመር።</p></div>
+</div>
+<div class="panel" style="margin-top:14px"><div class="tag">V6 · TAJWEED CHECK</div><h3>Quick practice</h3><p>Which rule is associated with a nasal sound on a doubled ن or م?</p><div id="tajweedChallenge"><button class="quiz-option" onclick="tajweedAnswer(0)">Qalqalah</button><button class="quiz-option" onclick="tajweedAnswer(1)">Ghunnah</button><button class="quiz-option" onclick="tajweedAnswer(2)">Madd</button></div><div class="feedback" id="tajweedFeedback"></div></div></section>
+
+<section class="section" id="resources" hidden>
+<div class="section-head"><div><h2>Trusted online resources</h2><p class="sub">Use these alongside ferhan for verified text, recitation, word study and Tajweed.</p></div></div>
+<div class="grid">
+<div class="card resource-card"><div class="tag">QUR’AN READING & STUDY</div><h3>Quran.com</h3><p>Read the Qur’an, open word-by-word meanings and pronunciation, choose reciters, use repeat controls and access tafsir.</p><a href="https://quran.com/al-fatihah" target="_blank" rel="noopener">Open Al-Fātiḥah study ↗</a></div>
+<div class="card resource-card"><div class="tag">VERIFIED QUR’AN TEXT</div><h3>Tanzil Project</h3><p>Downloadable Qur’an text and translations. Its Arabic text must be reproduced verbatim, with attribution and a link to Tanzil.</p><a href="https://tanzil.net/docs/Text_License" target="_blank" rel="noopener">Read text licence ↗</a><br><a href="https://tanzil.net/trans/" target="_blank" rel="noopener">Browse available translations ↗</a></div>
+<div class="card resource-card"><div class="tag">TAJWEED</div><h3>Itqan Tajweed</h3><p>Structured Tajweed lessons with examples, listening activities and checks for understanding.</p><a href="https://itqantajweed.com/" target="_blank" rel="noopener">Open Tajweed lessons ↗</a></div>
+<div class="card resource-card"><div class="tag">TAJWEED REFERENCE</div><h3>Online Quran · Tajweed Rules</h3><p>A structured reference for Hafs ‘an ‘Asim, including articulation points and core recitation rules.</p><a href="https://onlinequran.me/tajweed-rules" target="_blank" rel="noopener">Read Tajweed guide ↗</a></div>
+<div class="card resource-card"><div class="tag">RECITATION DATA & DEVELOPER REFERENCE</div><h3>Quran Foundation API</h3><p>Official developer documentation for verses, word audio, chapter recitation and verse timing metadata. API credentials belong on a secure backend, never in a public HTML file.</p><a href="https://api-docs.quran.foundation/docs/category/content-apis-4.0.0/" target="_blank" rel="noopener">Open API documentation ↗</a></div>
+<div class="card resource-card"><div class="tag">VERSE-BY-VERSE RECITATION</div><h3>Recite Quran</h3><p>Open the exact verse reference you supplied for an additional recitation and reading resource. ferhan links out rather than copying its audio or content.</p><a href="https://recitequran.com/1:1" target="_blank" rel="noopener">Open Al-Fātiḥah 1:1 ↗</a></div>
+<div class="card resource-card"><div class="tag">STRUCTURED BEGINNER COURSE</div><h3>Quran Central · Learn Quran</h3><p>Explore an additional guided learning resource alongside ferhan. Use it for supplementary practice; follow its own course sequence and teaching guidance.</p><a href="https://qurancentral.com/learn-quran" target="_blank" rel="noopener">Open Learn Quran ↗</a></div>
+<div class="card resource-card"><div class="tag">VIDEO LEARNING</div><h3>Your two YouTube courses</h3><p>Continue the playlists you supplied. Pause frequently, repeat short passages and compare your reading with a teacher.</p><a href="https://youtube.com/playlist?list=PLSWnR06mq_h0nbuw550QESCBSF1QVTqA6" target="_blank" rel="noopener">Playlist 1 ↗</a><br><a href="https://youtube.com/playlist?list=PLhZF7rewfdhKVNNESTSwLRprTG5nfZAyw" target="_blank" rel="noopener">Playlist 2 ↗</a></div>
+</div>
+<div class="notice" style="margin-top:15px">Amharic translation note: Tanzil lists an Amharic translation by Muhammed Sadiq and Muhammed Sani Habib, but its translation downloads are subject to non-commercial terms. ferhan links to sources rather than copying that translation into the app. The short Amharic word glosses here are learning aids and should be checked against a trusted translation and tafsir.</div>
+</section>
+
+<section class="section" id="course" hidden><div class="section-head"><div><h2>Video course library</h2><p class="sub">Watch the lessons from the two YouTube playlists you supplied. Use the player controls to choose a lesson.</p></div></div>
+<div class="tabs"><button class="active" onclick="showPlaylist(0,this)">Course 1</button><button onclick="showPlaylist(1,this)">Course 2</button></div>
+<div class="panel"><div class="tag" id="courseLabel">PLAYLIST 1</div><h3 id="courseTitle">Course playlist · 1</h3><iframe class="video" id="ytPlayer" src="https://www.youtube-nocookie.com/embed/videoseries?list=PLSWnR06mq_h0nbuw550QESCBSF1QVTqA6" title="Quran Arabic learning course playlist 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+<p class="muted">Video playback is provided by YouTube. The two original playlists remain hosted on YouTube. Choose a lesson in the player; pause and repeat short sections with the practice tools. Exact lesson titles and timestamp chapters can be added once the playlist lesson sequence is confirmed.</p></div></section>
+</main><div class="modal-backdrop" id="practiceModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><button class="modal-close" onclick="closePracticeModal()" aria-label="Close">×</button><div class="tag">ferhan DAILY REVISION</div><h2 id="modalTitle">A little revision today</h2><p class="amharic">ዛሬ አጭር የመድገም ልምምድ ያድርጉ። በቀስታ ያዳምጡ፣ ይድገሙ፣ ከዚያ እውቀትዎን ይፈትሹ።</p><div class="word"><strong>1 · Listen</strong><p class="muted">Choose one ayah and listen carefully.</p><button class="btn secondary" onclick="closePracticeModal();show('recitation')">Open recitation</button></div><div class="word" style="margin-top:10px"><strong>2 · Recall</strong><p class="muted">Try to recite from memory, then check the text.</p><button class="btn secondary" onclick="closePracticeModal();show('quiz')">Open full quiz</button></div><div class="word" style="margin-top:10px"><strong>3 · Pop-up quiz</strong><p>How many verses are in Surah Al-Ikhlas?</p><div class="controls"><button class="btn secondary" onclick="dailyQuizAnswer(3)">3</button><button class="btn secondary" onclick="dailyQuizAnswer(4)">4</button><button class="btn secondary" onclick="dailyQuizAnswer(5)">5</button></div><div class="feedback" id="dailyQuizFeedback"></div></div><div class="controls"><button class="btn" onclick="dismissDaily()">I’ll practise later</button></div></div></div><footer>ferhan · فَرْحَان — Learn steadily, practise patiently. <br>Learning support only; for Qur’anic recitation rules and correction, learn with a qualified teacher. <br><span style="font-size:12px">Bookmarks and progress are saved locally in this browser. Clearing browser data or switching devices may remove or not carry over this progress.</span></footer>
+<script>
+/* Migrate previous Noor/Farhan V6 browser data before app initialization. */
+(function migratePreviousFerhanStorage(){
+ const pairs=[
+  ["farhanLastBookmarkV6","ferhanLastBookmarkV6"],
+  ["farhanProgress","ferhanProgress"],
+  ["farhanAcademyDone","ferhanAcademyDone"],
+  ["farhanMemoriseV6","ferhanMemoriseV6"],
+  ["farhanSurahReviewsV6","ferhanSurahReviewsV6"],
+  ["farhanDailyDismissed","ferhanDailyDismissed"],
+  ["noorProgress","ferhanProgress"],
+  ["noorAcademyDone","ferhanAcademyDone"],
+  ["noorLastBookmarkV5","ferhanLastBookmarkV6"]
+ ];
+ try{pairs.forEach(([oldKey,newKey])=>{
+  if(!localStorage.getItem(newKey)&&localStorage.getItem(oldKey))
+   localStorage.setItem(newKey,localStorage.getItem(oldKey));
+ });}catch(e){}
+})();
+
+const lessons=[
+{title:"Arabic alphabet · الحروف",am:"የዐረብኛ ፊደላትን በቅርጻቸውና በድምፃቸው ይለዩ። በቀስታ ይናገሩ።",ar:"ا ب ت ث ج ح خ",latin:"Alif · Bā · Tā · Thā · Jīm · Ḥā · Khā",words:[["ا","Alif","አሊፍ"],["ب","Bā","ባ"],["ت","Tā","ታ"],["ث","Thā","ሳ (የምላስ ጫፍ)"],["ج","Jīm","ጂም"],["ح","Ḥā","ሐ"],["خ","Khā","ኻ"]]},
+{title:"Short vowels · الحركات",am:"ፈትሓ (َ) አጭር 'a'፣ ከስራ (ِ) አጭር 'i'፣ ደማ (ُ) አጭር 'u' ያሰማሉ።",ar:"بَ   بِ   بُ",latin:"Ba · Bi · Bu",words:[["بَ","Ba","በ (አጭር)"],["بِ","Bi","ቢ (አጭር)"],["بُ","Bu","ቡ (አጭር)"],["تَ","Ta","ተ (አጭር)"]]},
+{title:"Joining sounds · تركيب",am:"ፊደላትን ከአጭር አናባቢዎች ጋር በማጣመር ቀላል ድምፆችን ያንብቡ።",ar:"بَ + تَ = بَتَ",latin:"Ba + ta = bata",words:[["بَتَ","Bata","በተ"],["كَتَبَ","Kataba","ጻፈ"],["دَرَسَ","Darasa","ተማረ"]]},
+{title:"Long vowels · المد",am:"አሊፍ፣ ያእ እና ዋው በተወሰኑ ሁኔታዎች ድምፁን ያረዝማሉ።",ar:"بَا   بِي   بُو",latin:"Bā · Bī · Bū",words:[["بَا","Bā","ባ (ረጅም)"],["بِي","Bī","ቢ (ረጅም)"],["بُو","Bū","ቡ (ረጅም)"]]},
+{title:"Sukūn & shaddah · السكون والشدة",am:"ሱኩን (ْ) ከአናባቢ የሌለ ፊደልን፤ ሸዳ (ّ) ደግሞ የተጠናከረ/የተደገመ ተነባቢን ያመለክታሉ።",ar:"أَبْ   بَّ",latin:"Ab · Bba",words:[["أَبْ","Ab","አብ"],["بَّ","Bba","ባ (ተጠናክሮ)"]]},
+{title:"Reading practice · قراءة",am:"በተማሩት ድምፆች ቀላል ቃላትን ይለማመዱ። ትክክለኛ ተጅዊድን ከአስተማሪ ጋር ያረጋግጡ።",ar:"رَبِّ   الْحَمْدُ",latin:"Rabbi · Al-ḥamdu",words:[["رَبِّ","Rabbi","ጌታዬ"],["الْحَمْدُ","Al-ḥamdu","ምስጋና"]]}
+];
+const phrases=[["بِسْمِ اللَّهِ","Bismi-llāh","በአላህ ስም።"],["الْحَمْدُ لِلَّهِ","Al-ḥamdu lillāh","ምስጋና ለአላህ ይገባል።"],["السَّلَامُ عَلَيْكُمْ","As-salāmu ʿalaykum","ሰላም ለእናንተ ይሁን።"],["رَبِّ زِدْنِي عِلْمًا","Rabbi zidnī ʿilmā","ጌታዬ እውቀቴን ጨምርልኝ።"]];
+let currentLesson=0,phraseIndex=0,recorded=null,mediaRecorder=null,chunks=[],quizIndex=0,answered=false,score=0,done=new Set();
+const quizData=[
+{q:"Which letter is Alif?",o:["ا","ب","ت"],a:0,e:"ا is Alif, the first letter of the Arabic alphabet."},
+{q:"Which mark gives a short 'a' sound?",o:["ِ Kasrah","َ Fatḥah","ُ Ḍammah"],a:1,e:"Fatḥah (َ) gives a short 'a' sound."},
+{q:"What sound does بِ make?",o:["Ba","Bi","Bu"],a:1,e:"Kasrah under Bā gives بِ (Bi)."},
+{q:"Which symbol is Shaddah?",o:["ْ","ّ","َ"],a:1,e:"Shaddah (ّ) indicates a doubled or strengthened consonant."},
+{q:"What is a good way to improve recitation?",o:["Rush through the text","Listen, repeat and seek teacher feedback","Ignore pronunciation"],a:1,e:"Listen carefully, repeat slowly and ask a qualified teacher to correct your recitation."}
+];
+function show(id){document.querySelectorAll("main>section").forEach(s=>{s.hidden=(id==="home" ? !["home","resumePanel"].includes(s.id) : s.id!==id)});document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.go===id));activeSection=id;saveBookmark(false);window.scrollTo({top:0,behavior:"smooth"})}
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.go)));
+function renderLesson(){let l=lessons[currentLesson];document.getElementById("lessonTag").textContent="LESSON "+(currentLesson+1);document.getElementById("lessonTitle").textContent=l.title;document.getElementById("lessonAm").textContent=l.am;document.getElementById("lessonArabic").textContent=l.ar;document.getElementById("lessonTranslit").textContent=l.latin;document.getElementById("lessonTabs").innerHTML=lessons.map((x,i)=>`<button class="${i===currentLesson?'active':''}" onclick="loadLesson(${i})">${i+1}</button>`).join("");document.getElementById("letterGrid").innerHTML=l.words.map(w=>`<div class="word"><div class="arabic" translate="no">${w[0]}</div><strong>${w[1]}</strong><span class="muted">${w[2]}</span><button class="btn secondary" style="margin-top:8px;padding:6px 10px" onclick="speak(${JSON.stringify(w[0])})">▶</button></div>`).join("");}
+function loadLesson(i){currentLesson=i;renderLesson();saveBookmark(false)}
+function speak(txt){if(!("speechSynthesis"in window)){alert("Speech synthesis is not supported by this browser.");return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(txt);u.lang="ar-SA";u.rate=.78;let voices=speechSynthesis.getVoices();let v=voices.find(x=>x.lang.toLowerCase().startsWith("ar"));if(v)u.voice=v;speechSynthesis.speak(u)}
+function speakCurrent(){speak(lessons[currentLesson].ar)}function speakPractice(){speak(phrases[phraseIndex][0])}
+function markComplete(){done.add(currentLesson);updateProgress();alert("Lesson marked complete. Keep practising!")}
+function updateProgress(){document.getElementById("progressLabel").textContent=done.size+" of 6 topics completed";document.getElementById("progressBar").style.width=(done.size/6*100)+"%"}
+function setPhrase(){let p=phrases[phraseIndex];document.getElementById("practiceArabic").textContent=p[0];document.getElementById("practiceLatin").textContent=p[1];document.getElementById("practiceAm").textContent=p[2]}
+function nextPractice(){phraseIndex=(phraseIndex+1)%phrases.length;setPhrase()}
+async function recordVoice(){if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){document.getElementById("recordStatus").textContent="Audio recording is not supported in this browser. Try a current version of Safari or Chrome.";return}let btn=document.getElementById("recordBtn");if(mediaRecorder&&mediaRecorder.state==="recording"){mediaRecorder.stop();btn.textContent="● Record my voice";return}try{let stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];mediaRecorder=new MediaRecorder(stream);mediaRecorder.ondataavailable=e=>chunks.push(e.data);mediaRecorder.onstop=()=>{recorded=new Blob(chunks,{type:mediaRecorder.mimeType});document.getElementById("playRecord").disabled=false;document.getElementById("recordStatus").textContent="Recording ready. Replay it and compare with the Arabic model.";stream.getTracks().forEach(t=>t.stop())};mediaRecorder.start();btn.textContent="■ Stop recording";document.getElementById("recordStatus").textContent="Recording… say the phrase clearly, then press Stop."}catch(e){document.getElementById("recordStatus").textContent="Microphone permission was not granted. Allow microphone access and try again."}}
+function playRecording(){if(recorded){let a=new Audio(URL.createObjectURL(recorded));a.play()}}
+function renderQuiz(){let q=quizData[quizIndex];answered=false;document.getElementById("quizCount").textContent=`Question ${quizIndex+1} of ${quizData.length}`;document.getElementById("question").textContent=q.q;document.getElementById("feedback").textContent="";document.getElementById("nextQuestion").disabled=true;document.getElementById("nextQuestion").textContent=quizIndex===quizData.length-1?"See results →":"Next question →";document.getElementById("options").innerHTML=q.o.map((x,i)=>`<button class="quiz-option" onclick="answer(${i},this)">${x}</button>`).join("")}
+function answer(i,el){if(answered)return;answered=true;let q=quizData[quizIndex];document.querySelectorAll(".quiz-option")[q.a].classList.add("correct");if(i===q.a){score++;document.getElementById("feedback").textContent="Correct! "+q.e}else{el.classList.add("wrong");document.getElementById("feedback").textContent="Not quite. "+q.e}document.getElementById("nextQuestion").disabled=false}
+function nextQuestion(){if(!answered)return;if(quizIndex===quizData.length-1){document.getElementById("question").textContent=`You scored ${score} out of ${quizData.length}`;document.getElementById("options").innerHTML="";document.getElementById("feedback").textContent=score>=4?"Excellent work. Review the lessons and try again later.":"Good effort. Revisit the lessons, then try again.";document.getElementById("nextQuestion").disabled=true;return}quizIndex++;renderQuiz()}
+function resetQuiz(){quizIndex=0;score=0;renderQuiz()}
+function showPlaylist(n,btn){document.querySelectorAll("#course .tabs button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");let id=n===0?"PLSWnR06mq_h0nbuw550QESCBSF1QVTqA6":"PLhZF7rewfdhKVNNESTSwLRprTG5nfZAyw";document.getElementById("ytPlayer").src="https://www.youtube-nocookie.com/embed/videoseries?list="+id;document.getElementById("courseLabel").textContent="PLAYLIST "+(n+1);document.getElementById("courseTitle").textContent="Course playlist · "+(n+1)}
+renderLesson();setPhrase();renderQuiz();updateProgress();
+const fatiha=[
+["بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ","Bismi llāhi r-raḥmāni r-raḥīm","በአላህ ስም፣ እጅግ ሩህሩህ እና አዛኝ በሆነው።"],
+["ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ","Al-ḥamdu lillāhi rabbi l-ʿālamīn","ምስጋና ሁሉ የዓለማት ጌታ ለሆነው አላህ ነው።"],
+["ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ","Ar-raḥmāni r-raḥīm","እጅግ ሩህሩህ፣ አዛኝ።"],
+["مَـٰلِكِ يَوْمِ ٱلدِّينِ","Māliki yawmi d-dīn","የፍርድ ቀን ባለቤት።"],
+["إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ","Iyyāka naʿbudu wa iyyāka nastaʿīn","አንተን ብቻ እንገዛለን፤ ከአንተም ብቻ እርዳታን እንሻለን።"],
+["ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ","Ihdinā ṣ-ṣirāṭa l-mustaqīm","ቀጥተኛውን መንገድ ምራን።"],
+["صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ","Ṣirāṭa lladhīna anʿamta ʿalayhim ghayri l-maghḍūbi ʿalayhim wa la ḍ-ḍāllīn","በጸጋህ የተባረኩትን መንገድ፤ ቁጣ የወረደባቸውንና የተሳሳቱትን መንገድ ሳይሆን።"]
+];
+let ayahAudio=new Audio(), ayahIndex=0, voiceRate=.8;
+
+const wordStudyData=[
+[["بِسْمِ","bismi","በስም"],["ٱللَّهِ","Allāhi","አላህ"],["ٱلرَّحْمَٰنِ","ar-Raḥmān","እጅግ ሩህሩህ"],["ٱلرَّحِيمِ","ar-Raḥīm","በጣም አዛኝ"]],
+[["ٱلْحَمْدُ","al-ḥamdu","ምስጋና"],["لِلَّهِ","lillāhi","ለአላህ"],["رَبِّ","rabbi","ጌታ"],["ٱلْعَٰلَمِينَ","al-ʿālamīn","ዓለማት"]],
+[["ٱلرَّحْمَٰنِ","ar-raḥmāni","እጅግ ሩህሩህ"],["ٱلرَّحِيمِ","ar-raḥīmi","በጣም አዛኝ"]],
+[["مَٰلِكِ","māliki","ባለቤት / ገዢ"],["يَوْمِ","yawmi","ቀን"],["ٱلدِّينِ","ad-dīn","ፍርድ"]],
+[["إِيَّاكَ","iyyāka","አንተን ብቻ"],["نَعْبُدُ","naʿbudu","እንገዛለን"],["وَ","wa","እና"],["إِيَّاكَ","iyyāka","አንተን ብቻ"],["نَسْتَعِينُ","nastaʿīnu","እርዳታ እንሻለን"]],
+[["ٱهْدِنَا","ihdinā","ምራን"],["ٱلصِّرَٰطَ","aṣ-ṣirāṭa","መንገድን"],["ٱلْمُسْتَقِيمَ","al-mustaqīm","ቀጥተኛውን"]],
+[["صِرَٰطَ","ṣirāṭa","መንገድ"],["ٱلَّذِينَ","alladhīna","እነዚያ"],["أَنْعَمْتَ","anʿamta","በጸጋ የባረክህ"],["عَلَيْهِمْ","ʿalayhim","በእነርሱ ላይ"],["غَيْرِ","ghayri","ሳይሆን"],["ٱلْمَغْضُوبِ","al-maghḍūbi","ቁጣ የወረደባቸው"],["عَلَيْهِمْ","ʿalayhim","በእነርሱ ላይ"],["وَلَا","wa-lā","እና አይደለም"],["ٱلضَّآلِّينَ","aḍ-ḍāllīn","የተሳሳቱ"]]
+];
+let selectedWord=null,selectedAyah=0;
+function renderWordStudy(i){selectedAyah=i;selectedWord=null;const host=document.getElementById("wordStudy");if(!host)return;host.innerHTML=wordStudyData[i].map((w,j)=>`<button class="wbw-word" id="wbw-${j}" data-sync-word="${j+1}" onclick="focusWord(${j})"><div class="arabic" translate="no">${w[0]}</div><div class="latin">${w[1]}</div><div class="gloss" lang="am">${w[2]}</div></button>`).join("");document.getElementById("wordStudyHint").textContent=`Ayah ${i+1}: tap a word to focus it. These are concise study glosses, not a full translation.`;saveBookmark(false);}
+function focusWord(j){selectedWord=j;document.querySelectorAll(".wbw-word").forEach((el,k)=>el.classList.toggle("active",k===j));const w=wordStudyData[selectedAyah][j];document.getElementById("wordStudyHint").textContent=`Selected: ${w[0]} · ${w[1]} · ${w[2]}`;}
+function speakFocusedWord(){if(selectedWord===null){document.getElementById("wordStudyHint").textContent="Choose a word first.";return;}speak(wordStudyData[selectedAyah][selectedWord][0]);}
+let academyDone=new Set();
+function completeStage(i){academyDone.add(i);try{localStorage.setItem("ferhanAcademyDone",JSON.stringify([...academyDone]));}catch(e){}updateAcademyProgress();}
+function updateAcademyProgress(){const label=document.getElementById("academyProgress");if(!label)return;label.textContent=`${academyDone.size} of 6 stages complete`;document.getElementById("academyProgressBar").style.width=(academyDone.size/6*100)+"%";for(let i=0;i<6;i++){const el=document.getElementById("stage"+i);if(el)el.classList.toggle("done",academyDone.has(i));}}
+function loadAcademyProgress(){try{academyDone=new Set(JSON.parse(localStorage.getItem("ferhanAcademyDone")||"[]"));}catch(e){academyDone=new Set();}updateAcademyProgress();}
+
+function renderAyahs(){const host=document.getElementById("ayahList");if(!host)return;host.innerHTML=fatiha.map((v,i)=>`<div class="word" style="text-align:left"><div class="row" style="display:flex;justify-content:space-between;align-items:center"><strong>Ayah ${i+1}</strong><span><button class="btn secondary" onclick="playAyah(${i})">▶ Listen & repeat</button> <a class="btn secondary" style="display:inline-block;text-decoration:none" href="https://quran.com/1/${i+1}" target="_blank" rel="noopener">Quran.com ↗</a></span></div><div class="arabic" translate="no" style="text-align:right">${v[0]}</div><div class="translit">${v[1]}</div><p class="amharic">${v[2]}</p></div>`).join("")}
+function playAyah(i,seekTo=0){ayahIndex=i;saveBookmark(false);const n=String(i+1).padStart(3,"0");ayahAudio.pause();ayahAudio.src=`https://everyayah.com/data/Alafasy_128kbps/001${n}.mp3`;ayahAudio.playbackRate=voiceRate;ayahAudio.onloadedmetadata=()=>{if(seekTo>0&&Number.isFinite(ayahAudio.duration))ayahAudio.currentTime=Math.min(seekTo,Math.max(0,ayahAudio.duration-0.5));};document.getElementById("ayahStatus").textContent=`Playing Al-Fatihah, ayah ${i+1} · Mishary Rashid Alafasy`;ayahAudio.play().catch(()=>document.getElementById("ayahStatus").textContent="Audio could not start. Check your internet connection and press play again.");}
+function playAllFatiha(){playAyah(0);ayahAudio.onended=()=>{if(ayahIndex<6)playAyah(ayahIndex+1);else document.getElementById("ayahStatus").textContent="Al-Fatihah listening completed. Repeat each verse aloud."}}
+function stopAyahAudio(){ayahAudio.pause();ayahAudio.currentTime=0;ayahAudio.onended=null;document.getElementById("ayahStatus").textContent="Playback stopped."}
+function setVoiceRate(v){voiceRate=Number(v);ayahAudio.playbackRate=voiceRate}
+function loadSavedProgress(){try{const raw=JSON.parse(localStorage.getItem("ferhanProgress")||"{}");done=new Set(raw.done||[]);updateProgress()}catch(e){}}
+const originalMarkComplete=markComplete;
+markComplete=function(){done.add(currentLesson);updateProgress();try{localStorage.setItem("ferhanProgress",JSON.stringify({done:[...done]}))}catch(e){}alert("Lesson progress saved on this device.")};
+const originalSpeak=speak;
+speak=function(txt){if(!("speechSynthesis"in window)){alert("Speech synthesis is not supported by this browser.");return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(txt);u.lang="ar-SA";u.rate=voiceRate;let voices=speechSynthesis.getVoices();let v=voices.find(x=>x.lang.toLowerCase().startsWith("ar"));if(v)u.voice=v;speechSynthesis.speak(u)};
+
+// Local-only bookmark: no login, server, or cloud account.
+let activeSection="home";
+const BOOKMARK_KEY="ferhanLastBookmarkV6";
+function bookmarkLabel(section,lesson,ayah){
+ const names={home:"Home",academy:"Academy",lessons:"Guided lessons",practice:"Listen & repeat",quiz:"Quiz",recitation:"Al-Fatihah recitation",tajweed:"Tajweed",resources:"Resources",course:"Video courses"};
+ return section==="lessons" ? `${names[section]} · ${lessons[lesson]?.title||"Lesson"}` :
+        section==="recitation" ? `${names[section]} · Ayah ${ayah+1}` : (names[section]||"ferhan");
+}
+function saveBookmark(showMessage=false){
+ const data={section:activeSection||"home",lesson:currentLesson||0,ayah:selectedAyah??ayahIndex??0,word:selectedWord??null,academy:[...academyDone],done:[...done],savedAt:Date.now(),audioTime:activeSection==="recitation"&&!ayahAudio.paused?Math.floor(ayahAudio.currentTime):0};
+ try{localStorage.setItem(BOOKMARK_KEY,JSON.stringify(data));}catch(e){}
+ updateBookmarkSummary(data);
+ if(showMessage){const el=document.getElementById("ayahStatus");if(el)el.textContent="Bookmark saved on this device. You can resume from the home page."; }
+}
+function readBookmark(){try{return JSON.parse(localStorage.getItem(BOOKMARK_KEY)||"null")}catch(e){return null}}
+function updateBookmarkSummary(data=readBookmark()){
+ const el=document.getElementById("bookmarkSummary");if(!el)return;
+ if(!data){el.textContent="Your last lesson and reading position will be saved privately on this device.";return;}
+ const when=data.savedAt?new Date(data.savedAt).toLocaleString():"Previously saved";
+ el.textContent=`Last saved: ${bookmarkLabel(data.section,data.lesson||0,data.ayah||0)} · ${when}`;
+}
+function resumeBookmark(){
+ const b=readBookmark();if(!b){show("lessons");return;}
+ currentLesson=Math.max(0,Math.min(lessons.length-1,Number(b.lesson)||0));
+ try{done=new Set(b.done||[]);academyDone=new Set(b.academy||[]);updateProgress();updateAcademyProgress();}catch(e){}
+ if(b.section==="lessons"){renderLesson();show("lessons");}
+ else if(b.section==="recitation"){renderWordStudy(Number(b.ayah)||0);document.getElementById("wbwAyah").value=String(Number(b.ayah)||0);renderAyahs();show("recitation");playAyah(Number(b.ayah)||0,Number(b.audioTime)||0);}
+ else if(["home","academy","practice","quiz","tajweed","resources","course"].includes(b.section)){show(b.section);}
+ else {renderLesson();show("lessons");}
+}
+window.addEventListener("pagehide",()=>{saveBookmark(false);try{if(activeSection==="recitation"&&!ayahAudio.paused){const b=readBookmark();if(b){b.audioTime=Math.floor(ayahAudio.currentTime);localStorage.setItem(BOOKMARK_KEY,JSON.stringify(b));}}}catch(e){}});
+ayahAudio.addEventListener("pause",()=>{if(activeSection==="recitation")saveBookmark(false);});
+
+renderAyahs();renderWordStudy(0);loadSavedProgress();loadAcademyProgress();updateBookmarkSummary();
+
+
+
+const shortGloss={
+"قُلْ":["በል / ተናገር"],"هُوَ":["እርሱ"],"ٱللَّهُ":["አላህ"],"أَحَدٌ":["አንድ"],"ٱلصَّمَدُ":["ሁሉም የሚፈልጉት"],"لَمْ":["አል-"],"يَلِدْ":["ወለደ"],"وَلَمْ":["እና አል-"],"يُولَدْ":["ተወለደ"],"وَلَمْ":["እና አል-"],"يَكُن":["አልነበረም"],"لَّهُۥ":["ለእርሱ"],"كُفُوًا":["እኩል"],"قُلْ":["በል"],"أَعُوذُ":["ጥበቃ እሻለሁ"],"بِرَبِّ":["በጌታ"],"ٱلْفَلَقِ":["ንጋት"],"مِن":["ከ"],"شَرِّ":["ክፉ"],"مَا":["ያንን"],"خَلَقَ":["ፈጠረ"],"وَمِن":["እና ከ"],"غَاسِقٍ":["ጨለማ"],"إِذَا":["በጊዜው"],"وَقَبَ":["ሲገባ"],"ٱلنَّفَّـٰثَـٰتِ":["የሚነፍሱ"],"فِي":["በ"],"ٱلْعُقَدِ":["ቋጠሮዎች"],"حَاسِدٍ":["ቀናተኛ"],"حَسَدَ":["ቀና"],"بِرَبِّ":["በጌታ"],"ٱلنَّاسِ":["ሰዎች"],"مَلِكِ":["ንጉሥ"],"إِلَٰهِ":["አምላክ"],"ٱلْوَسْوَاسِ":["ሹክሹክታ"],"ٱلْخَنَّاسِ":["ወደ ኋላ የሚሸሸው"],"ٱلَّذِي":["ያ"],"يُوَسْوِسُ":["ሹክሹክታ የሚያደርግ"],"صُدُورِ":["ልቦች"],"مِنَ":["ከ"],"ٱلْجِنَّةِ":["ጂኖች"],"وَٱلنَّاسِ":["እና ሰዎች"]
+};
+function renderShortWordCards(surahId,verseIndex){
+ const arabic=shortSurahs[surahId].verses[verseIndex][0].split(/\s+/);
+ return `<div class="word-by-word">${arabic.map((w,i)=>`<button class="wbw-word sync-word" data-sync-word="${i+1}" type="button" onclick="focusShortWord(this)"><div class="arabic" translate="no">${w}</div><div class="gloss">${shortGloss[w]||"የቃሉን አጠራር እና ትርጉም ከታመነ ምንጭ ያረጋግጡ"}</div></button>`).join("")}</div>`;
+}
+function focusShortWord(el){el.parentElement.querySelectorAll(".wbw-word").forEach(x=>x.classList.remove("active"));el.classList.add("active");}
+
+// ferhan V6: verified verse text, local progress, revision and backup tools.
+const shortSurahs={
+112:{name:"Al-Ikhlas · الإخلاص",url:"al-ikhlas",verses:[
+["قُلْ هُوَ ٱللَّهُ أَحَدٌ","Qul huwa Allāhu aḥad","አላህ አንድ ነው ብለህ ተናገር፤ የአላህን አንድነት ያስተምራል።"],
+["ٱللَّهُ ٱلصَّمَدُ","Allāhuṣ-ṣamad","ሁሉም የሚፈልጉት፣ እርሱ ግን ማንንም የማይፈልግ።"],
+["لَمْ يَلِدْ وَلَمْ يُولَدْ","Lam yalid wa lam yūlad","አልወለደም፣ አልተወለደም።"],
+["وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌ","Wa lam yakul-lahū kufuwan aḥad","ለእርሱ እኩል የሆነ ማንም የለም።"]]},
+113:{name:"Al-Falaq · الفلق",url:"al-falaq",verses:[
+["قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ","Qul aʿūdhu bi-rabbi l-falaq","በንጋት ጌታ ጥበቃ መሻት።"],
+["مِن شَرِّ مَا خَلَقَ","Min sharri mā khalaq","ከፈጠረው ነገር ጉዳት ጥበቃ መሻት።"],
+["وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ","Wa min sharri ghāsiqin idhā waqab","ጨለማ ሲገባ ከሚመጣ ክፉ ነገር ጥበቃ መሻት።"],
+["وَمِن شَرِّ ٱلنَّفَّـٰثَـٰتِ فِي ٱلْعُقَدِ","Wa min sharrin-naffāthāti fi l-ʿuqad","በቋጠሮዎች ላይ የሚነፍሱትን ክፉ ተግባር በተመለከተ ጥበቃ መሻት።"],
+["وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ","Wa min sharri ḥāsidin idhā ḥasad","ቅናት ከሚያደርግ ሰው ክፉ ውጤት ጥበቃ መሻት።"]]},
+114:{name:"An-Nas · الناس",url:"an-nas",verses:[
+["قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ","Qul aʿūdhu bi-rabbi n-nās","የሰዎች ጌታ በሆነው አላህ ጥበቃ መሻት።"],
+["مَلِكِ ٱلنَّاسِ","Maliki n-nās","የሰዎች ንጉሥ።"],
+["إِلَٰهِ ٱلنَّاسِ","Ilāhi n-nās","የሰዎች አምላክ።"],
+["مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ","Min sharril-waswāsi l-khannās","ክፉ ሹክሹክታ ከሚያመጣው ነገር ጥበቃ መሻት።"],
+["ٱلَّذِي يُوَسْوِسُ فِي صُدُورِ ٱلنَّاسِ","Alladhī yuwaswisu fī ṣudūri n-nās","በሰዎች ልብ ውስጥ ሹክሹክታ የሚያደርገው።"],
+["مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ","Mina l-jinnati wa n-nās","ከጂንና ከሰዎች።"]]}
+};
+let activeShortSurah=112,shortAyahIndex=0,surahRepeatCount=3,surahRepeatDone=0,surahReview=new Set(),memoriseState={},shortAudio=new Audio(),shortPlayAll=false,shortSurahUsed=false;
+const MEM_KEY="ferhanMemoriseV6",REVIEW_KEY="ferhanSurahReviewsV6";
+function renderShortSurah(id,focus=0){
+ activeShortSurah=Number(id);const surah=shortSurahs[activeShortSurah];shortAyahIndex=Math.min(focus,surah.verses.length-1);
+ document.getElementById("shortSurahSelect").value=String(activeShortSurah);
+ document.getElementById("shortSurahMeta").textContent=`SURAH ${activeShortSurah} · ${surah.name} · ${surah.verses.length} VERSES`;
+ document.getElementById("shortSurahVerses").innerHTML=surah.verses.map((v,i)=>`<article class="surah-verse ${i===shortAyahIndex?'current':''}" id="short-ayah-${i}"><div class="row" style="display:flex;justify-content:space-between;gap:8px;align-items:center"><strong>Ayah ${i+1}</strong><button class="btn secondary" onclick="playShortAyah(${i})">▶ Listen & repeat</button></div><div class="arabic" translate="no" lang="ar">${v[0]}</div><div class="translit">${v[1]}</div><p class="amharic">${v[2]}</p><div class="muted">Tap a word for an Amharic learning gloss</div>${renderShortWordCards(activeShortSurah,i)}<div class="controls"><a class="btn secondary" style="text-decoration:none" href="https://quran.com/${surah.url}/${i+1}" target="_blank" rel="noopener">Quran.com ↗</a><button class="btn secondary" onclick="setShortBookmark(${i})">🔖 Save verse</button></div></article>`).join("");
+ renderMemoriseChecklist();saveBookmark(false);
+}
+function chooseShortSurah(id){shortSurahUsed=true;renderShortSurah(id)}
+function playShortAyah(i){shortSurahUsed=true;shortPlayAll=false;shortAyahIndex=i;surahRepeatDone=0;renderShortSurah(activeShortSurah,i);playShortAudioOnce()}
+function playShortAudioOnce(){
+ const surah=shortSurahs[activeShortSurah],file=String(activeShortSurah).padStart(3,"0")+String(shortAyahIndex+1).padStart(3,"0");
+ shortAudio.pause();shortAudio.src=`https://everyayah.com/data/Alafasy_128kbps/${file}.mp3`;
+ document.getElementById("shortSurahStatus").textContent=`Playing ${surah.name}, ayah ${shortAyahIndex+1} · repeat ${surahRepeatDone+1} of ${surahRepeatCount}`;
+ shortAudio.onended=()=>{
+  surahRepeatDone++;
+  if(surahRepeatDone<surahRepeatCount){playShortAudioOnce();return}
+  if(shortPlayAll&&shortAyahIndex<surah.verses.length-1){shortAyahIndex++;surahRepeatDone=0;renderShortSurah(activeShortSurah,shortAyahIndex);playShortAudioOnce();return}
+  shortPlayAll=false;document.getElementById("shortSurahStatus").textContent=`Finished ayah ${shortAyahIndex+1}. Repeat aloud, then continue.`;
+ };
+ shortAudio.onerror=()=>document.getElementById("shortSurahStatus").textContent="Audio unavailable. Check your internet connection or open Quran.com.";
+ shortAudio.play().catch(()=>document.getElementById("shortSurahStatus").textContent="Press play again after checking your connection.");
+ saveBookmark(false);
+}
+function playShortSurah(){shortSurahUsed=true;shortPlayAll=true;shortAyahIndex=0;surahRepeatDone=0;renderShortSurah(activeShortSurah,0);playShortAudioOnce()}
+function stopShortSurah(){shortPlayAll=false;shortAudio.pause();shortAudio.currentTime=0;document.getElementById("shortSurahStatus").textContent="Playback stopped."}
+function setShortBookmark(i){shortSurahUsed=true;shortAyahIndex=i;saveBookmark(true);document.getElementById("shortSurahStatus").textContent=`Saved Surah ${activeShortSurah}, ayah ${i+1}. Resume from Home.`}
+function markSurahReviewed(){surahReview.add(activeShortSurah);localStorage.setItem(REVIEW_KEY,JSON.stringify([...surahReview]));document.getElementById("shortSurahStatus").textContent="Surah review saved on this device.";renderMemoriseChecklist()}
+const memoriseSteps=["Listen to the complete surah","Repeat each ayah slowly","Recite while looking at the text","Try reciting without looking","Review again tomorrow"];
+function renderMemoriseChecklist(){
+ const host=document.getElementById("memoriseChecklist");if(!host)return;
+ host.innerHTML=`<div class="tag" style="margin:10px 0">${shortSurahs[activeShortSurah].name}</div>`+memoriseSteps.map((x,i)=>`<label class="checkline"><input type="checkbox" ${memoriseState[activeShortSurah+"-"+i]?"checked":""} onchange="toggleMemorise(${i},this.checked)"><span>${x}</span></label>`).join("")+`<p class="muted">${surahReview.has(activeShortSurah)?"Surah review marked complete.":"Surah review not yet marked complete."}</p>`;
+}
+function toggleMemorise(i,v){memoriseState[activeShortSurah+"-"+i]=v;localStorage.setItem(MEM_KEY,JSON.stringify(memoriseState))}
+function dailyQuizAnswer(n){const el=document.getElementById("dailyQuizFeedback");if(el)el.textContent=n===4?"Correct! Al-Ikhlas has four verses.":"Not quite — Al-Ikhlas has four verses. Try listening to it once more."}
+function closePracticeModal(){document.getElementById("practiceModal").classList.remove("open")}
+function openDaily(){document.getElementById("practiceModal").classList.add("open")}
+function dismissDaily(){closePracticeModal();localStorage.setItem("ferhanDailyDismissed",new Date().toDateString())}
+function maybeShowDailyPractice(){if(localStorage.getItem("ferhanDailyDismissed")!==new Date().toDateString())setTimeout(openDaily,900)}
+function exportBackup(){
+ const keys=["ferhanLastBookmarkV6","ferhanProgress","ferhanAcademyDone",MEM_KEY,REVIEW_KEY,"ferhanDailyDismissed","noorProgress","noorAcademyDone"];
+ const backup={app:"ferhan Quran Learning",version:6,exportedAt:new Date().toISOString(),data:{}};
+ keys.forEach(k=>{const v=localStorage.getItem(k);if(v!==null)backup.data[k]=v});
+ const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="ferhan-v6-progress-backup.json";a.click();URL.revokeObjectURL(url);
+}
+function importBackup(event){
+ const file=event.target.files?.[0];if(!file)return;const reader=new FileReader();
+ reader.onload=()=>{try{
+  const obj=JSON.parse(reader.result);if(!obj||typeof obj!=="object"||!obj.data||typeof obj.data!=="object")throw Error("Invalid backup");
+  const allowed=["ferhanLastBookmarkV6","ferhanProgress","ferhanAcademyDone",MEM_KEY,REVIEW_KEY,"ferhanDailyDismissed","noorProgress","noorAcademyDone"];
+  const legacyMap={"farhanLastBookmarkV6":"ferhanLastBookmarkV6","farhanProgress":"ferhanProgress","farhanAcademyDone":"ferhanAcademyDone","farhanMemoriseV6":"ferhanMemoriseV6","farhanSurahReviewsV6":"ferhanSurahReviewsV6","farhanDailyDismissed":"ferhanDailyDismissed"};
+  allowed.forEach(k=>{if(typeof obj.data[k]==="string")localStorage.setItem(k,obj.data[k])});
+  Object.entries(legacyMap).forEach(([oldKey,newKey])=>{if(!localStorage.getItem(newKey)&&typeof obj.data[oldKey]==="string")localStorage.setItem(newKey,obj.data[oldKey])});
+  loadSavedProgress();loadAcademyProgress();loadV6State();updateBookmarkSummary();
+  alert("Backup imported. Your saved lessons and bookmark have been restored on this device.");
+ }catch(e){alert("This file is not a valid FERHAN progress backup.");}event.target.value=""};
+ reader.readAsText(file);
+}
+function loadV6State(){
+ try{memoriseState=JSON.parse(localStorage.getItem(MEM_KEY)||"{}")}catch(e){memoriseState={}}
+ try{surahReview=new Set(JSON.parse(localStorage.getItem(REVIEW_KEY)||"[]"))}catch(e){surahReview=new Set()}
+ renderMemoriseChecklist();
+}
+const saveBookmarkV5=saveBookmark;
+saveBookmark=function(showMessage=false){
+ const previous=readBookmark();saveBookmarkV5(showMessage);
+ try{
+  const b=readBookmark();if(!b)return;
+  if((activeSection==="recitation"&&shortSurahUsed)||(activeSection==="home"&&previous?.shortSurah)){
+   b.shortSurah=activeShortSurah;b.shortAyah=shortAyahIndex;
+  }else{delete b.shortSurah;delete b.shortAyah;}
+  localStorage.setItem(BOOKMARK_KEY,JSON.stringify(b));
+ }catch(e){}
+};
+const resumeBookmarkV5=resumeBookmark;
+resumeBookmark=function(){
+ const b=readBookmark();
+ if(b?.shortSurah){currentLesson=Math.max(0,Math.min(lessons.length-1,Number(b.lesson)||0));done=new Set(b.done||[]);academyDone=new Set(b.academy||[]);activeShortSurah=Number(b.shortSurah);shortAyahIndex=Number(b.shortAyah)||0;shortSurahUsed=true;updateProgress();updateAcademyProgress();show("recitation");renderShortSurah(activeShortSurah,shortAyahIndex);return;}
+ resumeBookmarkV5();
+};
+renderShortSurah(112);loadV6State();maybeShowDailyPractice();
+
+// FERHAN V6.1 — synchronized word highlighting.
+// Timing data and chapter audio are supplied by a private-key Cloudflare Worker.
+// No Quran Foundation secret or access token is ever sent to the browser.
+const FERHAN_TIMING_API_KEY="ferhanTimingApiUrl";
+let ferhanTimingApi=localStorage.getItem(FERHAN_TIMING_API_KEY)||"";
+let ferhanSyncAudio=new Audio(),ferhanSyncData=null,ferhanSyncChapter=null,ferhanSyncTick=null;
+function configureTimingService(){
+ const current=ferhanTimingApi||"";
+ const value=prompt("Paste your FERHAN timing Worker URL (for example https://your-worker.your-subdomain.workers.dev)",current);
+ if(value===null)return;
+ ferhanTimingApi=value.trim().replace(/\/+$/,"");
+ if(ferhanTimingApi&&!/^https:\/\/[a-z0-9.-]+(?::\d+)?$/i.test(ferhanTimingApi)){
+  alert("Please enter a valid HTTPS Worker URL.");ferhanTimingApi="";return;
+ }
+ if(ferhanTimingApi)localStorage.setItem(FERHAN_TIMING_API_KEY,ferhanTimingApi);
+ else localStorage.removeItem(FERHAN_TIMING_API_KEY);
+ const el=document.getElementById("syncStatus");
+ if(el)el.textContent=ferhanTimingApi?"Timing service URL saved on this device. Press Play with word sync.":"Timing service disconnected.";
+}
+function clearSyncHighlights(){
+ document.querySelectorAll(".wbw-word.sync-active,.wbw-word.active").forEach(el=>el.classList.remove("sync-active"));
+ document.querySelectorAll(".surah-verse.sync-current").forEach(el=>el.classList.remove("sync-current"));
+}
+function syncWordsAtTime(){
+ if(!ferhanSyncData||!ferhanSyncChapter)return;
+ const t=Math.round(ferhanSyncAudio.currentTime*1000);
+ let active=null;
+ for(const verse of (ferhanSyncData.timestamps||[])){
+  for(const seg of (verse.segments||[])){
+   if(t>=Number(seg[1])&&t<Number(seg[2])){active={verseKey:verse.verse_key,wordIndex:Number(seg[0])};break;}
+  }
+  if(active)break;
+ }
+ if(!active)return;
+ const [chapter,verseNo]=active.verseKey.split(":").map(Number);
+ if(chapter!==ferhanSyncChapter)return;
+ if(chapter===1){
+  const ayah=verseNo-1;
+  if(selectedAyah!==ayah){
+   const sel=document.getElementById("wbwAyah");if(sel)sel.value=String(ayah);
+   renderWordStudy(ayah);
+  }
+  document.querySelectorAll("#wordStudy .wbw-word").forEach((el,i)=>{
+   el.classList.toggle("sync-active",i===active.wordIndex-1);
+  });
+  document.querySelectorAll("#ayahList .word").forEach((el,i)=>el.classList.toggle("sync-current",i===ayah));
+ }else{
+  if(activeShortSurah!==chapter||shortAyahIndex!==verseNo-1){
+   activeShortSurah=chapter;shortAyahIndex=verseNo-1;shortSurahUsed=true;
+   const selector=document.getElementById("shortSurahSelect");if(selector)selector.value=String(chapter);
+   renderShortSurah(chapter,verseNo-1);
+  }
+  const verseEl=document.getElementById("short-ayah-"+(verseNo-1));
+  if(verseEl){
+   verseEl.classList.add("sync-current");
+   verseEl.querySelectorAll(".wbw-word").forEach((el,i)=>el.classList.toggle("sync-active",i===active.wordIndex-1));
+  }
+ }
+}
+async function playSyncedChapter(chapter){
+ chapter=Number(chapter);
+ if(![1,112,113,114].includes(chapter)){alert("Synchronized playback is currently set up for Al-Fātiḥah and surahs 112–114.");return;}
+ if(!ferhanTimingApi){configureTimingService();if(!ferhanTimingApi)return;}
+ const status=document.getElementById(chapter===1?"syncStatus":"shortSurahStatus");
+ if(status)status.textContent="Loading verified recitation audio and word timestamps…";
+ try{
+  const response=await fetch(`${ferhanTimingApi}/api/recitation/${chapter}`,{headers:{Accept:"application/json"}});
+  if(!response.ok)throw new Error(response.status===403?"Worker origin not allowed. Check ALLOWED_ORIGIN.":`Timing service returned HTTP ${response.status}.`);
+  const data=await response.json();
+  if(!data.audioUrl||!Array.isArray(data.timestamps)||!data.timestamps.length)throw new Error("No verified word timing data was returned for this surah.");
+  if(!data.timestamps.some(v=>Array.isArray(v.segments)&&v.segments.length))throw new Error("This reciter/chapter has no word-level segments available.");
+  ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);clearSyncHighlights();
+  ferhanSyncData=data;ferhanSyncChapter=chapter;
+  ferhanSyncAudio.src=data.audioUrl;ferhanSyncAudio.currentTime=0;
+  ferhanSyncAudio.playbackRate=chapter===1?voiceRate:1;
+  ferhanSyncAudio.ontimeupdate=syncWordsAtTime;
+  ferhanSyncAudio.onended=()=>{clearInterval(ferhanSyncTick);clearSyncHighlights();if(status)status.textContent="Recitation finished. Review the highlighted words and repeat aloud.";};
+  ferhanSyncAudio.onerror=()=>{if(status)status.textContent="Chapter audio could not be loaded. Check the Worker response and audio URL.";};
+  if(chapter===1){show("recitation");}
+  else{show("recitation");renderShortSurah(chapter,0);}
+  await ferhanSyncAudio.play();
+  ferhanSyncTick=setInterval(syncWordsAtTime,80);
+  if(status)status.textContent=`Synchronized recitation playing · Surah ${chapter} · ${data.reciterName||"Configured reciter"} · word highlighting enabled`;
+ }catch(error){
+  if(status)status.textContent=`Sync unavailable: ${error.message}`;
+ }
+}
+function stopSyncedPlayback(){
+ ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);clearSyncHighlights();
+ const status=document.getElementById("syncStatus");if(status)status.textContent="Synchronized playback stopped.";
+ const shortStatus=document.getElementById("shortSurahStatus");if(shortStatus)shortStatus.textContent="Synchronized playback stopped.";
+}
+
+
+
+function tajweedAnswer(i){
+ const f=document.getElementById("tajweedFeedback");
+ f.textContent=i===1?"Correct. Ghunnah is a nasal sound; practise its application with a qualified teacher.":"Try again: Ghunnah is the nasal sound associated with نّ and مّ.";
+}
+function migrateV5Progress(){
+ const pairs=[["noorProgress","ferhanProgress"],["noorAcademyDone","ferhanAcademyDone"],["noorLastBookmarkV5","ferhanLastBookmarkV6"]];
+ pairs.forEach(([oldKey,newKey])=>{if(!localStorage.getItem(newKey)&&localStorage.getItem(oldKey))localStorage.setItem(newKey,localStorage.getItem(oldKey))});
+}
+
+function migrateLegacyFerhanKeys(){
+ const oldKeys=["FerhanLastBookmarkV6","FerhanProgress","FerhanAcademyDone","FerhanMemoriseV6","FerhanSurahReviewsV6","FerhanDailyDismissed"];
+ const newKeys=["ferhanLastBookmarkV6","ferhanProgress","ferhanAcademyDone","ferhanMemoriseV6","ferhanSurahReviewsV6","ferhanDailyDismissed"];
+ oldKeys.forEach((oldKey,i)=>{if(!localStorage.getItem(newKeys[i])&&localStorage.getItem(oldKey))localStorage.setItem(newKeys[i],localStorage.getItem(oldKey));});
+}
+
+migrateLegacyFerhanKeys();
+migrateV5Progress();
+</script></body></html>
