@@ -89,9 +89,9 @@ input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;borde
 
 <section class="section" id="recitation" hidden><div class="section-head"><div><h2>Qur’an recitation practice</h2><p class="sub">Listen to each ayah, repeat it, and move at your own pace.</p></div></div>
 <div class="panel">
-<div class="notice"><strong>Live word highlighting:</strong> Connect a secure timing service once, then press “Play with word sync”. The highlighted Arabic word follows the reciter using published word timestamps.</div>
-<div class="controls"><button class="btn gold" onclick="configureTimingService()">⚙ Connect timing service</button><button class="btn secondary" onclick="playSyncedChapter(1)">▶ Play Al-Fātiḥah with word sync</button></div>
-<p class="muted" id="syncStatus">Timing service not connected. Configure the FERHAN timing Worker URL to enable synchronized playback.</p>
+<div class="notice"><strong>Live word highlighting:</strong> FERHAN loads verified recitation audio and word timestamps published through GitHub Actions. No Worker URL or API credentials are needed in the browser.</div>
+<div class="controls"><button class="btn gold" onclick="configureTimingService()">↻ Check GitHub data</button><button class="btn secondary" onclick="playSyncedChapter(1)">▶ Play Al-Fātiḥah with word sync</button></div>
+<p class="muted" id="syncStatus">GitHub-hosted recitation data will load when published by the repository workflow.</p>
 <div class="tag">SURAH 1 · AL-FĀTIḤAH · الفاتحة</div>
 <h3>Verse-by-verse listening</h3>
 <p class="amharic">እያንዳንዱን አንቀጽ ያዳምጡ፣ በቀስታ ይድገሙ፣ ከዚያ ወደ ቀጣዩ ይሂዱ። የአማርኛ ማብራሪያዎቹ አጭር የትርጉም መመሪያዎች ናቸው፤ ለትክክለኛ ትርጉም የታመነ ተፍሲር ይጠቀሙ።</p>
@@ -114,7 +114,7 @@ input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;borde
 <div class="surah-tools"><label class="muted">Choose surah <select id="shortSurahSelect" onchange="chooseShortSurah(this.value)"><option value="112">112 · Al-Ikhlas (4 ayat)</option><option value="113">113 · Al-Falaq (5 ayat)</option><option value="114">114 · An-Nas (6 ayat)</option></select></label><label class="muted">Repeat each verse <select id="surahRepeat" onchange="surahRepeatCount=Number(this.value)"><option value="1">Once</option><option value="2">2 times</option><option value="3" selected>3 times</option><option value="5">5 times</option><option value="10">10 times</option></select></label></div>
 <div id="shortSurahMeta" class="tag" style="margin-top:14px">SURAH 112</div><div id="shortSurahVerses"></div>
 <div class="controls"><button class="btn" onclick="playShortSurah()">▶ Play selected surah</button><button class="btn gold" onclick="playSyncedChapter(activeShortSurah)">▶ Play with word sync</button><button class="btn secondary" onclick="stopSyncedPlayback()">■ Stop sync</button><button class="btn secondary" onclick="stopShortSurah()">■ Stop</button><button class="btn secondary" onclick="markSurahReviewed()">✓ Mark surah reviewed</button></div><p class="muted" id="shortSurahStatus">Audio: EveryAyah · Mishary Alafasy. Internet connection required.</p>
-<div class="notice">Synchronized playback uses chapter audio and word timestamps from the FERHAN timing service. If timing data is unavailable for a chapter, the app reports that clearly and does not guess word positions.</div></div>
+<div class="notice">Synchronized playback uses chapter audio and word timestamps published by the FERHAN GitHub Actions workflow. If timing data is unavailable for a chapter, the app reports that clearly and does not guess word positions.</div></div>
 <div class="panel" style="margin-top:14px"><h3>Memorisation checklist</h3><p class="muted">Tick each step as you complete it. Your checklist is stored on this device.</p><div id="memoriseChecklist"></div></div>
 <div class="panel" style="margin-top:14px"><h3>Daily study routine</h3><p class="amharic">በየቀኑ 15–20 ደቂቃ በቋሚነት መለማመድ ይረዳል።</p>
 <div class="grid">
@@ -401,23 +401,18 @@ resumeBookmark=function(){
 renderShortSurah(112);loadV6State();maybeShowDailyPractice();
 
 // FERHAN V6.1 — synchronized word highlighting.
-// Timing data and chapter audio are supplied by a private-key Cloudflare Worker.
+// Recitation data is published as static JSON by GitHub Actions.
 // No Quran Foundation secret or access token is ever sent to the browser.
-const FERHAN_TIMING_API_KEY="ferhanTimingApiUrl";
-let ferhanTimingApi=localStorage.getItem(FERHAN_TIMING_API_KEY)||"";
+// GitHub Pages mode: timing data is generated securely by GitHub Actions
+// and published as static JSON. No browser-side API credentials or Worker URL.
 let ferhanSyncAudio=new Audio(),ferhanSyncData=null,ferhanSyncChapter=null,ferhanSyncTick=null;
 function configureTimingService(){
- const current=ferhanTimingApi||"";
- const value=prompt("Paste your FERHAN timing Worker URL (for example https://your-worker.your-subdomain.workers.dev)",current);
- if(value===null)return;
- ferhanTimingApi=value.trim().replace(/\/+$/,"");
- if(ferhanTimingApi&&!/^https:\/\/[a-z0-9.-]+(?::\d+)?$/i.test(ferhanTimingApi)){
-  alert("Please enter a valid HTTPS Worker URL.");ferhanTimingApi="";return;
- }
- if(ferhanTimingApi)localStorage.setItem(FERHAN_TIMING_API_KEY,ferhanTimingApi);
- else localStorage.removeItem(FERHAN_TIMING_API_KEY);
  const el=document.getElementById("syncStatus");
- if(el)el.textContent=ferhanTimingApi?"Timing service URL saved on this device. Press Play with word sync.":"Timing service disconnected.";
+ if(el)el.textContent="GitHub Quran data is used automatically. Checking published recitation data…";
+ fetch("./data/recitation/1.json",{cache:"no-store"})
+  .then(r=>{if(!r.ok)throw new Error("Quran data has not been published yet. Run the GitHub Actions workflow.");return r.json();})
+  .then(d=>{if(!d.audioUrl||!Array.isArray(d.timestamps))throw new Error("Published data is incomplete.");if(el)el.textContent="GitHub Quran data connected · "+(d.reciterName||"Configured reciter");})
+  .catch(e=>{if(el)el.textContent="GitHub data unavailable: "+e.message;});
 }
 function clearSyncHighlights(){
  document.querySelectorAll(".wbw-word.sync-active,.wbw-word.active").forEach(el=>el.classList.remove("sync-active"));
@@ -462,12 +457,11 @@ function syncWordsAtTime(){
 async function playSyncedChapter(chapter){
  chapter=Number(chapter);
  if(![1,112,113,114].includes(chapter)){alert("Synchronized playback is currently set up for Al-Fātiḥah and surahs 112–114.");return;}
- if(!ferhanTimingApi){configureTimingService();if(!ferhanTimingApi)return;}
  const status=document.getElementById(chapter===1?"syncStatus":"shortSurahStatus");
  if(status)status.textContent="Loading verified recitation audio and word timestamps…";
  try{
-  const response=await fetch(`${ferhanTimingApi}/api/recitation/${chapter}`,{headers:{Accept:"application/json"}});
-  if(!response.ok)throw new Error(response.status===403?"Worker origin not allowed. Check ALLOWED_ORIGIN.":`Timing service returned HTTP ${response.status}.`);
+  const response=await fetch(`./data/recitation/${chapter}.json`,{headers:{Accept:"application/json"},cache:"no-store"});
+  if(!response.ok)throw new Error("GitHub Quran data is not published for this surah yet. Open GitHub Actions and run Update Quran recitation data.");
   const data=await response.json();
   if(!data.audioUrl||!Array.isArray(data.timestamps)||!data.timestamps.length)throw new Error("No verified word timing data was returned for this surah.");
   if(!data.timestamps.some(v=>Array.isArray(v.segments)&&v.segments.length))throw new Error("This reciter/chapter has no word-level segments available.");
@@ -477,7 +471,7 @@ async function playSyncedChapter(chapter){
   ferhanSyncAudio.playbackRate=chapter===1?voiceRate:1;
   ferhanSyncAudio.ontimeupdate=syncWordsAtTime;
   ferhanSyncAudio.onended=()=>{clearInterval(ferhanSyncTick);clearSyncHighlights();if(status)status.textContent="Recitation finished. Review the highlighted words and repeat aloud.";};
-  ferhanSyncAudio.onerror=()=>{if(status)status.textContent="Chapter audio could not be loaded. Check the Worker response and audio URL.";};
+  ferhanSyncAudio.onerror=()=>{if(status)status.textContent="Chapter audio could not be loaded. Check the published audio URL and internet connection.";};
   if(chapter===1){show("recitation");}
   else{show("recitation");renderShortSurah(chapter,0);}
   await ferhanSyncAudio.play();
