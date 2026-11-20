@@ -249,7 +249,7 @@ function ethParts(a){
   return 'ከ'+period+' '+eh+':'+(mi<10?'0':'')+mi+' ሰዓት';
 }
 function ethRange(s,e){return ethParts(s)+' እስከ '+ethParts(e)}
-function ethLine(s,e){return '<span class="eth-time">'+ethRange(s,e)+'</span>'}
+function ethLine(s,e){return '<span class="eth-time">'+(s===e?ethParts(s):ethRange(s,e))+'</span>'}
 
 function dur(m){var h=Math.floor(m/60),r=m%60;return h?(h+'h'+(r?' '+r+'m':'')):r+'m'}
 function dn(d){return WD[(d-1)%7]}
