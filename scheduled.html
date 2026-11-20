@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quran & Flight Roster · November 2026</title>
+<style>
+:root{--bg:#f4f6f5;--card:#fff;--ink:#0f1f1a;--sub:#5b6b64;--line:#e3e9e6;--free:#16a34a;--flight:#2563eb;--lay:#f59e0b;--ground:#8b5cf6;--duty:#e11d48;--rest:#94a3b8;--sleep:#cbd5e1;--shadow:0 6px 24px -10px rgba(15,31,26,.2);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1411;--card:#13201b;--ink:#eaf3ef;--sub:#93a69d;--line:#233630;--free:#22c55e;--flight:#3b82f6;--lay:#fbbf24;--ground:#a78bfa;--duty:#fb7185;--rest:#64748b;--sleep:#2a3b44;--shadow:none}}
+
+:root[data-theme="light"]{--bg:#f4f6f5;--card:#fff;--ink:#0f1f1a;--sub:#5b6b64;--line:#e3e9e6;--free:#16a34a;--flight:#2563eb;--lay:#f59e0b;--ground:#8b5cf6;--duty:#e11d48;--rest:#94a3b8;--sleep:#cbd5e1;--shadow:0 6px 24px -10px rgba(15,31,26,.2)}
+:root[data-theme="dark"]{--bg:#0b1411;--card:#13201b;--ink:#eaf3ef;--sub:#93a69d;--line:#233630;--free:#22c55e;--flight:#3b82f6;--lay:#fbbf24;--ground:#a78bfa;--duty:#fb7185;--rest:#64748b;--sleep:#2a3b44;--shadow:none}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:1000px;margin:0 auto;padding:16px 14px 60px}
+.hero{background:linear-gradient(135deg,#0f6b3c,#16a34a 60%,#4ade80);color:#fff;border-radius:24px;padding:20px;box-shadow:var(--shadow)}
+.hero small{opacity:.85;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:11px}
+.hero h1{margin:4px 0 2px;font-size:26px;line-height:1.1;letter-spacing:-.02em}
+.hero p{margin:0;opacity:.9;font-size:13px}
+.today{margin-top:14px;background:rgba(255,255,255,.16);border-radius:16px;padding:12px 14px}
+.today b{font-size:15px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:0;border-radius:14px;padding:9px 12px;background:var(--card);color:var(--ink);font:inherit;font-size:13px;text-align:left;box-shadow:var(--shadow);cursor:pointer;border-left:5px solid var(--free)}
+.chip b{display:block;font-size:13px}.chip span{color:var(--sub);font-size:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--card);border-radius:18px;padding:14px;box-shadow:var(--shadow);border-top:4px solid var(--c)}
+.stat b{display:block;font-size:24px;letter-spacing:-.02em}.stat span{font-size:12px;color:var(--sub)}
+h2{font-size:18px;margin:26px 0 4px;letter-spacing:-.01em}
+.hint{margin:0 0 10px;color:var(--sub);font-size:13px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;font-weight:600;margin:8px 0 12px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-1px}
+.tl{overflow:auto;max-height:70vh;border-radius:20px;background:var(--card);box-shadow:var(--shadow);overscroll-behavior:contain}
+.tlin{min-width:0;width:100%}
+.row{display:flex;height:42px;border-bottom:1px solid var(--line)}
+.row.now{background:color-mix(in srgb,var(--free) 8%,var(--card))}
+.dl{position:sticky;left:0;z-index:3;width:48px;flex:none;background:inherit;background-color:var(--card);display:flex;flex-direction:column;justify-content:center;padding-left:12px;border-right:1px solid var(--line);font-size:11px;color:var(--sub);line-height:1.15}
+.row.now .dl{background:color-mix(in srgb,var(--free) 12%,var(--card))}
+.dl b{font-size:15px;color:var(--ink)}
+.hdr{position:sticky;top:0;z-index:5;height:34px;background:var(--card)}
+.hdr .dl{z-index:6}
+.hrs{flex:1;display:flex}.hrs span{flex:1;min-width:0;text-align:center;font-size:10px;font-weight:700;color:var(--sub);align-self:center}
+.track{position:relative;flex:1;background-image:linear-gradient(to right,var(--line) 1px,transparent 1px);background-size:calc(100%/24) 100%}
+.bar{position:absolute;top:7px;bottom:7px;min-width:1px;border:0;padding:0 2px;border-radius:9px;color:#fff;font:700 10.5px system-ui,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;cursor:pointer;transition:transform .12s,filter .12s}
+.bar:active{transform:scale(.97)}.bar:hover{filter:brightness(1.1)}
+.t-free{background:var(--free)}.t-flight{background:var(--flight)}.t-lay{background:var(--lay);color:#3b2400}.t-ground{background:var(--ground);color:#fff}.t-duty{background:var(--duty)}
+.t-rest{background:repeating-linear-gradient(135deg,var(--rest) 0 4px,transparent 4px 8px);opacity:.55}
+.t-sleep{background:var(--sleep);color:var(--sub);opacity:.8}
+.gdo{position:absolute;inset:7px 8px;border-radius:9px;display:flex;align-items:center;padding-left:10px;font-size:11px;font-weight:700;color:var(--sub);background:repeating-linear-gradient(135deg,transparent 0 6px,var(--line) 6px 7px);pointer-events:none}
+.days{display:grid;gap:10px}
+@media(min-width:700px){.days{grid-template-columns:1fr 1fr}}
+.day{background:var(--card);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
+.day.now{outline:2px solid var(--free)}
+.dh{display:flex;align-items:center;gap:10px}
+.dn{width:44px;height:44px;border-radius:14px;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:var(--sub);font-weight:700;line-height:1}
+.dn b{font-size:18px;color:var(--ink)}
+.badge{margin-left:auto;font-size:11px;font-weight:800;padding:4px 10px;border-radius:99px;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c)}
+.items{margin:10px 0 0;padding:0;list-style:none;font-size:13px;color:var(--sub)}
+.items li{padding:3px 0;display:flex;gap:8px}.items li i{width:8px;height:8px;border-radius:50%;margin-top:6px;flex:none}
+.items b{color:var(--ink)}
+.wins{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.win{border:0;font:inherit;font-size:12px;font-weight:700;padding:6px 10px;border-radius:10px;background:color-mix(in srgb,var(--free) 16%,transparent);color:var(--free);cursor:pointer}
+#bd{position:fixed;inset:0;background:rgba(5,15,10,.45);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;display:flex;align-items:flex-end;justify-content:center}
+#bd.on{opacity:1;pointer-events:auto}
+#sh{width:100%;max-width:520px;background:var(--card);border-radius:26px 26px 0 0;padding:20px 20px calc(24px + env(safe-area-inset-bottom,0px));transform:translateY(100%);transition:transform .25s}
+#bd.on #sh{transform:none}
+.sk{display:flex;align-items:center;gap:10px}.sk i{width:14px;height:14px;border-radius:5px;background:var(--c)}
+.sk span{font-weight:800;font-size:17px}
+.big{font-size:40px;font-weight:800;letter-spacing:-.03em;margin:8px 0 2px;color:var(--c)}
+.sub2{color:var(--sub);font-size:13px;margin-bottom:12px}
+.tr{display:flex;gap:10px}.tr div{flex:1;background:var(--bg);border-radius:14px;padding:10px 12px}
+.tr small{color:var(--sub);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.tr b{display:block;font-size:17px}.tr span{font-size:12px;color:var(--sub)}
+.x{margin-top:14px;width:100%;border:0;padding:13px;border-radius:14px;background:var(--ink);color:var(--bg);font:700 14px system-ui;cursor:pointer}
+footer{margin-top:28px;font-size:12px;color:var(--sub);text-align:center}
+
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.theme-toggle{flex:none;border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.16);color:#fff;border-radius:999px;padding:8px 12px;font:700 12px system-ui;cursor:pointer}
+.calendar-section{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:var(--shadow)}
+.calendar-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.calendar-heading h2{margin:0 0 2px}
+.calendar-heading .hint{margin:0 0 12px}
+.calendar-key{display:flex;gap:10px;flex-wrap:wrap;color:var(--sub);font-size:11px;font-weight:700}
+.calendar-key span{display:flex;align-items:center;gap:5px}
+.calendar-key i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.key-free{background:var(--free)}.key-flight{background:var(--flight)}.key-lay{background:var(--lay)}.key-ground{background:var(--ground)}
+.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal-weekday{text-align:center;color:var(--sub);font-size:10px;font-weight:800;padding:5px 0}
+.cal-day{position:relative;min-width:0;min-height:62px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);padding:7px 4px 6px;text-align:center;font:inherit;cursor:pointer}
+.cal-day:active{transform:scale(.97)}
+.cal-day.empty{border-color:transparent;background:transparent;cursor:default}
+.cal-day.today{outline:2px solid var(--free);outline-offset:1px}
+.cal-day.selected{background:color-mix(in srgb,var(--free) 13%,var(--card));border-color:var(--free)}
+.cal-num{display:block;font-size:14px;font-weight:800}
+.cal-status{display:flex;justify-content:center;gap:3px;margin-top:7px;min-height:7px}
+.cal-status i{width:6px;height:6px;border-radius:50%;display:block}
+.cal-note{display:block;color:var(--sub);font-size:9px;line-height:1.2;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:420px){.calendar-section{padding:10px}.cal-day{min-height:54px;padding:6px 2px}.cal-note{font-size:8px}.calendar-key{gap:7px}}
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"]{color-scheme:dark}
+
+
+/* Keep the complete 24-hour month timeline inside the device width. */
+.tl{width:100%;overflow-x:hidden;overflow-y:auto}
+.tlin{width:100%;min-width:0}
+.track{min-width:0}
+.hrs span{overflow:hidden;white-space:nowrap}
+@media(max-width:600px){
+  .dl{width:42px;padding-left:7px;font-size:9px}
+  .dl b{font-size:13px}
+  .hrs span{font-size:8px}
+  .bar{top:9px;bottom:9px;padding:0;border-radius:4px}
+  .bar:not(:hover){text-indent:-9999px}
+  .row{height:38px}
+  .hdr{height:30px}
+}
+
+
+.eth-time{display:block;font-size:11px;line-height:1.35;color:var(--sub);font-weight:600;margin-top:2px}
+.eth-inline{display:block;font-size:10px;line-height:1.3;color:var(--sub);font-weight:600}
+.items .eth-time{font-size:10.5px}
+.win .eth-time{color:inherit;opacity:.85}
+.chip .eth-time{font-size:10px}
+.tr .eth-time{font-size:11px}
+.today .eth-time{color:rgba(255,255,255,.88)}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-top">
+      <small>November 2026 · Ethiopian time (EAT)</small>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme">☀️ Light</button>
+    </div>
+    <h1>Quran & Flight Roster</h1>
+    <p>Tap any bar to see its total time.</p>
+    <div class="today" id="today"></div>
+  </div>
+
+  <section class="calendar-section" aria-label="Monthly calendar">
+    <div class="calendar-heading">
+      <div><h2>November 2026</h2><p class="hint">Monthly overview · Select a date to jump to its roster</p></div>
+      <div class="calendar-key"><span><i class="key-free"></i>Quran</span><span><i class="key-flight"></i>Flight / duty</span><span><i class="key-lay"></i>Layover</span><span><i class="key-ground"></i>Ground</span></div>
+    </div>
+    <div class="calendar" id="calendar"></div>
+  </section>
+
+  <div class="grid" id="stats"></div>
+
+  <h2>Next Quran windows</h2>
+  <p class="hint">Free time of 1 hour or more. Tap one for details.</p>
+  <div class="chips" id="next"></div>
+
+  <h2>Month timeline</h2>
+  <p class="hint">Scroll sideways for the full day. Each row is one day, 12 AM to 12 AM.</p>
+  <div class="legend">
+    <span><i style="background:var(--free)"></i>Quran available</span>
+    <span><i style="background:var(--lay)"></i>Layover (3h+)</span>
+    <span><i style="background:var(--ground)"></i>Ground time (&lt;3h)</span>
+    <span><i style="background:var(--flight)"></i>Flight</span>
+    <span><i style="background:var(--duty)"></i>Duty</span>
+    <span><i style="background:repeating-linear-gradient(135deg,var(--rest) 0 3px,transparent 3px 6px)"></i>8h rest</span>
+    <span><i style="background:var(--sleep)"></i>Sleep</span>
+  </div>
+  <div class="tl" id="tl"><div class="tlin" id="tlin"></div></div>
+
+  <h2>Daily roster</h2>
+  <p class="hint">Report, flights and release for each day, in Ethiopian time.</p>
+  <div class="days" id="days"></div>
+
+  <footer>Airport times from the roster are converted to Ethiopian time (EAT, UTC+3). Sleep is 11 PM to 7 AM. Quran time excludes duty, layovers, 8 hours of rest before and after duty, and sleep.</footer>
+</div>
+
+<div id="bd"><div id="sh"></div></div>
+
+<script>
+var CUR=20, WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var OFF={ADD:3,EBB:3,DAR:3,LOS:1,MXP:1,ZRH:1,BGF:1,MPM:2,LUN:2,DAC:6};
+var GDO=[5,6,13,18,28,29,30];
+var DUTIES=[
+{r:[2,'11:00','ADD'],sb:1,f:[['SBA','ADD',2,'11:00','ADD',2,'15:00']],l:[2,'15:00','ADD']},
+{r:[7,'07:30','ADD'],f:[['ET332','ADD',7,'13:10','EBB',7,'15:09'],['ET333','EBB',7,'16:45','ADD',7,'18:51']],l:[7,'18:51','ADD']},
+{r:[9,'07:00','ADD'],f:[['ET901','ADD',9,'08:58','LOS',9,'12:17']],l:[9,'12:17','LOS']},
+{r:[10,'12:15','LOS'],f:[['ET900','LOS',10,'13:36','ADD',10,'20:53']],l:[10,'20:53','ADD']},
+{r:[12,'06:30','ADD'],f:[['ET805','ADD',12,'08:09','DAR',12,'11:00'],['ET802','DAR',12,'11:41','ADD',12,'14:30']],l:[12,'14:30','ADD']},
+{r:[14,'22:40','ADD'],f:[['ET736','ADD',15,'00:22','MXP',15,'05:18']],l:[15,'05:18','MXP']},
+{r:[16,'18:25','MXP'],f:[['ET733','MXP',16,'19:06','ZRH',16,'20:18'],['ET733','ZRH',16,'21:44','ADD',17,'05:59']],l:[17,'05:59','ADD']},
+{r:[19,'07:15','ADD'],f:[['ET819','ADD',19,'08:51','MPM',19,'13:27'],['ET818','MPM',19,'14:11','ADD',19,'20:46']],l:[19,'20:46','ADD']},
+{r:[21,'09:00','ADD'],f:[['ET959','ADD',21,'10:40','BGF',21,'12:20'],['ET958','BGF',21,'13:20','ADD',21,'19:00']],l:[21,'19:00','ADD']},
+{r:[22,'20:30','ADD'],f:[['ET891','ADD',22,'22:10','LUN',23,'01:20'],['ET890','LUN',23,'02:30','ADD',23,'07:55']],l:[23,'07:55','ADD']},
+{r:[25,'15:55','ADD'],f:[['ET8804','ADD',25,'17:35','DAC',26,'04:15']],l:[26,'04:15','DAC']},
+{r:[27,'13:20','DAC'],f:[['DH','DAC',27,'14:20','ADD',27,'19:05']],l:[27,'19:05','ADD']}];
+
+var TOT=30*1440, grid=new Int16Array(TOT).fill(-1), iv=[], dayItems={};
+function T(a){var h=a[1].split(':');return (a[0]-1)*1440+(+h[0])*60+(+h[1])+(3-OFF[a[2]])*60}
+function mk(t,s,e,title,sub,short){iv.push({t:t,s:s,e:e,title:title,sub:sub||'',short:short||''});return iv.length-1}
+function paint(id,only){var o=iv[id];for(var m=Math.max(0,o.s);m<Math.min(TOT,o.e);m++){if(!only||grid[m]<0)grid[m]=id}}
+function addItem(abs,t,c){var d=Math.floor(abs/1440)+1;(dayItems[d]=dayItems[d]||[]).push({a:abs,t:t,c:c})}
+
+var sleepL=[],restL=[],awayL=[],dutyL=[],turnL=[],flL=[];
+for(var d=0;d<=30;d++){sleepL.push(mk('sleep',d*1440-60,d*1440+420,'Sleep','11:00 PM to 7:00 AM'))}
+DUTIES.forEach(function(D,i){
+  var rep=D.r, repA=T(D.r), relA=T(D.l), first=D.f[0], last=D.f[D.f.length-1];
+  var dep0=T([first[2],first[3],first[1]]), arrN=T([last[5],last[6],last[4]]);
+  restL.push(mk('rest',repA-480,repA,'Rest before duty','8 hours before report'));
+  restL.push(mk('rest',relA,relA+480,'Rest after duty','8 hours after release'));
+  if(D.sb){dutyL.push(mk('duty',repA,relA,'Standby (SBA)','At ADD, report to release'));
+    addItem(repA,'Report','duty');addItem(relA,'Release','duty');addItem(repA,'Standby SBA until '+fmtT(relA),'duty');return}
+  dutyL.push(mk('duty',repA,dep0,'Pre-flight duty','Report to first departure'));
+  dutyL.push(mk('duty',arrN,relA,'Post-flight duty','Landing to release'));
+  addItem(repA,'Report at '+rep[2],'duty');
+  D.f.forEach(function(f,k){
+    var s=T([f[2],f[3],f[1]]),e=T([f[5],f[6],f[4]]);
+    flL.push(mk('flight',s,e,f[0]+' · '+f[1]+' → '+f[4],'Flight',f[0]));
+    addItem(s,f[0]+' '+f[1]+' → '+f[4],'flight');
+    if(D.f[k+1]){
+      var n=D.f[k+1], gapEnd=T([n[2],n[3],n[1]]), gap=gapEnd-e;
+      if(gap>0){
+        var isGround=gap<180;
+        turnL.push(mk(isGround?'ground':'lay',e,gapEnd,isGround?'Ground time in '+f[4]:'Layover in '+f[4],isGround?'Short connection between flights (under 3 hours)':'Between flights, same duty',isGround?'Ground':'Layover'));
+      }
+    }
+  });
+  addItem(relA,'Release at '+D.l[2],'duty');
+  var nx=DUTIES[i+1];
+  if(nx&&D.l[2]!=='ADD'){awayL.push(mk('lay',relA,T(nx.r),'Layover in '+D.l[2],'Away from Addis between duties','Layover'))}
+});
+sleepL.forEach(function(i){paint(i)});
+restL.forEach(function(i){paint(i,true)});
+awayL.forEach(function(i){paint(i)});
+dutyL.forEach(function(i){paint(i)});
+turnL.forEach(function(i){paint(i)});
+flL.forEach(function(i){paint(i)});
+(function(){var m=0;while(m<TOT){if(grid[m]<0){var s=m;while(m<TOT&&grid[m]<0)m++;var id=mk('free',s,m,'Quran available','Free to study','Quran');for(var k=s;k<m;k++)grid[k]=id}else m++}})();
+
+var COL={free:'var(--free)',flight:'var(--flight)',lay:'var(--lay)',ground:'var(--ground)',duty:'var(--duty)',rest:'var(--rest)',sleep:'var(--rest)'};
+function per(h){return h>=5&&h<12?'Morning':h>=12&&h<17?'Afternoon':h>=17&&h<21?'Evening':'Night'}
+function parts(a){var m=((a%1440)+1440)%1440,h=Math.floor(m/60),mi=m%60,dd=Math.floor(a/1440)+1;
+  return{time:(h%12||12)+':'+(mi<10?'0':'')+mi+' '+(h>=12?'PM':'AM'),per:per(h),date:WD[(dd-1+70)%7]+' '+dd+' Nov'}}
+
+function fmtT(a){var p=parts(a);return p.time+' ('+p.per+')'}
+function ethParts(a){
+  var m=((a%1440)+1440)%1440,h=Math.floor(m/60),mi=m%60;
+  var eh=(h+6)%12;if(eh===0)eh=12;
+  var period=h>=6&&h<12?'ጠዋት':h>=12&&h<18?'ከሰዓት':h>=18&&h<22?'ማታ':'ሌሊት';
+  return 'ከ'+period+' '+eh+':'+(mi<10?'0':'')+mi+' ሰዓት';
+}
+function ethRange(s,e){return ethParts(s)+' እስከ '+ethParts(e)}
+function ethLine(s,e){return '<span class="eth-time">'+ethRange(s,e)+'</span>'}
+
+function dur(m){var h=Math.floor(m/60),r=m%60;return h?(h+'h'+(r?' '+r+'m':'')):r+'m'}
+function dn(d){return WD[(d-1)%7]}
+
+
+// Explicit light/dark theme switch (light is the default).
+(function(){
+  var root=document.documentElement,btn=document.getElementById('themeToggle');
+  var saved='dark';
+  try{saved=localStorage.getItem('roster-theme')||'dark'}catch(e){}
+  function apply(theme){
+    root.setAttribute('data-theme',theme);
+    btn.textContent=theme==='dark'?'🌙 Dark':'☀️ Light';
+    btn.setAttribute('aria-label','Switch to '+(theme==='dark'?'light':'dark')+' theme');
+  }
+  apply(saved);
+  btn.addEventListener('click',function(){
+    var next=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    apply(next);
+    try{localStorage.setItem('roster-theme',next)}catch(e){}
+  });
+})();
+
+// stats
+var cnt={free:0,flight:0,lay:0,ground:0};for(var m=0;m<TOT;m++){var t=iv[grid[m]].t;if(cnt[t]!==undefined)cnt[t]++}
+document.getElementById('stats').innerHTML=
+ [['Quran time',Math.round(cnt.free/60)+' h','var(--free)'],['Layover (3h+)',Math.round(cnt.lay/60)+' h','var(--lay)'],['Ground time (<3h)',Math.round(cnt.ground/60)+' h','var(--ground)'],['Flying',Math.round(cnt.flight/60)+' h','var(--flight)'],['Days off (GDO)',GDO.length+' days','var(--duty)']]
+ .map(function(s){return '<div class="stat" style="--c:'+s[2]+'"><b>'+s[1]+'</b><span>'+s[0]+'</span></div>'}).join('');
+
+// today + next windows
+var frees=iv.filter(function(o){return o.t==='free'});
+var nowStart=(CUR-1)*1440, todayF=frees.filter(function(o){return o.s<CUR*1440&&o.e>nowStart});
+var tEl=document.getElementById('today');
+tEl.innerHTML='<b>Today · '+dn(CUR)+' '+CUR+' Nov</b><div style="font-size:13px;margin-top:3px;opacity:.95">'+
+ (todayF.length?'Quran time: '+todayF.map(function(o){return '<span>'+parts(o.s).time+' to '+parts(o.e).time+' ('+dur(o.e-o.s)+')</span>'+ethLine(o.s,o.e)}).join('<span style="display:block;margin-top:5px"></span>'):'No Quran window today.')+'</div>';
+document.getElementById('next').innerHTML=frees.filter(function(o){return o.e>nowStart&&o.e-o.s>=60}).slice(0,10).map(function(o){
+ var id=iv.indexOf(o);return '<button class="chip" onclick="openIv('+id+')"><b>'+parts(o.s).date+' · '+dur(o.e-o.s)+'</b><span>'+parts(o.s).time+' to '+parts(o.e).time+'</span>'+ethLine(o.s,o.e)+'</button>'}).join('');
+
+// timeline
+var h='<div class="row hdr"><div class="dl">Day</div><div class="hrs">';
+for(var i=0;i<24;i++)h+='<span>'+(i%12||12)+(i%12===0?(i<12?'a':'p'):'')+'</span>';
+h+='</div></div>';
+for(var d=1;d<=30;d++){
+  h+='<div class="row'+(d===CUR?' now':'')+'" id="r'+d+'"><div class="dl"><b>'+d+'</b>'+dn(d)+'</div><div class="track">';
+  var base=(d-1)*1440,i2=base;
+  while(i2<base+1440){var id=grid[i2],j=i2;while(j<base+1440&&grid[j]===id)j++;
+    var o=iv[id];
+    {
+      var txt=(j-i2)>=100&&o.short?o.short:'';
+      h+='<button class="bar t-'+o.t+'" style="left:'+((i2-base)/14.4)+'%;width:'+((j-i2)/14.4)+'%" onclick="openIv('+id+','+i2+','+j+')" aria-label="'+o.title+'">'+txt+'</button>'}
+    i2=j}
+  h+='</div></div>'}
+document.getElementById('tlin').innerHTML=h;
+
+// daily roster
+var dh='';
+for(var d=1;d<=30;d++){
+  var items=(dayItems[d]||[]).sort(function(a,b){return a.a-b.a}),isG=GDO.indexOf(d)>-1;
+  var dayFree=frees.filter(function(o){return o.s<d*1440&&o.e>(d-1)*1440&&o.e-o.s>=30});
+  var hasFl=items.some(function(x){return x.c==='flight'});
+  var away=iv.some(function(o){return o.t==='lay'&&o.s<=(d-1)*1440+720&&o.e>(d-1)*1440+720});
+  var badge=isG?['GDO','var(--duty)']:hasFl?['Flight day','var(--flight)']:away?['Layover','var(--lay)']:items.length?['Duty','var(--duty)']:['Free day','var(--free)'];
+  dh+='<div class="day'+(d===CUR?' now':'')+'"><div class="dh"><div class="dn"><b>'+d+'</b>'+dn(d).toUpperCase()+'</div><div><b>'+dn(d)+', '+d+' Nov</b></div><span class="badge" style="--c:'+badge[1]+'">'+badge[0]+'</span></div>';
+  if(items.length){dh+='<ul class="items">'+items.map(function(x){return '<li><i style="background:'+COL[x.c]+'"></i><span><b>'+parts(x.a).time+'</b> '+parts(x.a).per.toLowerCase()+' · '+x.t+ethLine(x.a,x.a)+'</span></li>'}).join('')+'</ul>'}
+  if(dayFree.length){dh+='<div class="wins">'+dayFree.map(function(o){var id=iv.indexOf(o);var s=Math.max(o.s,(d-1)*1440),e=Math.min(o.e,d*1440);return '<button class="win" onclick="openIv('+id+')">Quran '+parts(s).time+' to '+parts(e).time+ethLine(s,e)+'</button>'}).join('')+'</div>'}
+  dh+='</div>'}
+document.getElementById('days').innerHTML=dh;
+
+
+// Monthly calendar overview: date cells summarize the roster and jump to the selected day.
+(function(){
+  var el=document.getElementById('calendar');
+  var labels=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var firstOffset=new Date(2026,10,1).getDay();
+  var out=labels.map(function(x){return '<div class="cal-weekday">'+x+'</div>'}).join('');
+  for(var blank=0;blank<firstOffset;blank++)out+='<div class="cal-day empty" aria-hidden="true"></div>';
+  for(var d=1;d<=30;d++){
+    var dayStart=(d-1)*1440,dayEnd=d*1440;
+    var hasFree=frees.some(function(o){return o.s<dayEnd&&o.e>dayStart});
+    var hasFlight=flL.some(function(id){return iv[id].s<dayEnd&&iv[id].e>dayStart});
+    var hasLay=iv.some(function(o){return o.t==='lay'&&o.s<dayEnd&&o.e>dayStart});
+    var hasGround=iv.some(function(o){return o.t==='ground'&&o.s<dayEnd&&o.e>dayStart});
+    var items=dayItems[d]||[];
+    var note=GDO.indexOf(d)>-1?'GDO':hasFlight?'Flight':hasLay?'Layover':items.length?'Duty':'Free';
+    var dots=(hasFree?'<i style="background:var(--free)"></i>':'')+
+      (hasFlight?'<i style="background:var(--flight)"></i>':'')+
+      (hasLay?'<i style="background:var(--lay)"></i>':'')+(hasGround?'<i style="background:var(--ground)"></i>':'');
+    out+='<button class="cal-day'+(d===CUR?' today selected':'')+'" data-day="'+d+'" aria-label="'+labels[(firstOffset+d-1)%7]+' '+d+' November 2026, '+note+'">'+
+      '<span class="cal-num">'+d+'</span><span class="cal-status">'+dots+'</span><span class="cal-note">'+note+'</span></button>';
+  }
+  el.innerHTML=out;
+  el.addEventListener('click',function(e){
+    var b=e.target.closest('[data-day]');if(!b)return;
+    var d=+b.getAttribute('data-day');
+    el.querySelectorAll('.cal-day.selected').forEach(function(x){x.classList.remove('selected')});
+    b.classList.add('selected');
+    var row=document.getElementById('r'+d),card=document.querySelectorAll('.day')[d-1];
+    if(row){row.scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('tl').scrollLeft=0}
+    if(card)setTimeout(function(){card.scrollIntoView({behavior:'smooth',block:'start'})},180);
+  });
+})();
+
+// sheet
+var bd=document.getElementById('bd'),sh=document.getElementById('sh');
+function openIv(id,rs,re){
+  var o=iv[id],s=o.s,e=o.e;if(o.t==='rest'&&rs!==undefined){s=rs;e=re}
+  var a=parts(s),b=parts(e),c=COL[o.t];
+  sh.style.setProperty('--c',c);
+  sh.innerHTML='<div class="sk"><i></i><span>'+o.title+'</span></div><div class="big">'+dur(e-s)+'</div><div class="sub2">'+(o.t==='free'?'Total Quran time in this window':'Total time')+(o.sub?' · '+o.sub:'')+'</div>'+
+  '<div class="tr"><div><small>From</small><b>'+a.time+'</b><span>'+a.per+' · '+a.date+'</span>'+ethLine(s,s)+'</div><div><small>Until</small><b>'+b.time+'</b><span>'+b.per+' · '+b.date+'</span>'+ethLine(e,e)+'</div></div>'+
+  '<button class="x" onclick="closeSh()">Close</button>';
+  bd.classList.add('on')}
+function closeSh(){bd.classList.remove('on')}
+bd.addEventListener('click',function(e){if(e.target===bd)closeSh()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSh()});
+
+// scroll timeline to today, around 6 AM
+(function(){var tl=document.getElementById('tl'),r=document.getElementById('r'+CUR);tl.scrollTop=Math.max(0,r.offsetTop-90);tl.scrollLeft=0})();
+</script>
+</body>
+</html>
