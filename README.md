@@ -142,3 +142,14 @@ The scroll lessons are introductory learning material, not a substitute for a qu
 - Run **Actions → Update Quran recitation data → Run workflow** after upload. The generated `data/recitation/index.json` reports the exact chapters with available word-level timings. A chapter can be unavailable if the selected chapter-reciter has no timing segments for it.
 - `QF_CHAPTER_RECITER_ID` must be the chapter-reciter ID from Quran Foundation's `/resources/chapter_reciters` resource, not an ayah-by-ayah recitation ID. Keep `QF_CLIENT_ID` and `QF_CLIENT_SECRET` in GitHub Actions Secrets. Optionally set `QF_RECITER_NAME` in Actions Variables.
 - Audio and timing are Quran Foundation content. Review the Quran Foundation Developer Terms for permitted caching, storage, and redistribution before publishing generated files.
+
+
+## 2026 visual and reading-practice refresh
+
+- The interface now follows a consistent deep-emerald, warm-ivory and brushed-gold visual system inspired by the supplied Ferhan HTML reference. Responsive navigation, cards, buttons, reading panels and lesson surfaces share the same styling.
+- The vertical reading feed combines the existing micro-lessons and daily reading cards (Arabic facts, light language jokes, clearly labelled proverbs and short hadith excerpts with collection references) with all 6,236 Qur’anic ayahs from the supplied dataset.
+- The feed loads a small batch at a time as the learner scrolls. It supports tashkīl on/off, Arabic device-voice playback, English and Amharic translations, reveal/check prompts, and links to the corresponding Quran.com passage. The Qur’an reader and synchronized recitation player remain available.
+- Tajweed now includes practical drills for makhārij, ghunnah, qalqalah, natural madd, the four nūn sākinah/tanwīn rules, mīm sākinah, sun/moon letters and waqf. Each drill includes an Arabic example, Amharic guidance, a listening action, a practice prompt and a knowledge check. The supplied video playlists and Itqan Tajweed resource are linked from the practical lesson area.
+- The expanded feed contains 6,236 ayah reading cards (more than 77,000 Arabic word tokens in the source dataset), in addition to the original foundation lessons and daily reading cards. It is progressively rendered to avoid inserting thousands of cards into the page at once.
+
+Hadith excerpts are labelled with their cited collections and numbers. Proverbs and invented language jokes are explicitly labelled separately from hadith. Browser speech synthesis is not a Tajweed-certified reciter; use the linked recitation/video resources and a qualified teacher for pronunciation correction. The supplied Amharic translations and Quran word glosses retain the attribution and review notes already documented above.

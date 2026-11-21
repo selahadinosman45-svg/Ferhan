@@ -70,6 +70,77 @@ input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;borde
 .reader-pagination{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:14px 0}
 @media(max-width:760px){.feed-track{height:calc(100dvh - 250px);min-height:480px}.feed-translation{grid-template-columns:1fr}.feed-card{padding:20px}}
 
+
+/* FERHAN visual refresh — deep emerald, warm ivory and brushed gold */
+:root{--green:#0b342b;--green2:#185746;--gold:#d6b36b;--cream:#f8f6ef;--ink:#1d2c26;--muted:#68766f;--line:#e7e1d3;--white:#fff}
+body{background:var(--cream);color:var(--ink);font-family:Inter,"Noto Sans Ethiopic",system-ui,sans-serif}
+header{background:linear-gradient(120deg,#061f19 0%,#0b342b 55%,#164c3e 100%);color:#fff;box-shadow:0 12px 32px #08251d25;border-bottom:1px solid #d6b36b55;position:sticky;top:0;z-index:20}
+.brand{letter-spacing:.04em}.brandmark{background:linear-gradient(145deg,#e7ca8b,#bd9345);color:#0b342b;border:0;box-shadow:0 5px 18px #0003;font-weight:900}
+nav button{border:1px solid transparent;border-radius:999px;padding:9px 13px;color:#dbe8e1;transition:.2s}
+nav button.active,nav button:hover{background:#ffffff16;border-color:#d6b36b75;color:#f1d99e}
+main{max-width:1240px;padding:28px 24px 76px}
+.hero{background:radial-gradient(circle at 85% 10%,#d6b36b25,transparent 25%),linear-gradient(125deg,#061f19,#0b342b 62%,#185746);border:1px solid #d6b36b65;border-radius:30px;box-shadow:0 18px 50px #0b342b1c;padding:clamp(26px,4vw,48px)}
+.hero-art{color:#f0d69b;text-shadow:0 8px 26px #0004}
+.pill{background:#ffffff0d;border-color:#d6b36b77;color:#f2dca9}
+.kicker,.tag{color:#98743b}
+.section{margin-top:34px}.section h2{color:#0b342b;letter-spacing:-.025em}
+.card,.panel{border:1px solid #e8e1d2;border-radius:22px;box-shadow:0 8px 26px #1d33270b;background:#fff}
+.card{padding:22px;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.card:hover{transform:translateY(-3px);box-shadow:0 15px 34px #1d332718;border-color:#d7bc82}
+.panel{padding:24px}
+.btn{border-radius:13px;padding:11px 17px;box-shadow:0 5px 14px #102d2412;transition:transform .18s ease,filter .18s ease}
+.btn:hover{filter:brightness(1.04);transform:translateY(-1px)}
+.btn.gold{background:linear-gradient(135deg,#e4c98e,#c49b52);color:#1b2c24}
+.btn.secondary{background:#edf2ed;color:#0b342b;border:1px solid #dce6dd;box-shadow:none}
+.tabs button{border-radius:12px;background:#edf0e9;padding:10px 14px}
+.tabs button.active{background:#0b342b;color:#f0d69b}
+input,select{border-radius:12px!important;border-color:#d9dfd8!important}
+.progress{background:#e9e7df;height:9px}.progress span{background:linear-gradient(90deg,#c39a52,#e7cf9a)}
+.feed-shell{max-width:820px}
+.feed-top{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 14px}
+.feed-track{border-radius:26px;border:1px solid #d8c99f;background:#f0eee5;box-shadow:0 12px 34px #0b342b12;scrollbar-width:thin;scrollbar-color:#c5a66c #f0eee5}
+.feed-card{background:radial-gradient(circle at 90% 12%,#d8b66a22,transparent 24%),linear-gradient(145deg,#061f19,#0b342b 58%,#185746);padding:clamp(22px,5vw,42px);gap:24px}
+.feed-card:nth-child(3n+2),.feed-card:nth-child(3n){background:radial-gradient(circle at 90% 12%,#d8b66a20,transparent 24%),linear-gradient(145deg,#061f19,#0b342b 58%,#185746)}
+.feed-meta{color:#e7cb8e;letter-spacing:.12em}
+.feed-kind{width:max-content;margin:0 auto 8px;padding:5px 10px;border:1px solid #e6c98475;border-radius:999px;color:#efd89f;background:#ffffff0b;font-size:10px;font-weight:800;letter-spacing:.14em}
+.feed-main h2{color:#fff;text-align:center;font-size:clamp(22px,4vw,32px);margin:8px 0}
+.feed-ar{font-family:"Ferhan Uthmani","Amiri","Noto Naskh Arabic",serif;font-size:clamp(42px,8vw,78px);line-height:1.95;color:#f7e5bb;text-shadow:0 5px 18px #0002;margin:18px 0}
+.feed-ar.no-diacritics{font-size:clamp(38px,7vw,66px)}
+.feed-copy{color:#f3f3e9;line-height:1.8}
+.feed-translation>div{background:#ffffff12;border:1px solid #ffffff30;border-radius:17px;padding:15px;line-height:1.7}
+.feed-translation b{color:#f0d79e}
+.feed-actions button{border-radius:12px;background:#ffffff14;border-color:#ffffff55;padding:10px 13px}
+.feed-actions button.primary{background:linear-gradient(135deg,#e7cb8c,#c49a52);border-color:#e7cb8c;color:#172920}
+.feed-link{align-self:center;color:#f4d99e;font-weight:800;text-decoration:none;border-bottom:1px solid #f4d99e77;padding:5px}
+.feed-source{color:#e7d4a8;text-align:center;font-size:12px;opacity:.9}
+.feed-answer{color:#f7dfa5;min-height:44px}
+.feed-dots button{background:#cbbd9c}.feed-dots button.active{background:#0b342b}
+.tajweed-drill{display:flex;flex-direction:column;gap:8px}
+.tajweed-example{background:#f8f6ef;border:1px solid #eee5d2;border-radius:15px;padding:10px 14px;color:#0b342b;font-size:32px;text-align:center;line-height:1.8}
+.tajweed-drill-actions{display:flex;gap:8px;flex-wrap:wrap}
+.tajweed-hidden{display:none;background:#f8f6ef;border:1px solid #e8e1d2;border-radius:15px;padding:14px;margin-top:6px}
+.tajweed-hidden.open{display:block}
+.tajweed-hidden .quiz-option{font-size:13px}
+.reader-ayah,.surah-verse,.word,.wbw-word{border-radius:17px;border-color:#e8e1d2}
+.reader-ayah .arabic,.surah-verse .arabic{font-family:"Ferhan Uthmani","Amiri",serif}
+.modal-card{border-radius:26px}
+footer{color:#758078}
+@media(max-width:760px){
+ header{padding:13px 14px;gap:10px}
+ header nav{width:100%;flex-wrap:nowrap;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
+ header nav::-webkit-scrollbar{display:none}
+ nav button{white-space:nowrap;font-size:12px;padding:8px 11px}
+ main{padding:16px 12px 54px}
+ .hero{border-radius:22px}
+ .panel{padding:17px}
+ .feed-track{height:calc(100dvh - 245px);min-height:500px;border-radius:20px}
+ .feed-card{padding:20px 17px}
+ .feed-translation{grid-template-columns:1fr}
+ .feed-actions{gap:7px}
+ .feed-actions button{font-size:12px;padding:9px 10px}
+ #tajweedPractical{grid-template-columns:1fr!important}
+}
+
 </style>
 </head>
 <body>
@@ -93,7 +164,12 @@ input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;borde
 <div class="grid" style="margin-top:15px">
 <div class="card"><div class="tag">01 · FOUNDATIONS</div><h3>Arabic letters</h3><p>Recognise the shapes and names of the Arabic alphabet.</p><button class="btn secondary" onclick="show('lessons')">Open lesson</button></div>
 <div class="card"><div class="tag">02 · SOUND</div><h3>Short vowels</h3><p>Learn fatḥah, kasrah and ḍammah with listening practice.</p><button class="btn secondary" onclick="loadLesson(1);show('lessons')">Open lesson</button></div>
-<div class="card"><div class="tag">03 · READING</div><h3>Join the letters</h3><p>Blend sounds into simple syllables and words.</p><button class="btn secondary" onclick="loadLesson(2);show('lessons')">Open lesson</button></div></div></section>
+<div class="card"><div class="tag">03 · READING</div><h3>Join the letters</h3><p>Blend sounds into simple syllables and words.</p><button class="btn secondary" onclick="loadLesson(2);show('lessons')">Open lesson</button></div></div>
+<div class="grid" style="margin-top:14px">
+ <div class="card"><div class="tag">6,236 AYAH PRACTICE</div><h3>Scroll & read</h3><p>Read Qur’anic ayahs with or without tashkīl, translations and voice practice.</p><button class="btn gold" onclick="show('scrollLearn')">Open reading feed ↓</button></div>
+ <div class="card"><div class="tag">FULL TEXT</div><h3>Qur’an reader</h3><p>Explore all 114 surahs word by word in Arabic, English and Amharic.</p><button class="btn secondary" onclick="show('quranReader')">Open Qur’an</button></div>
+ <div class="card"><div class="tag">PRACTICAL TAJWEED</div><h3>Listen & apply</h3><p>Work through examples, listening drills and guided video lessons.</p><button class="btn secondary" onclick="show('tajweed')">Practice Tajweed</button></div>
+</div></section>
 
 <section class="section" id="academy" hidden>
 <div class="section-head"><div><h2>ferhan learning academy</h2><p class="sub">A structured six-stage path from Arabic letters to confident Qur’an revision.</p></div><span class="tag" id="academyProgress">0 of 6 stages complete</span></div>
@@ -179,6 +255,13 @@ input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;borde
 <div class="card"><div class="tag">05 · NŪN SĀKINAH</div><h3>النُّونُ السَّاكِنَة</h3><p>Iz-hār, Idghām, Iqlāb እና Ikhfā’ የሚባሉ አራት ዋና ህጎች።</p></div>
 <div class="card"><div class="tag">06 · STOPPING</div><h3>الْوَقْفُ وَالِابْتِدَاء</h3><p>በትርጉም እና በንባብ ትክክለኛነት መሠረት ማቆምና እንደገና መጀመር።</p></div>
 </div>
+<div class="section-head" style="margin-top:22px"><div><h2>Practice each rule</h2><p class="sub">Listen, notice the rule, try the example, then reveal the check.</p></div><span class="tag">LISTEN · TRY · CHECK</span></div>
+<div class="grid" id="tajweedPractical" style="grid-template-columns:repeat(2,1fr);gap:12px"></div>
+<div class="panel" style="margin-top:14px">
+ <div class="tag">VIDEO PRACTICE · GUIDED RECITATION</div><h3>Watch and repeat with a teacher</h3>
+ <p class="muted">Use the guided playlists, pause after each example, imitate the teacher, then return to the drills above. Browser voice is only a reading aid, not a Tajweed model.</p>
+ <div class="controls"><a class="btn gold" href="https://youtube.com/playlist?list=PLSWnR06mq_h0nbuw550QESCBSF1QVTqA6" target="_blank" rel="noopener" style="text-decoration:none">Open video course 1 ↗</a><a class="btn secondary" href="https://youtube.com/playlist?list=PLhZF7rewfdhKVNNESTSwLRprTG5nfZAyw" target="_blank" rel="noopener" style="text-decoration:none">Open video course 2 ↗</a><a class="btn secondary" href="https://itqantajweed.com/" target="_blank" rel="noopener" style="text-decoration:none">Itqan Tajweed ↗</a></div>
+</div>
 <div class="panel" style="margin-top:14px"><div class="tag">V6 · TAJWEED CHECK</div><h3>Quick practice</h3><p>Which rule is associated with a nasal sound on a doubled ن or م?</p><div id="tajweedChallenge"><button class="quiz-option" onclick="tajweedAnswer(0)">Qalqalah</button><button class="quiz-option" onclick="tajweedAnswer(1)">Ghunnah</button><button class="quiz-option" onclick="tajweedAnswer(2)">Madd</button></div><div class="feedback" id="tajweedFeedback"></div></div></section>
 
 <section class="section" id="resources" hidden>
@@ -202,12 +285,12 @@ input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;borde
 <p class="muted">Video playback is provided by YouTube. The two original playlists remain hosted on YouTube. Choose a lesson in the player; pause and repeat short sections with the practice tools. Exact lesson titles and timestamp chapters can be added once the playlist lesson sequence is confirmed.</p></div></section>
 
 <section class="section" id="scrollLearn" hidden>
- <div class="section-head"><div><h2>Scroll & learn · اقرأ خطوة خطوة</h2><p class="sub">Swipe up for the next short lesson. Learn the sound, see the mark, infer the reading, then reveal and repeat.</p></div></div>
+ <div class="section-head"><div><h2>Scroll & learn · اقرأ خطوة خطوة</h2><p class="sub">Read, listen, test your reading and keep scrolling through the complete practice library.</p></div></div>
  <div class="feed-shell">
   <div class="feed-top"><span class="tag" id="feedCounter">LESSON 1</span><div class="controls"><button class="btn secondary" onclick="feedPrev()">↑ Previous</button><button class="btn secondary" onclick="feedNext()">↓ Next</button></div></div>
   <div class="feed-track" id="feedTrack" aria-label="Vertical Arabic learning lesson feed"></div>
   <div class="feed-dots" id="feedDots"></div>
-  <p class="muted">Voice uses your device’s Arabic text-to-speech voice when available. If no Arabic voice is installed, listen to a teacher or use the recitation practice section.</p>
+  <p class="muted">For Qur’anic recitation, use the synchronized player or a trusted reciter. Device voice is a pronunciation aid only.</p>
  </div>
 </section>
 <section class="section" id="quranReader" hidden>
@@ -263,7 +346,7 @@ const quizData=[
 {q:"Which symbol is Shaddah?",o:["ْ","ّ","َ"],a:1,e:"Shaddah (ّ) indicates a doubled or strengthened consonant."},
 {q:"What is a good way to improve recitation?",o:["Rush through the text","Listen, repeat and seek teacher feedback","Ignore pronunciation"],a:1,e:"Listen carefully, repeat slowly and ask a qualified teacher to correct your recitation."}
 ];
-function show(id){document.querySelectorAll("main>section").forEach(s=>{s.hidden=(id==="home" ? !["home","resumePanel"].includes(s.id) : s.id!==id)});document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.go===id));activeSection=id;saveBookmark(false);window.scrollTo({top:0,behavior:"smooth"})}
+function show(id){document.querySelectorAll("main>section").forEach(s=>{s.hidden=(id==="home" ? !["home","resumePanel"].includes(s.id) : s.id!==id)});document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.go===id));activeSection=id;saveBookmark(false);if(id==="scrollLearn"){renderFeed();if(!quranBundle)initQuranReader();}if(id==="tajweed")renderTajweedPractice();window.scrollTo({top:0,behavior:"smooth"})}
 document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.go)));
 function renderLesson(){let l=lessons[currentLesson];document.getElementById("lessonTag").textContent="LESSON "+(currentLesson+1);document.getElementById("lessonTitle").textContent=l.title;document.getElementById("lessonAm").textContent=l.am;document.getElementById("lessonArabic").textContent=l.ar;document.getElementById("lessonTranslit").textContent=l.latin;document.getElementById("lessonTabs").innerHTML=lessons.map((x,i)=>`<button class="${i===currentLesson?'active':''}" onclick="loadLesson(${i})">${i+1}</button>`).join("");document.getElementById("letterGrid").innerHTML=l.words.map(w=>`<div class="word"><div class="arabic" translate="no">${w[0]}</div><strong>${w[1]}</strong><span class="muted">${w[2]}</span><button class="btn secondary" style="margin-top:8px;padding:6px 10px" onclick="speak(${JSON.stringify(w[0])})">▶</button></div>`).join("");}
 function loadLesson(i){currentLesson=i;renderLesson();saveBookmark(false)}
@@ -565,6 +648,38 @@ function stopSyncedPlayback(){ferhanSyncAudio.pause();ferhanSyncAudio.currentTim
 
 
 
+
+const tajweedPractice=[
+ {name:"Makharij · articulation points",am:"የፊደሉን የድምፅ መውጫ ቦታ ይለዩ። በተለይ ለ ح / ه እና ع / ء የአፍ ቅርጽን ያዳምጡ።",rule:"Letters emerge from the throat, tongue, lips and nasal passage. A teacher should check the exact articulation.",ar:"حَ  هَ  عَ  أَ  بَ  مَ",plain:"ح ه ع أ ب م",drill:"Listen to a qualified reciter pronounce each letter in a Qur’anic word. Repeat without forcing the sound.",q:"Which pair is articulated from the throat?",opts:["ح and ع","ب and م","ف and و"],a:0,why:"ح and ع are throat letters. Exact makhraj placement needs teacher feedback."},
+ {name:"Ghunnah · nasal resonance",am:"غُنَّة በኑንና ሚም በሸዳ ሲመጡ የሚሰማ የአፍንጫ ድምፅ ነው።",rule:"A clear nasal resonance is held for two counts in the well-known cases of نّ and مّ.",ar:"إِنَّ  ثُمَّ",plain:"إن ثم",drill:"Listen to a qualified reciter. Notice the nasal resonance on نّ and مّ; repeat gently for two counts.",q:"Which pair commonly carries ghunnah when doubled?",opts:["نّ and مّ","ل and ر","ق and ط"],a:0,why:"Nūn and mīm with shaddah are read with ghunnah."},
+ {name:"Qalqalah · echoing quality",am:"ቀልቀላህ በق ط ب ج د ፊደላት ላይ ሱኩን ሲኖር የሚሰማ የተለየ የድምፅ ጥራት ነው።",rule:"The five qalqalah letters are ق ط ب ج د. Avoid adding a full extra vowel.",ar:"قْ  طْ  بْ  جْ  دْ",plain:"ق ط ب ج د",drill:"Say the five letters with a light, controlled release. Do not turn the echo into an added vowel.",q:"Which letter is NOT a qalqalah letter?",opts:["ق","ط","س"],a:2,why:"The qalqalah set is ق ط ب ج د."},
+ {name:"Madd ṭabīʿī · natural elongation",am:"ማድ ጠቢዒ በመሠረታዊ ሁኔታ ሁለት ሐረካ ይረዝማል።",rule:"A matching long-vowel letter ا، و، ي follows its corresponding short vowel. In the basic natural madd, length is two counts.",ar:"قَالَ  يَقُولُ  قِيلَ",plain:"قال يقول قيل",drill:"Listen and compare the short vowel with the lengthened vowel. Keep the timing steady.",q:"How many counts is basic madd ṭabīʿī?",opts:["One","Two","Six"],a:1,why:"Natural madd is two counts in the standard beginner rule."},
+ {name:"Nūn sākinah · iẓhār",am:"ኢዝሃር ኑን ሳኪናህ ወይም ተንዊን ከጉሮሮ ፊደላት በፊት በግልጽ ማንበብ ነው።",rule:"Iẓhār applies before ء ه ع ح غ خ. Pronounce the nūn clearly without merging it into the next letter.",ar:"مِنْ هَادٍ",plain:"من هاد",drill:"Focus on the nūn sākinah before ه. Listen to the connected phrase from a trusted reciter.",q:"Which letter belongs to the iẓhār throat group?",opts:["ه","ب","ي"],a:0,why:"The six throat letters are ء ه ع ح غ خ."},
+ {name:"Nūn sākinah · idghām",am:"ኢድጋም ኑን ሳኪናህ ወይም ተንዊን ከيرملون ፊደላት በፊት በሚቀጥለው ፊደል ማዋሃድ ነው።",rule:"Idghām occurs before ي ر م ل و ن. Some cases include ghunnah and others do not.",ar:"مَنْ يَعْمَلْ  مِنْ رَبِّهِمْ",plain:"من يعمل من ربهم",drill:"Compare the transition before ي and ر. Do not insert a separate full nūn vowel.",q:"Which letter is in the idghām group?",opts:["ر","ح","ق"],a:0,why:"ر is one of the idghām letters; the group is ي ر م ل و ن."},
+ {name:"Nūn sākinah · iqlāb",am:"ኢቅላብ ኑን ሳኪናህ ወይም ተንዊን ከ ب በፊት ወደ የሚም ድምፅ በመቀየር በጉንናህ ማንበብ ነው።",rule:"Iqlāb occurs before ب. The nūn sound changes to a concealed mīm with ghunnah.",ar:"مِنْ بَعْدِ",plain:"من بعد",drill:"Listen for the concealed mīm-like sound before ب. Follow a reciter rather than relying on device TTS.",q:"Which letter triggers iqlāb?",opts:["ب","ل","خ"],a:0,why:"Iqlāb is triggered by ب."},
+ {name:"Nūn sākinah · ikhfāʾ",am:"ኢኽፋእ ኑን ሳኪናህ ወይም ተንዊን ከተወሰኑ 15 ፊደላት በፊት በመደበቅ ከጉንናህ ጋር ማንበብ ነው።",rule:"Ikhfāʾ is a middle position between clear pronunciation and full assimilation, with ghunnah.",ar:"مِنْ شَرِّ",plain:"من شر",drill:"Hear the nūn before ش as concealed with nasal resonance. Match the reciter's sound.",q:"What quality is heard in ikhfāʾ?",opts:["Concealment with ghunnah","A full stop","A long vowel"],a:0,why:"Ikhfāʾ is concealment with nasal resonance."},
+ {name:"Mīm sākinah · labial rules",am:"ሚም ሳኪናህ ከ ب ወይም م ወይም ከሌሎች ፊደላት ጋር ሲመጣ የተለያዩ ህጎች አሉት።",rule:"Before ب: ikhfāʾ shafawī. Before م: idghām shafawī. Before other letters: iẓhār shafawī.",ar:"هُمْ بِهِ  لَكُمْ مَا",plain:"هم به لكم ما",drill:"Compare the mīm at the end of هُمْ before ب and لَكُمْ before م.",q:"What rule applies to a sākin mīm before ب?",opts:["Ikhfāʾ shafawī","Iqlāb","Madd"],a:0,why:"Mīm sākinah before ب is ikhfāʾ shafawī."},
+ {name:"Sun & moon letters · ال",am:"የፀሐይ ፊደሎች ፊት የال ላም ይዋሃዳል፤ የጨረቃ ፊደሎች ፊት ግን በግልጽ ይነበባል።",rule:"The lām of ال assimilates before sun letters and remains clear before moon letters.",ar:"الشَّمْسُ  الْقَمَرُ",plain:"الشمس القمر",drill:"Read ash-shams with a doubled shīn, then al-qamar with a clearly pronounced lām.",q:"Which word keeps a clearly pronounced lām?",opts:["الْقَمَرُ","الشَّمْسُ"],a:0,why:"Qāf is a moon letter, so the lām in الْقَمَرُ is pronounced."},
+ {name:"Waqf · stopping carefully",am:"ወቅፍ በትርጉምና በንባብ ህግ መሠረት በተገቢው ቦታ ማቆም ነው።",rule:"Stopping can change the final sound. Learn the signs and restart where the meaning remains sound.",ar:"الرَّحِيمِ ۝ الْحَمْدُ لِلَّهِ",plain:"الرحيم الحمد لله",drill:"Pause at the verse ending, then restart the next phrase with a clear breath and correct connection.",q:"What should guide where you stop?",opts:["Meaning and recitation signs","Only the page margin","A random pause"],a:0,why:"Meaning and the muṣḥaf's waqf signs guide appropriate stopping and restarting."}
+];
+function renderTajweedPractice(){
+ const host=document.getElementById("tajweedPractical");if(!host)return;
+ host.innerHTML=tajweedPractice.map((x,i)=>`<article class="card tajweed-drill">
+  <div class="tag">PRACTICE ${String(i+1).padStart(2,"0")}</div><h3>${x.name}</h3><p class="amharic">${x.am}</p>
+  <div class="arabic tajweed-example" dir="rtl">${x.ar}</div><p class="muted">${x.rule}</p>
+  <div class="tajweed-drill-actions"><button class="btn gold" onclick="speak(${JSON.stringify(x.ar)})">🔊 Listen</button><button class="btn secondary" onclick="revealTajweed(${i})">Show drill</button></div>
+  <div class="tajweed-hidden" id="tajweed-drill-${i}"><p>${x.drill}</p><b>${x.q}</b><div>${x.opts.map((o,j)=>`<button class="quiz-option" onclick="checkTajweedPractice(${i},${j},this)">${o}</button>`).join("")}</div><p class="feedback" id="tajweed-feedback-${i}"></p><p class="muted">${x.why}</p></div>
+ </article>`).join("");
+}
+function revealTajweed(i){document.getElementById("tajweed-drill-"+i)?.classList.toggle("open")}
+function checkTajweedPractice(i,j,btn){
+ const x=tajweedPractice[i],host=document.getElementById("tajweed-feedback-"+i);
+ host.textContent=j===x.a?"Correct — review the rule and listen again.":"Try again. Listen to the example and notice the rule.";
+ host.style.color=j===x.a?"#16764c":"#a34b36";
+ btn.classList.add(j===x.a?"correct":"wrong");
+}
+renderTajweedPractice();
+
 function tajweedAnswer(i){
  const f=document.getElementById("tajweedFeedback");
  f.textContent=i===1?"Correct. Ghunnah is a nasal sound; practise its application with a qualified teacher.":"Try again: Ghunnah is the nasal sound associated with نّ and مّ.";
@@ -644,19 +759,125 @@ const microLessons = [
  ,{stage:"08 · QUR’AN BRIDGE",title:"Review: what helps unmarked reading?",ar:"مُفْرَدَاتٌ + نَحْوٌ + صَرْفٌ + سِيَاقٌ",plain:"مفردات نحو صرف سياق",am:"ያለ ሐረካት ንባብ ለመገመት ቃላት፣ ሰዋሰው፣ ቃል አወቃቀርና አውድ ያስፈልጋሉ።",en:"Vocabulary + grammar (naḥw) + morphology (ṣarf) + context work together. When uncertain, consult the marked text and a qualified teacher.",task:"Name two tools that help infer an unmarked word.",answer:"Any two: vocabulary, naḥw, ṣarf, sentence context.",kind:"recall"}
 
 ];
-let feedIndex=0,feedMarked=false,feedNoMarks=false;
+
+/* Short daily reading: facts, light language jokes, Arabic proverbs and brief sourced hadith. */
+const dailyReading = [
+ {stage:"DAILY FACT · ARABIC",kind:"fact",title:"Arabic has 28 commonly taught letters",ar:"لِلْعَرَبِيَّةِ ثَمَانِيَةٌ وَعِشْرُونَ حَرْفًا",plain:"للعربية ثمانية وعشرون حرفا",en:"Arabic is commonly taught with 28 letters. Hamzah is discussed separately in some teaching systems.",am:"በተለመደው የትምህርት ሥርዓት የዐረብኛ ፊደላት 28 ናቸው። ሐምዛ በአንዳንድ ሥርዓቶች በተለይ ይታያል።",task:"Read the sentence once with tashkīl, then try without it.",answer:"ثَمَانِيَةٌ وَعِشْرُونَ = twenty-eight."},
+ {stage:"DAILY FACT · READING",kind:"fact",title:"Arabic is read from right to left",ar:"نَقْرَأُ الْعَرَبِيَّةَ مِنَ الْيَمِينِ إِلَى الْيَسَارِ",plain:"نقرأ العربية من اليمين إلى اليسار",en:"Arabic lines begin on the right and continue toward the left.",am:"የዐረብኛ መስመር ከቀኝ ይጀምራል፣ ወደ ግራ ይቀጥላል።",task:"Point to the first word on the right, then read across.",answer:"مِنَ الْيَمِينِ إِلَى الْيَسَارِ = from right to left."},
+ {stage:"DAILY FACT · HARAKAT",kind:"fact",title:"A small mark can change a sound",ar:"الْفَتْحَةُ وَالْكَسْرَةُ وَالضَّمَّةُ حَرَكَاتٌ قَصِيرَةٌ",plain:"الفتحة والكسرة والضمة حركات قصيرة",en:"Fatḥah, kasrah and ḍammah are short-vowel marks. Learn to notice their position and sound.",am:"ፈትሓ፣ ከስራና ደማ አጫጭር አናባቢ ምልክቶች ናቸው።",task:"Read بَ بِ بُ slowly.",answer:"ba · bi · bu. Keep each vowel short."},
+ {stage:"DAILY FACT · SCRIPT",kind:"fact",title:"Dots help distinguish letters",ar:"تُغَيِّرُ النُّقَطُ هُوِيَّةَ الْحَرْفِ",plain:"تغير النقط هوية الحرف",en:"Dots distinguish letters such as ب، ت، ث and ن. Their positions are part of the letter.",am:"ነጥቦች እንደ ب፣ ت፣ ث እና ن ያሉ ፊደላትን ይለያሉ።",task:"Compare ب ت ث and name the number of dots.",answer:"ب has one below; ت has two above; ث has three above."},
+ {stage:"LIGHT JOKE · نُكْتَة",kind:"joke",title:"The clever pen",ar:"قَالَ الْقَلَمُ: أَنَا أَكْتُبُ، وَلَكِنِّي لَا أَقْرَأُ!",plain:"قال القلم أنا أكتب ولكني لا أقرأ",en:"The pen said: “I write, but I don't read!”",am:"ብዕሩ፦ «እኔ እጽፋለሁ፣ ግን አላነብም!» አለ።",task:"Find the verb أَكْتُبُ (I write).",answer:"أَكْتُبُ means “I write”; أَقْرَأُ means “I read”."},
+ {stage:"LIGHT JOKE · نُكْتَة",kind:"joke",title:"The sleepy book",ar:"قَالَ الْكِتَابُ: أَغْلِقُونِي، فَقَدْ تَعِبْتُ مِنَ الْقِرَاءَةِ!",plain:"قال الكتاب أغلقوني فقد تعبت من القراءة",en:"The book said: “Close me; I am tired of being read!”",am:"መጽሐፉ፦ «ዝጉኝ፤ በመነበብ ደክሜአለሁ!» አለ።",task:"Identify the command أَغْلِقُونِي.",answer:"أَغْلِقُونِي means “close me”."},
+ {stage:"LIGHT JOKE · نُكْتَة",kind:"joke",title:"A very short lesson",ar:"سَأَلَ الْمُعَلِّمُ: مَا جَمْعُ كِتَابٍ؟ قَالَ الطَّالِبُ: كُتُبٌ!",plain:"سأل المعلم ما جمع كتاب قال الطالب كتب",en:"The teacher asked: “What is the plural of book?” The student answered: “Books!”",am:"መምህሩ፦ «የኪታብ ብዙ ቁጥር ምንድን ነው?» ተማሪው፦ «ኩቱብ!» አለ።",task:"Read كِتَابٌ and كُتُبٌ.",answer:"كِتَابٌ = one book; كُتُبٌ = books."},
+ {stage:"ARABIC PROVERB · مَثَل",kind:"proverb",title:"Whoever strives, succeeds",ar:"مَنْ جَدَّ وَجَدَ",plain:"من جد وجد",en:"An Arabic proverb: “Whoever strives, finds (success).”",am:"የዐረብኛ ተረት፦ «የሚጥር ያገኛል።»",task:"Read the two words and identify the repeated pattern.",answer:"مَنْ = whoever; جَدَّ = worked hard; وَجَدَ = found. This is a proverb, not a hadith."},
+ {stage:"ARABIC PROVERB · مَثَل",kind:"proverb",title:"Patience brings relief",ar:"الصَّبْرُ مِفْتَاحُ الْفَرَجِ",plain:"الصبر مفتاح الفرج",en:"A commonly used Arabic proverb: “Patience is the key to relief.”",am:"የዐረብኛ ተረት፦ «ትዕግሥት የእፎይታ ቁልፍ ነው።»",task:"Find the word meaning “patience”.",answer:"الصَّبْرُ = patience. This is a proverb, not a hadith."},
+ {stage:"ARABIC PROVERB · مَثَل",kind:"proverb",title:"Knowledge is light",ar:"الْعِلْمُ نُورٌ",plain:"العلم نور",en:"A familiar Arabic saying: “Knowledge is light.”",am:"የተለመደ አባባል፦ «ዕውቀት ብርሃን ነው።»",task:"Read the two-word sentence aloud.",answer:"الْعِلْمُ = knowledge; نُورٌ = light. This is a saying, not a hadith."},
+ {stage:"HADITH · صحيح البخاري",kind:"hadith",title:"A good word is charity",ar:"الْكَلِمَةُ الطَّيِّبَةُ صَدَقَةٌ",plain:"الكلمة الطيبة صدقة",en:"“A good word is charity.”",am:"«መልካም ቃል ሰደቃ ነው።»",task:"Read the sentence, then identify the adjective الطَّيِّبَةُ.",answer:"الطَّيِّبَةُ means good/kind. Source: Ṣaḥīḥ al-Bukhārī 2989; also narrated in Ṣaḥīḥ Muslim 1009.",source:"Ṣaḥīḥ al-Bukhārī 2989 · Ṣaḥīḥ Muslim 1009"},
+ {stage:"HADITH · صحيح مسلم",kind:"hadith",title:"Religion is sincere counsel",ar:"الدِّينُ النَّصِيحَةُ",plain:"الدين النصيحة",en:"“Religion is sincere counsel.”",am:"«ሃይማኖት ቅን ምክር ነው።»",task:"Read the two nouns and listen to their endings.",answer:"الدِّينُ = religion; النَّصِيحَةُ = sincere counsel. Source: Ṣaḥīḥ Muslim 55.",source:"Ṣaḥīḥ Muslim 55"},
+ {stage:"HADITH · صحيح البخاري",kind:"hadith",title:"Make things easy",ar:"يَسِّرُوا وَلَا تُعَسِّرُوا",plain:"يسروا ولا تعسروا",en:"“Make things easy and do not make them difficult.”",am:"«አቅልሉ እንጂ አታክብዱ።»",task:"Find the negative particle لَا.",answer:"لَا means “do not”. Source: Ṣaḥīḥ al-Bukhārī 69; also Ṣaḥīḥ Muslim 1734.",source:"Ṣaḥīḥ al-Bukhārī 69 · Ṣaḥīḥ Muslim 1734"},
+ {stage:"HADITH · صحيح البخاري",kind:"hadith",title:"Actions are by intentions",ar:"إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ",plain:"إنما الأعمال بالنيات",en:"“Actions are judged by intentions.”",am:"«ሥራዎች የሚመዘኑት በዓላማዎች ነው።»",task:"Read الْأَعْمَالُ and النِّيَّاتِ carefully.",answer:"A short excerpt from the hadith on intentions. Source: Ṣaḥīḥ al-Bukhārī 1; Ṣaḥīḥ Muslim 1907.",source:"Ṣaḥīḥ al-Bukhārī 1 · Ṣaḥīḥ Muslim 1907"},
+ {stage:"HADITH · صحيح البخاري",kind:"hadith",title:"Show mercy",ar:"مَنْ لَا يَرْحَمُ لَا يُرْحَمُ",plain:"من لا يرحم لا يرحم",en:"“Whoever does not show mercy will not be shown mercy.”",am:"«ምሕረት የማያደርግ ምሕረት አያገኝም።»",task:"Identify the repeated verb يَرْحَمُ.",answer:"يَرْحَمُ means “shows mercy”. Source: Ṣaḥīḥ al-Bukhārī 6013; Ṣaḥīḥ Muslim 2319.",source:"Ṣaḥīḥ al-Bukhārī 6013 · Ṣaḥīḥ Muslim 2319"}
+];
+
+let readingFeed=[...microLessons,...dailyReading];
+let feedIndex=0,feedMarked=false,feedNoMarks=false,feedRenderedCount=0;
+const FEED_BATCH=18;
+
+function escapeFeedHTML(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]))}
+function buildExpandedReadingFeed(){
+ if(!quranBundle||window.ferhanQuranFeedReady)return;
+ window.ferhanQuranFeedReady=true;
+ const verseItems=[];
+ quranBundle.surahs.forEach(([chapter,name])=>{
+  const rows=quranBundle.quran[String(chapter)]||[];
+  rows.forEach((row,index)=>{
+   const words=Array.isArray(row[0])?row[0]:[];
+   const arabic=words.map(w=>w[0]).join(" ");
+   const plain=stripArabicMarks(arabic);
+   const verseNo=index+1;
+   const key=`${chapter}:${verseNo}`;
+   const english=row[1]||words.map(w=>w[2]||"").join(" ");
+   const amharic=quranBundle.amharic?.[key]||"የአማርኛ ትርጉም ለዚህ አንቀጽ አልተገኘም።";
+   verseItems.push({stage:`QUR’AN · ${name}`,kind:"quran",title:`${name} · Ayah ${verseNo}`,ar:arabic,plain,en:english,am:amharic,task:"Read with tashkīl, listen to a trusted reciter, then try again without the marks.",answer:`Surah ${name}, ayah ${verseNo}. Compare your reading with the fully marked Arabic and a qualified teacher.`,source:"Qur’an · word-by-word dataset",chapter:Number(chapter),ayah:verseNo});
+  });
+ });
+ readingFeed=[...microLessons,...dailyReading,...verseItems];
+ const count=readingFeed.length;
+ const label=document.getElementById("feedCounter");
+ if(label)label.textContent=`${count.toLocaleString()} READING CARDS`;
+ const host=document.getElementById("feedTrack");
+ if(host&&activeSection==="scrollLearn")renderFeed();
+}
+function feedCardHTML(x,i){
+ const arabic=feedNoMarks?(x.plain||stripArabicMarks(x.ar||"")):(x.ar||"");
+ const isQuran=x.kind==="quran";
+ const extraSource=x.source?`<div class="feed-source">${escapeFeedHTML(x.source)}</div>`:"";
+ const quranLink=isQuran?`<a class="feed-link" href="https://quran.com/${x.chapter}:${x.ayah}" target="_blank" rel="noopener">Open verified text & recitation ↗</a>`:"";
+ const syncLink=isQuran?`<button onclick="show('recitation')">Open synchronized player</button>`:"";
+ return `<article class="feed-card" id="feed-${i}" data-index="${i}">
+  <div class="feed-meta"><span>${escapeFeedHTML(x.stage||"READING PRACTICE")}</span><span>${(i+1).toLocaleString()} / ${readingFeed.length.toLocaleString()}</span></div>
+  <div class="feed-main">
+   <div class="feed-kind">${escapeFeedHTML((x.kind||"lesson").toUpperCase())}</div>
+   <h2>${escapeFeedHTML(x.title||"Reading practice")}</h2>
+   <div class="feed-ar ${feedNoMarks?'no-diacritics':''}" id="feedArabic-${i}" dir="rtl" lang="ar">${escapeFeedHTML(arabic)}</div>
+   <p class="feed-copy">${escapeFeedHTML(x.en||"")}</p>
+   <div class="feed-translation"><div><b>አማርኛ</b><br>${escapeFeedHTML(x.am||"")}</div><div><b>Practice</b><br>${escapeFeedHTML(x.task||"Read aloud and repeat.")}</div></div>
+   ${extraSource}
+   <div class="feed-actions">
+    <button class="primary" onclick="speakFeedItem(${i})">🔊 Listen</button>
+    <button onclick="toggleFeedMarks()">تَشْكِيلٌ ${feedNoMarks?'OFF':'ON'}</button>
+    <button onclick="revealFeed(${i})">Reveal / check</button>
+    ${syncLink}
+    ${quranLink}
+    <button onclick="feedNext()">Next ↓</button>
+   </div>
+   <div class="feed-answer" id="feedAnswer-${i}"></div>
+  </div>
+  <div class="feed-meta"><span>READ · LISTEN · INFER · REPEAT</span><span>${isQuran?'QUR’AN READING':'DAILY LEARNING'}</span></div>
+ </article>`;
+}
+function appendFeedBatch(){
+ const host=document.getElementById("feedTrack");if(!host)return;
+ const end=Math.min(readingFeed.length,feedRenderedCount+FEED_BATCH);
+ const html=[];for(let i=feedRenderedCount;i<end;i++)html.push(feedCardHTML(readingFeed[i],i));
+ host.insertAdjacentHTML("beforeend",html.join(""));
+ feedRenderedCount=end;
+}
 function renderFeed(){
  const host=document.getElementById("feedTrack");if(!host)return;
- host.innerHTML=microLessons.map((x,i)=>`<article class="feed-card" id="feed-${i}"><div class="feed-meta"><span>${x.stage}</span><span>${i+1} / ${microLessons.length}</span></div><div><h2 style="text-align:center;font-size:clamp(22px,4vw,32px)">${x.title}</h2><div class="feed-ar ${feedNoMarks?'no-diacritics':''}" id="feedArabic-${i}">${feedNoMarks?x.plain:x.ar}</div><p class="feed-copy">${x.en}</p><div class="feed-translation"><div><b>አማርኛ</b><br>${x.am}</div><div><b>Practice</b><br>${x.task}</div></div><div class="feed-actions"><button class="primary" onclick="speak(${JSON.stringify(x.ar)})">🔊 Listen</button><button onclick="toggleFeedMarks()">تَشْكِيلٌ ${feedNoMarks?'OFF':'ON'}</button><button onclick="revealFeed(${i})">Reveal / check</button><button onclick="feedNext()">Next lesson ↓</button></div><div class="feed-answer" id="feedAnswer-${i}"></div></div><div class="feed-meta"><span>READ · LISTEN · INFER · REPEAT</span><span>${x.kind==='quran'?'QUR’AN PRACTICE':'MICRO LESSON'}</span></div></article>`).join("");
- host.scrollTop=0;feedIndex=0;updateFeedControls();
- host.onscroll=()=>{const cards=[...host.children];let best=0,dist=Infinity;cards.forEach((c,i)=>{const d=Math.abs(c.getBoundingClientRect().top-host.getBoundingClientRect().top);if(d<dist){dist=d;best=i}});feedIndex=best;updateFeedControls()};
+ host.innerHTML="";feedRenderedCount=0;feedIndex=0;
+ appendFeedBatch();appendFeedBatch();
+ updateFeedControls();
+ host.onscroll=()=>{
+  const cards=[...host.children];let best=0,dist=Infinity;
+  cards.forEach(c=>{const d=Math.abs(c.getBoundingClientRect().top-host.getBoundingClientRect().top);if(d<dist){dist=d;best=Number(c.dataset.index)||0}});
+  feedIndex=best;updateFeedControls();
+  if(host.scrollTop+host.clientHeight>host.scrollHeight-host.clientHeight*2)appendFeedBatch();
+ };
 }
-function updateFeedControls(){const c=document.getElementById("feedCounter");if(c)c.textContent=`LESSON ${feedIndex+1} · ${microLessons[feedIndex].stage}`;const dots=document.getElementById("feedDots");if(dots)dots.innerHTML=microLessons.map((_,i)=>`<button class="${i===feedIndex?'active':''}" aria-label="Go to lesson ${i+1}" onclick="feedGo(${i})"></button>`).join("")}
-function feedGo(i){feedIndex=Math.max(0,Math.min(microLessons.length-1,i));document.getElementById("feed-"+feedIndex)?.scrollIntoView({behavior:"smooth",block:"start"});updateFeedControls()}
+function updateFeedControls(){
+ const item=readingFeed[feedIndex]||readingFeed[0];
+ const c=document.getElementById("feedCounter");if(c)c.textContent=`${(feedIndex+1).toLocaleString()} / ${readingFeed.length.toLocaleString()} · ${item?.stage||"READING"}`;
+ const dots=document.getElementById("feedDots");if(dots){
+  const from=Math.max(0,Math.min(readingFeed.length-9,feedIndex-4));
+  dots.innerHTML=Array.from({length:Math.min(9,readingFeed.length-from)},(_,n)=>{const i=from+n;return `<button class="${i===feedIndex?'active':''}" aria-label="Go to lesson ${i+1}" onclick="feedGo(${i})"></button>`}).join("");
+ }
+}
+function feedGo(i){
+ feedIndex=Math.max(0,Math.min(readingFeed.length-1,i));
+ const host=document.getElementById("feedTrack");
+ while(feedRenderedCount<=feedIndex)appendFeedBatch();
+ document.getElementById("feed-"+feedIndex)?.scrollIntoView({behavior:"smooth",block:"start"});updateFeedControls();
+}
 function feedNext(){feedGo(feedIndex+1)}
 function feedPrev(){feedGo(feedIndex-1)}
-function revealFeed(i){const x=microLessons[i];const el=document.getElementById("feedAnswer-"+i);if(el)el.textContent=x.answer}
-function toggleFeedMarks(){feedNoMarks=!feedNoMarks;microLessons.forEach((x,i)=>{const el=document.getElementById("feedArabic-"+i);if(el){el.textContent=feedNoMarks?x.plain:x.ar;el.classList.toggle("no-diacritics",feedNoMarks)}});document.querySelectorAll(".feed-actions button").forEach(b=>{if(b.textContent.includes("تَشْكِيلٌ"))b.textContent="تَشْكِيلٌ "+(feedNoMarks?"OFF":"ON")})}
+function speakFeedItem(i){const x=readingFeed[i];if(x?.ar)speak(x.ar)}
+function revealFeed(i){const x=readingFeed[i];const el=document.getElementById("feedAnswer-"+i);if(el)el.textContent=x?.answer||"Read carefully, listen, and compare with a trusted source."}
+function toggleFeedMarks(){
+ feedNoMarks=!feedNoMarks;
+ document.querySelectorAll(".feed-ar").forEach(el=>{const i=Number(el.id.replace("feedArabic-",""));const x=readingFeed[i];if(x)el.textContent=feedNoMarks?(x.plain||stripArabicMarks(x.ar||"")):(x.ar||"");el.classList.toggle("no-diacritics",feedNoMarks)});
+ document.querySelectorAll(".feed-actions button").forEach(b=>{if(b.textContent.includes("تَشْكِيلٌ"))b.textContent="تَشْكِيلٌ "+(feedNoMarks?"OFF":"ON")});
+}
 document.addEventListener("keydown",e=>{if(activeSection==="scrollLearn"&&e.key==="ArrowDown")feedNext();if(activeSection==="scrollLearn"&&e.key==="ArrowUp")feedPrev()});
 
 /* Full Qur'an word-by-word reader, imported from the supplied Ferhan reader. */
@@ -666,7 +887,7 @@ function stripArabicMarks(t){return t.replace(/[\u064B-\u065F\u0670\u06D6-\u06ED
 async function initQuranReader(){
  const status=document.getElementById("quranReaderStatus");try{
   const r=await fetch("./data/quran-word-by-word.json");if(!r.ok)throw new Error("Qur’an data file not found.");
-  quranBundle=await r.json();const sel=document.getElementById("quranSurahSelect");
+  quranBundle=await r.json();buildExpandedReadingFeed();const sel=document.getElementById("quranSurahSelect");
   sel.innerHTML=quranBundle.surahs.map(x=>`<option value="${x[0]}">${x[0]}. ${x[1]}</option>`).join("");
   sel.value="1";sel.onchange=()=>{quranChapter=Number(sel.value);quranPageIndex=0;renderQuranReader()};
   if(status)status.textContent="Complete Qur’an loaded · 114 surahs · 6,236 ayahs · Arabic word-by-word · English glosses · Amharic verse translations.";
