@@ -33,6 +33,39 @@ input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;borde
 .modal-backdrop{position:fixed;inset:0;background:#10251dcc;z-index:99;display:none;align-items:center;justify-content:center;padding:18px}.modal-backdrop.open{display:flex}.modal-card{background:#fff;border-radius:22px;max-width:560px;width:100%;padding:24px;max-height:88vh;overflow:auto;box-shadow:0 24px 80px #0004}.modal-close{float:right;border:0;background:#edf2ee;border-radius:50%;width:36px;height:36px;font-size:20px;cursor:pointer}.surah-verse{padding:16px;border:1px solid var(--line);border-radius:16px;background:#fff;margin:12px 0}.surah-verse .arabic{font-size:clamp(30px,5vw,44px);text-align:right;line-height:1.9}.surah-verse.current{border:2px solid var(--gold);background:#fffaf0}.surah-verse.sync-current{border:2px solid #1d8a63;background:#e7f6ee}.surah-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.checkline{display:flex;gap:10px;align-items:center;padding:10px;border-bottom:1px solid var(--line)}.checkline input{width:18px;height:18px;accent-color:var(--green)}@media(max-width:760px){.modal-card{padding:18px}}
 \nfooter{text-align:center;padding:25px;color:var(--muted);font-size:13px}
 @media(max-width:760px){header{align-items:flex-start;flex-direction:column}.hero,.lesson-layout{grid-template-columns:1fr}.hero-art{display:none}.grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}main{padding:18px 14px 50px}.hero{padding:25px}}
+
+/* FERHAN integrated vertical micro-learning + full Qur'an reader */
+.feed-shell{max-width:720px;margin:0 auto}
+.feed-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.feed-track{height:min(72vh,760px);min-height:510px;overflow-y:auto;scroll-snap-type:y mandatory;border-radius:22px;background:#e8ece6;border:1px solid var(--line);overscroll-behavior:contain}
+.feed-card{min-height:100%;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(20px,5vw,34px);background:linear-gradient(145deg,#123d35,#1d5a4b);color:#fff;position:relative;overflow:hidden}
+.feed-card:nth-child(3n+2){background:linear-gradient(145deg,#243e58,#315d72)}
+.feed-card:nth-child(3n){background:linear-gradient(145deg,#493b2c,#7b5c36)}
+.feed-meta{display:flex;justify-content:space-between;align-items:center;color:#f0dcae;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.feed-ar{font-family:"Noto Naskh Arabic","Amiri",serif;font-size:clamp(42px,9vw,76px);line-height:1.8;text-align:center;direction:rtl;margin:16px 0;color:#fff}
+.feed-ar.no-diacritics{font-size:clamp(40px,8vw,68px)}
+.feed-copy{font-size:clamp(15px,2vw,18px);color:#f0f4ef;max-width:580px;margin:0 auto;text-align:center}
+.feed-translation{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.feed-translation>div{border:1px solid #ffffff35;background:#ffffff12;border-radius:14px;padding:12px;font-size:14px}
+.feed-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:18px}
+.feed-actions button{border:1px solid #ffffff55;background:#ffffff18;color:white;border-radius:999px;padding:10px 14px;font-weight:700;cursor:pointer}
+.feed-actions button.primary{background:#e4c27d;color:#252319;border-color:#e4c27d}
+.feed-answer{min-height:48px;text-align:center;color:#f3dfb5;margin-top:10px;font-weight:700}
+.feed-dots{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin:10px 0}
+.feed-dots button{width:8px;height:8px;border:0;border-radius:50%;background:#b8c4bb;padding:0}
+.feed-dots button.active{background:var(--green);width:22px;border-radius:99px}
+.reader-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.reader-toolbar select{flex:1;min-width:150px}
+.reader-ayah{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.reader-ayah .arabic{font-size:clamp(28px,5vw,42px);text-align:right;line-height:2;color:var(--green)}
+.reader-word-grid{display:flex;flex-wrap:wrap;flex-direction:row-reverse;gap:8px;justify-content:flex-start;margin-top:10px}
+.reader-word{background:#f8f8f4;border:1px solid var(--line);border-radius:12px;padding:9px 11px;min-width:88px;text-align:center}
+.reader-word .arabic{font-size:27px;margin:0;line-height:1.7}
+.reader-word small{display:block;color:var(--muted)}
+.reader-word .am{color:var(--green2);font-weight:700}
+.reader-pagination{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:14px 0}
+@media(max-width:760px){.feed-track{height:calc(100dvh - 250px);min-height:480px}.feed-translation{grid-template-columns:1fr}.feed-card{padding:20px}}
+
 </style>
 </head>
 <body>
@@ -153,6 +186,31 @@ input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;borde
 <div class="tabs"><button class="active" onclick="showPlaylist(0,this)">Course 1</button><button onclick="showPlaylist(1,this)">Course 2</button></div>
 <div class="panel"><div class="tag" id="courseLabel">PLAYLIST 1</div><h3 id="courseTitle">Course playlist · 1</h3><iframe class="video" id="ytPlayer" src="https://www.youtube-nocookie.com/embed/videoseries?list=PLSWnR06mq_h0nbuw550QESCBSF1QVTqA6" title="Quran Arabic learning course playlist 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
 <p class="muted">Video playback is provided by YouTube. The two original playlists remain hosted on YouTube. Choose a lesson in the player; pause and repeat short sections with the practice tools. Exact lesson titles and timestamp chapters can be added once the playlist lesson sequence is confirmed.</p></div></section>
+
+<section class="section" id="scrollLearn" hidden>
+ <div class="section-head"><div><h2>Scroll & learn · اقرأ خطوة خطوة</h2><p class="sub">Swipe up for the next short lesson. Learn the sound, see the mark, infer the reading, then reveal and repeat.</p></div></div>
+ <div class="feed-shell">
+  <div class="feed-top"><span class="tag" id="feedCounter">LESSON 1</span><div class="controls"><button class="btn secondary" onclick="feedPrev()">↑ Previous</button><button class="btn secondary" onclick="feedNext()">↓ Next</button></div></div>
+  <div class="feed-track" id="feedTrack" aria-label="Vertical Arabic learning lesson feed"></div>
+  <div class="feed-dots" id="feedDots"></div>
+  <p class="muted">Voice uses your device’s Arabic text-to-speech voice when available. If no Arabic voice is installed, listen to a teacher or use the recitation practice section.</p>
+ </div>
+</section>
+<section class="section" id="quranReader" hidden>
+ <div class="section-head"><div><h2>Full Qur’an word-by-word reader</h2><p class="sub">Arabic text with English glosses, Amharic verse translation, transliteration, and a diacritic toggle.</p></div></div>
+ <div class="panel">
+  <div class="reader-toolbar">
+   <select id="quranSurahSelect" aria-label="Choose surah"></select>
+   <button class="btn secondary" id="quranMarksBtn" onclick="toggleQuranMarks()">تَشْكِيلٌ ON</button>
+   <button class="btn secondary" onclick="toggleQuranTranslation()">EN + አማ</button>
+  </div>
+  <div class="muted" id="quranReaderStatus">Loading the Qur’an word-by-word dataset…</div>
+  <div id="quranReaderVerses"></div>
+  <div class="reader-pagination"><button class="btn secondary" onclick="quranPage(-1)">← Previous</button><span class="muted" id="quranPageLabel">Page 1</span><button class="btn secondary" onclick="quranPage(1)">Next →</button></div>
+ </div>
+ <p class="muted">Word-by-word English/transliteration and Amharic verse translations are carried over from the supplied Ferhan reader file. Translation is an aid to study, not a replacement for tafsīr or a qualified teacher.</p>
+</section>
+
 </main><div class="modal-backdrop" id="practiceModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><button class="modal-close" onclick="closePracticeModal()" aria-label="Close">×</button><div class="tag">ferhan DAILY REVISION</div><h2 id="modalTitle">A little revision today</h2><p class="amharic">ዛሬ አጭር የመድገም ልምምድ ያድርጉ። በቀስታ ያዳምጡ፣ ይድገሙ፣ ከዚያ እውቀትዎን ይፈትሹ።</p><div class="word"><strong>1 · Listen</strong><p class="muted">Choose one ayah and listen carefully.</p><button class="btn secondary" onclick="closePracticeModal();show('recitation')">Open recitation</button></div><div class="word" style="margin-top:10px"><strong>2 · Recall</strong><p class="muted">Try to recite from memory, then check the text.</p><button class="btn secondary" onclick="closePracticeModal();show('quiz')">Open full quiz</button></div><div class="word" style="margin-top:10px"><strong>3 · Pop-up quiz</strong><p>How many verses are in Surah Al-Ikhlas?</p><div class="controls"><button class="btn secondary" onclick="dailyQuizAnswer(3)">3</button><button class="btn secondary" onclick="dailyQuizAnswer(4)">4</button><button class="btn secondary" onclick="dailyQuizAnswer(5)">5</button></div><div class="feedback" id="dailyQuizFeedback"></div></div><div class="controls"><button class="btn" onclick="dismissDaily()">I’ll practise later</button></div></div></div><footer>ferhan · فَرْحَان — Learn steadily, practise patiently. <br>Learning support only; for Qur’anic recitation rules and correction, learn with a qualified teacher. <br><span style="font-size:12px">Bookmarks and progress are saved locally in this browser. Clearing browser data or switching devices may remove or not carry over this progress.</span></footer>
 <script>
 /* Migrate previous Noor/Farhan V6 browser data before app initialization. */
@@ -506,4 +564,88 @@ function migrateLegacyFerhanKeys(){
 
 migrateLegacyFerhanKeys();
 migrateV5Progress();
+
+/* FERHAN integrated learning feed */
+const microLessons = [
+ {stage:"01 · LETTERS",title:"Arabic is read from right to left",ar:"ا ب ت ث ج ح خ",plain:"ا ب ت ث ج ح خ",am:"የዐረብኛ ጽሑፍ ከቀኝ ወደ ግራ ይነበባል። ፊደሎቹን በቅርጽና በድምፅ ይለዩ።",en:"Arabic is written and read from right to left. Recognise each letter before blending.",task:"Say the letters slowly, then tap Listen.",answer:"The first group: Alif, Bā, Tā, Thā, Jīm, Ḥā, Khā.",kind:"intro"},
+ {stage:"01 · LETTERS",title:"Letter shapes change in a word",ar:"بـ  ـبـ  ـب",plain:"بـ ـبـ ـب",am:"ባእ በቃል ውስጥ በመጀመሪያ፣ መካከልና መጨረሻ የተለያዩ ቅርጾች ይኖሩታል።",en:"Bāʾ changes shape depending on its position: initial, medial and final.",task:"Which letter is shown in all three positions?",answer:"All three are Bāʾ (ب). Its dots stay below.",kind:"shape"},
+ {stage:"02 · HARAKAT",title:"Fatḥah · short a",ar:"بَ  تَ  كَ",plain:"ب ت ك",am:"ፈትሓ (َ) ከፊደሉ በላይ ይቀመጣል፤ አጭር 'a' ድምፅ ይሰጣል።",en:"Fatḥah is a short vowel written above a consonant. It gives a short 'a' sound.",task:"Infer the vowel: بَ",answer:"بَ is ba: Bāʾ with fatḥah.",kind:"infer"},
+ {stage:"02 · HARAKAT",title:"Kasrah · short i",ar:"بِ  تِ  كِ",plain:"ب ت ك",am:"ከስራ (ِ) ከፊደሉ በታች ይጻፋል፤ አጭር 'i' ድምፅ ይሰጣል።",en:"Kasrah is written below the consonant and gives a short 'i' sound.",task:"Infer the vowel: بِ",answer:"بِ is bi: Bāʾ with kasrah.",kind:"infer"},
+ {stage:"02 · HARAKAT",title:"Ḍammah · short u",ar:"بُ  تُ  كُ",plain:"ب ت ك",am:"ደማ (ُ) ከፊደሉ በላይ ይቀመጣል፤ አጭር 'u' ድምፅ ይሰጣል።",en:"Ḍammah is written above the consonant and gives a short 'u' sound.",task:"Infer the vowel: بُ",answer:"بُ is bu: Bāʾ with ḍammah.",kind:"infer"},
+ {stage:"02 · HARAKAT",title:"Tanwīn · an ending n sound",ar:"بًا  بٍِ  بٌ",plain:"با بي ب",am:"ተንዊን በቃል መጨረሻ የ'n' ድምፅ ይጨምራል።",en:"Tanwīn marks an n-like ending: -an, -in or -un. Its reading depends on the mark and context.",task:"Name the three tanwīn marks.",answer:"Fatḥatān (ً), kasratān (ٍ), ḍammatān (ٌ).",kind:"recall"},
+ {stage:"02 · HARAKAT",title:"Sukūn · no vowel after the consonant",ar:"بْ  أَبْ  يَكْتُبْ",plain:"ب  أب  يكتب",am:"ሱኩን (ْ) በፊደሉ ላይ አጭር አናባቢ እንደሌለ ያመለክታል።",en:"Sukūn means the consonant has no short vowel after it. Join it to the preceding sound.",task:"What does ْ tell you?",answer:"The consonant is vowelless; do not add an extra short vowel.",kind:"infer"},
+ {stage:"02 · HARAKAT",title:"Shaddah · doubled consonant",ar:"بّ  رَبِّ  إِنَّ",plain:"ب  رب  إن",am:"ሸዳ (ّ) ተነባቢው እንደተጠናከረ/እንደተደገመ ያመለክታል።",en:"Shaddah doubles or strengthens the consonant. Hold it correctly rather than skipping it.",task:"What does ّ indicate?",answer:"A doubled/strengthened consonant. In نّ and مّ, ghunnah is heard.",kind:"recall"},
+ {stage:"03 · BLENDING",title:"Blend three short syllables",ar:"كَتَبَ",plain:"كتب",am:"ፊደሎችን ከሐረካት ጋር በማጣመር ቃሉን ያንብቡ።",en:"Blend each consonant and short vowel: ka-ta-ba. This is a simple Arabic verb meaning 'he wrote'.",task:"Try reading the word before revealing the answer.",answer:"كَتَبَ · kataba · he wrote · ጻፈ",kind:"infer"},
+ {stage:"03 · BLENDING",title:"A word with sukūn",ar:"مِنْ",plain:"من",am:"ሱኩን ያለውን ፊደል ከቀደመው ድምፅ ጋር ያገናኙ።",en:"Read مِنْ as min. The nūn has sukūn, so it does not take an extra vowel.",task:"Infer the missing short vowel marks in مِنْ.",answer:"مِ + نْ → min. Kasrah on mīm, sukūn on nūn.",kind:"infer"},
+ {stage:"04 · VOCABULARY",title:"Build a useful word bank",ar:"كِتَابٌ  بَيْتٌ  قَلَمٌ",plain:"كتاب بيت قلم",am:"كِتَابٌ መጽሐፍ፤ بَيْتٌ ቤት፤ قَلَمٌ ብዕር።",en:"kitābun = book; baytun = house; qalamun = pen. Learn words in context, not as isolated sounds only.",task:"Which word means 'book'?",answer:"كِتَابٌ means book · መጽሐፍ.",kind:"recall"},
+ {stage:"05 · NAḤW",title:"Three basic word types",ar:"اِسْمٌ  فِعْلٌ  حَرْفٌ",plain:"اسم فعل حرف",am:"በናሕው መሠረት ቃላት በመሠረቱ ስም፣ ግስና ቅንጣት/አገናኝ ይሆናሉ።",en:"Arabic grammar (naḥw): ism = noun/name, fiʿl = verb, ḥarf = particle/preposition.",task:"Classify كِتَابٌ.",answer:"كِتَابٌ is an ism (noun).",kind:"recall"},
+ {stage:"05 · NAḤW",title:"A simple nominal sentence",ar:"الْبَيْتُ كَبِيرٌ",plain:"البيت كبير",am:"ይህ የስም ዓረፍተ ነገር ነው፤ الْبَيْتُ ርዕስ፣ كَبِيرٌ ዜና/ገላጭ ነው።",en:"A basic nominal sentence: al-baytu = the house (subject/topic); kabīrun = big (predicate).",task:"Which word tells us about the house?",answer:"كَبِيرٌ is the predicate (khabar).",kind:"recall"},
+ {stage:"06 · ṢARF",title:"Roots carry core meaning",ar:"كَتَبَ  كَاتِبٌ  مَكْتُوبٌ",plain:"كتب كاتب مكتوب",am:"ሰርፍ የቃላትን አወቃቀር ያጠናል። ك ت ب ሥር ፊደሎች ከመጻፍ ጋር የተያያዙ ቃላትን ይፈጥራሉ።",en:"Ṣarf studies word formation. The root ك ت ب relates to writing: kataba (he wrote), kātib (writer), maktūb (written).",task:"Find the shared root letters.",answer:"ك ت ب. The pattern changes the word’s grammatical form and meaning.",kind:"recall"},
+ {stage:"06 · ṢARF",title:"Recognise a common pattern",ar:"فَاعِلٌ",plain:"فاعل",am:"فَاعِلٌ ብዙ ጊዜ የተግባር ፈጻሚን የሚያመለክት ቅርጽ ነው።",en:"The pattern فَاعِلٌ often forms an active participle: كَاتِبٌ = a writer.",task:"What is كَاتِبٌ on the pattern فَاعِلٌ?",answer:"An active participle: a person who writes.",kind:"recall"},
+ {stage:"07 · READ WITHOUT MARKS",title:"Infer the short vowels",ar:"كَتَبَ",plain:"كتب",am:"አሁን ሐረካት ሳይታዩ ይሞክሩ። ቃሉን ከትርጉሙና ከአውዱ ጋር ያገናኙ።",en:"Without tashkīl, the same consonant skeleton can require context. Read the known example, then check the fully marked form.",task:"Read the unmarked letters كتب. Reveal one possible reading.",answer:"كَتَبَ (kataba, he wrote). Context matters: unmarked Arabic can have other readings.",kind:"unmarked"},
+ {stage:"07 · READ WITHOUT MARKS",title:"Compare marked and unmarked text",ar:"رَبِّ الْعَالَمِينَ",plain:"رب العالمين",am:"ሐረካትን በማስወገድ የቀሩትን ፊደሎች ይመልከቱ፤ ከአውድ ጋር በማያያዝ ንባቡን ይገምቱ።",en:"The marked form supports accurate recitation. The unmarked form asks you to use vocabulary, grammar and context.",task:"Tap the toggle to compare the two forms.",answer:"Use the marked text to verify your inferred reading. Do not guess when context is insufficient.",kind:"compare"},
+ {stage:"05 · NAḤW",title:"The definite article ال",ar:"كِتَابٌ  →  الْكِتَابُ",plain:"كتاب → الكتاب",am:"الـ በስም ፊት ሲመጣ ብዙ ጊዜ የታወቀ/የተወሰነ ስም ያደርገዋል።",en:"The prefix ال often makes a noun definite: kitābun (a book) → al-kitābu (the book). The article's lām assimilates before sun letters.",task:"Which form means 'the book'?",answer:"الْكِتَابُ means 'the book'.",kind:"recall"},
+ {stage:"05 · NAḤW",title:"A preposition changes the ending",ar:"فِي الْبَيْتِ",plain:"في البيت",am:"فِي በ/ውስጥ ማለት ነው። ከእሱ በኋላ የሚመጣው ስም ብዙ ጊዜ በجر ይመጣል።",en:"fī = in. A noun after a preposition is majrūr; the common fully marked ending is kasrah: al-bayti.",task:"Why does الْبَيْتِ end with kasrah here?",answer:"Because it follows the preposition فِي; this is an introductory example of jarr.",kind:"recall"},
+ {stage:"05 · NAḤW",title:"Pronouns are essential vocabulary",ar:"أَنَا  أَنْتَ  هُوَ  هِيَ",plain:"أنا أنت هو هي",am:"አና እኔ፤ አንተَ አንተ (ወንድ)፤ ሁዋ እሱ፤ ሂያ እሷ።",en:"Basic independent pronouns: anā (I), anta (you masculine), huwa (he), hiya (she).",task:"Which pronoun means 'I'?",answer:"أَنَا means 'I'.",kind:"recall"},
+ {stage:"06 · ṢARF",title:"Past and present verb forms",ar:"كَتَبَ  يَكْتُبُ",plain:"كتب يكتب",am:"كَتَبَ ጻፈ (ያለፈ)፤ يَكْتُبُ ይጽፋል (አሁን/የሚደጋገም)።",en:"A simple verb pair: kataba (he wrote) and yaktubu (he writes/is writing). Verb prefixes and patterns help identify person and tense/aspect.",task:"Which one is the past form?",answer:"كَتَبَ is the past form; يَكْتُبُ is the imperfect/present form.",kind:"recall"},
+ {stage:"06 · ṢARF",title:"A root can produce many words",ar:"عَلِمَ  عِلْمٌ  عَالِمٌ",plain:"علم علم عالم",am:"ع ل م ሥር ፊደሎች ከዕውቀት ጋር የተያያዙ ቃላትን ያመነጫሉ።",en:"The root ع ل م relates to knowing: ʿalima (he knew), ʿilm (knowledge), ʿālim (scholar/one who knows).",task:"Find the three root consonants.",answer:"ع ل م. Root recognition helps expand vocabulary.",kind:"recall"},
+ {stage:"07 · READ WITHOUT MARKS",title:"Use context, not guesswork",ar:"عَلِمَ  /  عِلْمٌ",plain:"علم / علم",am:"ያለ ሐረካት የተጻፈው علم በአውድ መሠረት የተለያየ ንባብ ሊኖረው ይችላል።",en:"The consonant skeleton علم can represent different forms. Syntax and sentence context help decide whether it is a verb or noun.",task:"Why is unvowelled Arabic sometimes ambiguous?",answer:"Short vowels are often omitted. Grammar, morphology and context help identify the intended reading.",kind:"unmarked"},
+ {stage:"08 · QUR’AN BRIDGE",title:"Apply the foundation to Al-Fātiḥah",ar:"بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",plain:"بسم الله الرحمن الرحيم",am:"በተማሩት ፊደላት፣ ሐረካት፣ ሸዳና ቃላት አሁን በቁርኣን አንቀጽ ላይ ይለማመዱ።",en:"Move from isolated letters to a short Qur’anic phrase. Listen, follow the words, and repeat slowly.",task:"Listen to the phrase, then read it aloud.",answer:"Bismi-llāhi r-raḥmāni r-raḥīm. Continue in the Qur’an reader for word-by-word meanings.",kind:"quran"}
+];
+let feedIndex=0,feedMarked=false,feedNoMarks=false;
+function renderFeed(){
+ const host=document.getElementById("feedTrack");if(!host)return;
+ host.innerHTML=microLessons.map((x,i)=>`<article class="feed-card" id="feed-${i}"><div class="feed-meta"><span>${x.stage}</span><span>${i+1} / ${microLessons.length}</span></div><div><h2 style="text-align:center;font-size:clamp(22px,4vw,32px)">${x.title}</h2><div class="feed-ar ${feedNoMarks?'no-diacritics':''}" id="feedArabic-${i}">${feedNoMarks?x.plain:x.ar}</div><p class="feed-copy">${x.en}</p><div class="feed-translation"><div><b>አማርኛ</b><br>${x.am}</div><div><b>Practice</b><br>${x.task}</div></div><div class="feed-actions"><button class="primary" onclick="speak(${JSON.stringify(x.ar)})">🔊 Listen</button><button onclick="toggleFeedMarks()">تَشْكِيلٌ ${feedNoMarks?'OFF':'ON'}</button><button onclick="revealFeed(${i})">Reveal / check</button><button onclick="feedNext()">Next lesson ↓</button></div><div class="feed-answer" id="feedAnswer-${i}"></div></div><div class="feed-meta"><span>READ · LISTEN · INFER · REPEAT</span><span>${x.kind==='quran'?'QUR’AN PRACTICE':'MICRO LESSON'}</span></div></article>`).join("");
+ host.scrollTop=0;feedIndex=0;updateFeedControls();
+ host.onscroll=()=>{const cards=[...host.children];let best=0,dist=Infinity;cards.forEach((c,i)=>{const d=Math.abs(c.getBoundingClientRect().top-host.getBoundingClientRect().top);if(d<dist){dist=d;best=i}});feedIndex=best;updateFeedControls()};
+}
+function updateFeedControls(){const c=document.getElementById("feedCounter");if(c)c.textContent=`LESSON ${feedIndex+1} · ${microLessons[feedIndex].stage}`;const dots=document.getElementById("feedDots");if(dots)dots.innerHTML=microLessons.map((_,i)=>`<button class="${i===feedIndex?'active':''}" aria-label="Go to lesson ${i+1}" onclick="feedGo(${i})"></button>`).join("")}
+function feedGo(i){feedIndex=Math.max(0,Math.min(microLessons.length-1,i));document.getElementById("feed-"+feedIndex)?.scrollIntoView({behavior:"smooth",block:"start"});updateFeedControls()}
+function feedNext(){feedGo(feedIndex+1)}
+function feedPrev(){feedGo(feedIndex-1)}
+function revealFeed(i){const x=microLessons[i];const el=document.getElementById("feedAnswer-"+i);if(el)el.textContent=x.answer}
+function toggleFeedMarks(){feedNoMarks=!feedNoMarks;microLessons.forEach((x,i)=>{const el=document.getElementById("feedArabic-"+i);if(el){el.textContent=feedNoMarks?x.plain:x.ar;el.classList.toggle("no-diacritics",feedNoMarks)}});document.querySelectorAll(".feed-actions button").forEach(b=>{if(b.textContent.includes("تَشْكِيلٌ"))b.textContent="تَشْكِيلٌ "+(feedNoMarks?"OFF":"ON")})}
+document.addEventListener("keydown",e=>{if(activeSection==="scrollLearn"&&e.key==="ArrowDown")feedNext();if(activeSection==="scrollLearn"&&e.key==="ArrowUp")feedPrev()});
+
+/* Full Qur'an word-by-word reader, imported from the supplied Ferhan reader. */
+let quranBundle=null,quranChapter=1,quranPageIndex=0,quranMarks=true,quranShowTranslations=true;
+const quranPerPage=8;
+function stripArabicMarks(t){return t.replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g,"")}
+async function initQuranReader(){
+ const status=document.getElementById("quranReaderStatus");try{
+  const r=await fetch("./data/quran-word-by-word.json");if(!r.ok)throw new Error("Qur’an data file not found.");
+  quranBundle=await r.json();const sel=document.getElementById("quranSurahSelect");
+  sel.innerHTML=quranBundle.surahs.map(x=>`<option value="${x[0]}">${x[0]}. ${x[1]}</option>`).join("");
+  sel.value="1";sel.onchange=()=>{quranChapter=Number(sel.value);quranPageIndex=0;renderQuranReader()};
+  if(status)status.textContent="Qur’an dataset loaded · 114 surahs · word-by-word English and Amharic verse translations.";
+  renderQuranReader();
+ }catch(e){if(status)status.textContent="Could not load the Qur’an data: "+e.message+" · Check that data/quran-word-by-word.json is in your GitHub repository."}
+}
+function renderQuranReader(){
+ if(!quranBundle)return;const verses=quranBundle.quran[String(quranChapter)]||[];const start=quranPageIndex*quranPerPage,end=Math.min(verses.length,start+quranPerPage);
+ const host=document.getElementById("quranReaderVerses");host.innerHTML="";
+ for(let i=start;i<end;i++){
+  const verse=verses[i],words=verse[0]||[],key=quranChapter+":"+(i+1),am=quranBundle.amharic[key]||"";
+  const article=document.createElement("article");article.className="reader-ayah";
+  const num=document.createElement("div");num.className="muted";num.textContent=key;article.appendChild(num);
+  const grid=document.createElement("div");grid.className="reader-word-grid";
+  words.forEach(w=>{
+   const card=document.createElement("div");card.className="reader-word";
+   const ar=document.createElement("div");ar.className="arabic";ar.lang="ar";ar.textContent=quranMarks?w[0]:stripArabicMarks(w[0]);card.appendChild(ar);
+   if(quranShowTranslations){const en=document.createElement("small");en.textContent=w[2]||"";card.appendChild(en);const tr=document.createElement("small");tr.textContent=w[1]||"";card.appendChild(tr)}
+   card.addEventListener("click",()=>speak(w[0]));grid.appendChild(card);
+  });
+  article.appendChild(grid);
+  if(quranShowTranslations){const en=document.createElement("p");en.className="muted";en.textContent=verse[1]||"";article.appendChild(en);const amEl=document.createElement("p");amEl.className="amharic";amEl.textContent=am;article.appendChild(amEl)}
+  host.appendChild(article);
+ }
+ const pages=Math.max(1,Math.ceil(verses.length/quranPerPage));document.getElementById("quranPageLabel").textContent=`${quranPageIndex+1} / ${pages} · Surah ${quranChapter}`;
+ document.getElementById("quranSurahSelect").value=String(quranChapter);
+}
+function quranPage(delta){if(!quranBundle)return;const n=(quranBundle.quran[String(quranChapter)]||[]).length;const max=Math.max(0,Math.ceil(n/quranPerPage)-1);quranPageIndex=Math.max(0,Math.min(max,quranPageIndex+delta));renderQuranReader()}
+function toggleQuranMarks(){quranMarks=!quranMarks;document.getElementById("quranMarksBtn").textContent=quranMarks?"تَشْكِيلٌ ON":"تَشْكِيلٌ OFF";renderQuranReader()}
+function toggleQuranTranslation(){quranShowTranslations=!quranShowTranslations;renderQuranReader()}
+const showFerhanBase=show;
+show=function(id){showFerhanBase(id);if(id==="scrollLearn"&&!document.getElementById("feedTrack").children.length)renderFeed();if(id==="quranReader"&&!quranBundle)initQuranReader()};
+
 </script></body></html>

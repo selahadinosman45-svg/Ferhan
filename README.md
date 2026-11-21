@@ -5,6 +5,10 @@ FERHAN is a static Arabic and Amharic Quran-learning website. It is hosted on Gi
 ## Included learning features
 
 - Arabic + Amharic academy, lessons, repeat practice, Tajweed and quizzes.
+- TikTok-style vertical snap-scroll micro-lessons: swipe through letters, letter forms, harakāt, tanwīn, sukūn, shaddah, blending, vocabulary, basic naḥw, ṣarf, and unvowelled reading inference.
+- Each micro-lesson includes Arabic text, Amharic and English explanations, listen/repeat speech, reveal/check answers, and a with/without-tashkīl comparison.
+- Full Qur’an reader for all 114 surahs with word-by-word Arabic, transliteration and English glosses, plus Amharic verse translations; toggle tashkīl on/off.
+- Browser speech synthesis for Arabic words and phrases where an Arabic voice is available.
 - Al-Fatihah word-by-word study and short-surah lessons.
 - Synchronized chapter playback and word highlighting for chapters 1, 112, 113 and 114.
 - Local bookmarks, lesson completion, memorisation checklists and JSON backup/restore.
@@ -12,7 +16,7 @@ FERHAN is a static Arabic and Amharic Quran-learning website. It is hosted on Gi
 
 ## Architecture
 
-- **GitHub Pages:** serves `index.html` and static assets.
+- **GitHub Pages:** serves `index.html` and static assets, including `data/quran-word-by-word.json` (the supplied full Qur’an word-level dataset).
 - **GitHub Actions:** securely authenticates with Quran Foundation, downloads chapter audio URLs and word timing segments, then commits the resulting JSON files.
 - **Browser:** reads `./data/recitation/{chapter}.json`. No Client ID, Client Secret, access token, Worker URL or backend credentials are placed in the website.
 
@@ -54,6 +58,7 @@ Upload the contents of this ZIP to the root of your GitHub repository. Keep the 
 
 The repository root should contain:
 - `index.html`
+- `data/quran-word-by-word.json`
 - `README.md`
 - `.github/workflows/update-quran-data.yml`
 - `scripts/update-recitation.mjs`
@@ -107,3 +112,10 @@ Bookmarks, lesson completion and memorisation checklists remain in browser local
 - OAuth quickstart: https://api-docs.quran.foundation/docs/quickstart/
 - Audio API: https://api-docs.quran.com/docs/sdk/javascript/audio/
 - Chapter recitation endpoint: https://api-docs.quran.foundation/docs/content_apis_versioned/4.0.0/chapter-reciter-audio-file/
+
+
+## Integrated source data and attribution
+
+The full Qur’an word-by-word Arabic text, transliteration and English glosses were carried over from the supplied “Ferhan Quran Learning for Adults” HTML file. That source credits Quranwbw.com (with credits there to quran.com, tanzil.net and seventysixnine.com). The Amharic ayah translations are included unmodified and attributed in the source file to Muhammed Sadiq & Muhammed Sani Habib (am.sadiq, Tanzil.net, 2012). Word-level Amharic glosses remain available for Al-Fātiḥah in the academy's existing word study. Please retain these attributions and have translations reviewed by a qualified teacher.
+
+The scroll lessons are introductory learning material, not a substitute for a qualified Arabic or Qur’an teacher. Unvowelled Arabic can be ambiguous; use vocabulary, morphology, syntax and context, and verify recitation against a trusted mushaf and teacher. Browser voice output depends on installed device voices and may not model tajweed accurately.
