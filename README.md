@@ -181,7 +181,7 @@ The supplied Figma URL could not be fetched in this environment (restricted acce
 - Existing Qur’an text, translations, learning content, audio workflow, local progress and privacy model are retained.
 
 
-## V8 — synchronized word-by-word recitation studio
+## V9 — synchronized word-by-word recitation studio
 
 The recitation player now includes a seekable transport, playback speed presets, five-second skip controls, ayah previous/next and replay, optional current-ayah looping, and tap-to-seek Arabic words. Highlighting continues to use the official word-level timing segments supplied in `data/recitation/`; it never estimates word boundaries.
 

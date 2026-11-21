@@ -64,10 +64,17 @@ Qur’anic text and translations should be checked against a trusted mushaf and 
 The Qur'an reader includes an optional Mushaf-style presentation, focus mode, adjustable Arabic type size, verse-level listen and recall-hide controls, and a local Hifz list. Learners can save ayahs, revisit the oldest review first, mark items as personally learned, remove items, and export their list as JSON. Hifz data is stored in this browser under `ferhanHifzStudioV7`; it is separate from the Quran text dataset and is not synced between devices. The service-worker cache is versioned `ferhan-academy-v7` so installed copies can receive the updated shell.
 
 
-## V8 · synchronized word-by-word recitation
+## V9 · synchronized word-by-word recitation
 
 The full-surah player uses Quran Foundation chapter audio and its published word-level timing segments. While audio plays, the active Arabic word is highlighted and brought into view. Each word is also tappable to seek to that word's official start timestamp. The transport includes seeking, five-second skip, speed presets, play/pause, ayah previous/next, ayah replay, and optional current-ayah looping.
 
 To publish timing data, configure repository secrets `QF_CLIENT_ID` and `QF_CLIENT_SECRET`, plus repository variable `QF_CHAPTER_RECITER_ID` (and optionally `QF_RECITER_NAME`). Run **Actions → Update Quran recitation data → Run workflow**. The workflow publishes `data/recitation/index.json` and per-surah JSON. Until the workflow has run successfully, the player reports timing data unavailable rather than inventing timestamps. Credentials are used only in GitHub Actions and are not included in the public app. Audio streaming requires internet access.
 
 The service-worker shell cache is now `ferhan-academy-v8`; existing V7 Hifz and bookmark storage keys are deliberately retained so local progress is not discarded by this update.
+
+## V9 visual refinement
+- The Qur'an section opens in a Mushaf-inspired page layout with a surah title plate, basmala where appropriate, Arabic ayah flow, decorative ayah markers, and English/Amharic verse translations.
+- Word-level audio pronunciation remains available by tapping an Arabic word. Tashkīl, translations, font sizing, recall hiding, bookmarking and Hifz actions remain available.
+- The reader can switch between Mushaf view and compact word-card view.
+- Mobile navigation is a five-destination, safe-area-aware iPhone-style bottom tab bar. The desktop top navigation remains unchanged.
+- The rest of the learning sections retain their existing layouts; this release concentrates the major visual change in the Qur'an reader and improves contrast and navigation styling.

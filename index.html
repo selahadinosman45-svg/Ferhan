@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#123d35"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png"><meta name="google" content="notranslate">
 <title>ferhan — Quran Arabic Learning · V8</title>
 <style>
@@ -463,6 +463,106 @@ main{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
 .sync-verse-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:13px}.sync-verse-nav .btn{font-size:12px;padding:9px 12px}.sync-player .muted{color:#d3dfd7}.sync-word{transition:background .16s ease,border-color .16s ease,transform .16s ease}.sync-word[aria-current="true"]{background:#f8e8bc!important;border:2px solid #c79b45!important;box-shadow:0 0 0 5px #d6b36b28!important;transform:translateY(-3px) scale(1.025)}
 @media(max-width:600px){.sync-player{padding:14px;margin-left:-4px;margin-right:-4px}.sync-player-controls{gap:7px}.sync-setting{font-size:11px}.sync-verse-nav .btn{flex:1}.sync-word-grid{gap:6px}.sync-word{min-width:78px;padding:8px 7px}}
 
+
+/* V9 — true Mushaf page presentation + high-contrast iPhone navigation */
+:root{--forest:#173f35;--forest-deep:#10372e;--gold:#c9a45f;--gold-deep:#9b7437;--app-bg:#f7f6f1;--ink:#1b2c24;--muted:#69766f;--hairline:#e6e0d3}
+body{background:var(--app-bg);color:var(--ink)}
+.brand{color:#173f35;font-size:19px;letter-spacing:.01em}.brandmark{background:linear-gradient(145deg,#f0d99e,#c69b4d);color:#173f35;border-radius:50%;font-weight:900}
+.hero{background:radial-gradient(circle at 90% 10%,#ffffff18,transparent 30%),linear-gradient(130deg,#0e3028,#174b3d 62%,#286451)}
+.btn{font-weight:720}.btn.secondary{background:#edf2ed;color:#173f35;border:1px solid #dce6dd}.btn.gold{background:linear-gradient(135deg,#f0d99e,#c69b4d);color:#19372d}
+.section-head .sub{color:#69766f}
+/* Reader chrome */
+#quranReader>.section-head{margin-bottom:12px}
+#quranReader>.section-head .sub{max-width:580px}
+#quranReader>.panel{padding:clamp(12px,2.4vw,24px);background:#f1eee5;border-color:#e4ddcf;box-shadow:0 16px 42px #2a3a2d0c}
+#quranReader .reader-toolbar{position:sticky;top:68px;z-index:12;padding:10px;background:rgba(250,249,246,.94);border:1px solid #e8e2d6;border-radius:18px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+#quranReader .reader-toolbar select{background:#fff;color:#183d33;border-color:#e2dacb;font-weight:700}
+#quranReader .mushaf-tools{padding:2px 3px 10px;gap:7px}
+#quranReader .mushaf-tools .btn{font-size:12px;min-height:38px;padding:8px 12px}
+#quranReader .reader-font-control{display:flex;align-items:center;gap:8px;padding:7px 11px;background:#fff;border:1px solid #e7dfd0;border-radius:999px}
+.mushaf-reader-host{max-width:820px;margin:0 auto}
+.mushaf-page{position:relative;overflow:hidden;margin:14px auto 18px;padding:clamp(20px,5vw,48px) clamp(16px,5vw,52px);max-width:760px;min-height:640px;background:#fffefa;border:1px solid #e4d8c2;border-radius:7px;box-shadow:0 16px 44px #43351d12,inset 0 0 0 7px #fffefa,inset 0 0 0 8px #eee4d2}
+.mushaf-page:before,.mushaf-page:after{content:"۞";position:absolute;color:#d8c69e;font-size:17px;opacity:.8}
+.mushaf-page:before{top:13px;left:17px}.mushaf-page:after{top:13px;right:17px}
+.mushaf-surah-plate{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 auto 8px;padding:10px 14px;max-width:420px;border-top:1px solid #e7dcc5;border-bottom:1px solid #e7dcc5;color:#8d7041;background:linear-gradient(90deg,transparent,#f8f3e8,transparent)}
+.mushaf-surah-name{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.mushaf-surah-arabic{font-size:25px!important;color:#254b3d!important;line-height:1.4!important;margin:0!important}
+.mushaf-ornament{font-size:18px;color:#bd9855}
+.mushaf-page-range{text-align:center;color:#a08a62;font-size:9px;font-weight:850;letter-spacing:.18em;margin:12px 0 20px}
+.mushaf-basmala{font-size:clamp(29px,5vw,39px)!important;color:#214b3c!important;text-align:center!important;line-height:1.9!important;margin:4px 0 20px!important}
+#quranReader .reader-ayah{position:relative;margin:0;padding:15px 0 13px;border:0;border-bottom:1px solid #eee7da;border-radius:0;background:transparent;box-shadow:none;transition:background .2s ease}
+#quranReader .reader-ayah:last-child{border-bottom:0}
+#quranReader.mushaf-mode .reader-ayah>div:first-child:before,#quranReader.mushaf-mode .reader-ayah>div:first-child:after{content:none!important;display:none!important}
+#quranReader .mushaf-ayah-label{display:inline-grid;place-items:center;width:25px;height:25px;margin:0 0 7px;border:1px solid #e6dcc7;border-radius:50%;color:#9a7a45;font-size:9px;font-weight:800;letter-spacing:.04em}
+#quranReader .reader-word-grid{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:baseline;gap:1px 5px;direction:rtl;text-align:right;margin:0;line-height:2.35}
+#quranReader .reader-word{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;padding:0 2px;border:0;border-radius:0;background:transparent;color:#183f34;box-shadow:none;cursor:pointer;line-height:1.5}
+#quranReader .reader-word:active{background:#f5ecd8;border-radius:7px}
+#quranReader .reader-word .arabic{font-size:clamp(29px,5.4vw,42px);line-height:1.9;color:#173f35;margin:0;white-space:nowrap}
+#quranReader .reader-word small{display:none}
+#quranReader .ayah-end-mark{display:inline-flex;align-items:center;justify-content:center;align-self:center;min-width:28px;height:28px;margin:0 5px;color:#a98548;font-family:serif;font-size:17px;white-space:nowrap}
+#quranReader .mushaf-translations{margin:8px 0 0;padding:9px 12px;border-left:2px solid #d7c295;background:#f9f6ee;border-radius:0 10px 10px 0}
+#quranReader .mushaf-translations p{margin:3px 0;line-height:1.65;font-size:13px;color:#68756e}
+#quranReader .mushaf-translations .mushaf-amharic{font-size:14px;color:#38584b}
+#quranReader .ayah-actions{justify-content:flex-start;margin-top:8px;gap:6px}
+#quranReader .ayah-actions button{background:transparent;border:1px solid #e6dece;color:#6c795f;padding:5px 10px;font-size:10px}
+#quranReader .reader-ayah.recall-hidden .reader-word-grid{filter:blur(9px);background:#f4efe4;border-radius:12px}
+#quranReader .reader-ayah.recall-hidden .reader-word-grid:after{border-radius:12px}
+#quranReader .reader-pagination{display:flex;justify-content:space-between;align-items:center;gap:10px;max-width:760px;margin:14px auto 0;padding-top:12px;border-top:1px solid #e4ddcf}
+#quranReader .reader-pagination .btn{min-height:42px}
+#quranReader .mushaf-progress{max-width:760px;margin:10px auto 15px;background:#e3ddcf}
+#quranReader .mushaf-progress span{background:linear-gradient(90deg,#1c5a46,#c7a15d)}
+#quranReader.mushaf-mode .panel{background:#f1eee5}
+#quranReader.mushaf-mode .reader-ayah{background:transparent}
+#quranReader.mushaf-mode .reader-word{background:transparent;border:0;min-width:0;padding:0 2px}
+#quranReader.mushaf-mode .reader-word .arabic{color:#173f35}
+#quranReader.focus-mode .reader-ayah:not(.active-ayah){opacity:.42}
+
+#quranReader.compact-reader .mushaf-page{min-height:0;background:#fff;border:1px solid #e6e0d3;border-radius:20px;box-shadow:0 10px 32px #20352a08;padding:20px}
+#quranReader.compact-reader .reader-ayah{padding:14px;margin:10px 0;border:1px solid #e8e1d5;border-radius:16px;background:#fff}
+#quranReader.compact-reader .reader-word-grid{gap:8px;justify-content:center}
+#quranReader.compact-reader .reader-word{min-width:76px;padding:7px 9px;border:1px solid #e8e1d5;border-radius:12px;background:#fff}
+#quranReader.compact-reader .reader-word small{display:block;font-size:10px;color:#718077}
+
+/* Keep the existing learning sections intact; only navigation and palette are normalized. */
+@media(min-width:761px){.mobile-tabbar{display:none!important}}
+@media(max-width:760px){
+ header{position:sticky!important;top:0;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;min-height:62px;padding:8px 15px!important;background:rgba(250,249,246,.96)!important;z-index:50}
+ header .brand{margin:0!important;font-size:18px;gap:10px}
+ header .brandmark{width:40px;height:40px;flex:0 0 40px}
+ header nav:not(.mobile-tabbar){display:none!important}
+ .mobile-tabbar{position:fixed!important;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;align-items:center!important;gap:2px!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;max-width:none!important;height:auto!important;min-height:65px;padding:7px 8px calc(7px + env(safe-area-inset-bottom))!important;border:0!important;border-top:1px solid #e6e1d7!important;border-radius:18px 18px 0 0!important;background:rgba(255,255,252,.96)!important;box-shadow:0 -8px 28px #1c30240d!important;backdrop-filter:blur(24px) saturate(180%)!important;-webkit-backdrop-filter:blur(24px) saturate(180%)!important;z-index:100!important;overflow:visible!important
+ }
+ .mobile-tabbar button{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;min-width:0!important;min-height:48px!important;padding:5px 2px!important;border:0!important;border-radius:13px!important;background:transparent!important;color:#77847b!important;font:650 10px/1.1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;letter-spacing:0!important;white-space:nowrap!important}
+ .mobile-tabbar button .tab-icon{font-size:21px!important;line-height:1!important;color:#7c8a80!important}
+ .mobile-tabbar button.active{background:#edf2ed!important;color:#173f35!important}
+ .mobile-tabbar button.active .tab-icon{color:#b18b4c!important}
+ main{padding:13px 12px calc(92px + env(safe-area-inset-bottom))!important}
+ footer{padding-bottom:calc(95px + env(safe-area-inset-bottom))!important}
+ #quranReader>.panel{padding:10px!important;border-radius:20px!important}
+ #quranReader .reader-toolbar{top:62px;gap:6px;padding:8px;border-radius:15px}
+ #quranReader .reader-toolbar select{min-width:100%;flex-basis:100%;height:43px}
+ #quranReader .reader-toolbar .btn{flex:1;font-size:11px;padding:8px 10px}
+ #quranReader .mushaf-tools{gap:6px}
+ #quranReader .mushaf-tools .btn{flex:1;font-size:10px;padding:7px 9px}
+ #quranReader .reader-font-control{width:100%;justify-content:space-between;font-size:11px}
+ .mushaf-page{min-height:560px;padding:24px 17px 28px;border-radius:5px;box-shadow:0 10px 30px #43351d10,inset 0 0 0 5px #fffefa,inset 0 0 0 6px #eee4d2}
+ .mushaf-page:before{top:10px;left:11px}.mushaf-page:after{top:10px;right:11px}
+ .mushaf-surah-plate{margin-bottom:6px;padding:8px 9px;gap:9px}
+ .mushaf-surah-name{font-size:10px}
+ .mushaf-surah-arabic{font-size:22px!important}
+ .mushaf-page-range{margin:9px 0 15px;font-size:8px}
+ #quranReader .reader-ayah{padding:13px 0 11px}
+ #quranReader .reader-word-grid{gap:0 3px;line-height:2.25}
+ #quranReader .reader-word .arabic{font-size:clamp(27px,7vw,36px);line-height:1.95}
+ #quranReader .ayah-end-mark{font-size:15px;min-width:25px}
+ #quranReader .mushaf-translations{padding:8px 9px;margin-top:7px}
+ #quranReader .mushaf-translations p{font-size:12px}
+ #quranReader .mushaf-translations .mushaf-amharic{font-size:13px}
+ #quranReader .ayah-actions button{font-size:9px;padding:5px 8px}
+ #quranReader .reader-pagination .btn{font-size:11px;padding:8px 10px}
+}
+@media(prefers-reduced-motion:reduce){.mobile-tabbar,.mushaf-page,.reader-ayah{transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -637,16 +737,16 @@ main{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
   
  </div>
 </section>
-<section class="section" id="quranReader" hidden>
- <div class="section-head"><div><h2>Complete Qur’an · all 114 surahs</h2><p class="sub">Read all 6,236 ayahs in Arabic, word by word, with transliteration, English glosses, Amharic verse translations, and a tashkīl on/off toggle.</p></div></div>
+<section class="section mushaf-mode" id="quranReader" hidden>
+ <div class="section-head"><div><h2>The Qur’an</h2><p class="sub">Mushaf-style reading · 114 surahs · English and Amharic support.</p></div></div>
  <div class="panel">
   <div class="reader-toolbar">
    <select id="quranSurahSelect" aria-label="Choose surah"></select>
    <button class="btn secondary" id="quranMarksBtn" onclick="toggleQuranMarks()">تَشْكِيلٌ ON</button>
-   <button class="btn secondary" onclick="toggleQuranTranslation()">EN + አማ</button>
+   <button class="btn secondary" id="quranTranslationBtn" onclick="toggleQuranTranslation()">Translations ON</button>
   </div>
   <div class="mushaf-tools">
-   <button class="btn gold" id="mushafModeBtn" onclick="toggleMushafMode()">۞ Mushaf view</button>
+   <button class="btn gold" id="mushafModeBtn" onclick="toggleMushafMode()">۞ Mushaf view ON</button>
    <button class="btn secondary" id="focusModeBtn" onclick="toggleFocusMode()">◉ Focus</button>
    <button class="btn secondary" onclick="saveCurrentAyahBookmark()">☆ Bookmark ayah</button>
    <button class="btn secondary" onclick="showMemorisationStudio()">✧ Memorisation</button>
@@ -654,7 +754,7 @@ main{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
   </div>
   <div class="mushaf-progress" aria-label="Surah reading progress"><span id="mushafProgressBar"></span></div>
   <div class="muted" id="quranReaderStatus">Loading the Qur’an word-by-word dataset…</div>
-  <div id="quranReaderVerses"></div>
+  <div id="quranReaderVerses" class="mushaf-reader-host"></div>
   <section class="panel" id="memorisationStudio" hidden style="margin-top:16px">
    <div class="section-head"><div><div class="tag">YOUR HIFZ SPACE</div><h3>Memorisation studio</h3><p class="sub">Save ayahs to revise, practise recall, and track your own review rhythm.</p></div></div>
    <div class="memorise-dock"><div class="memorise-stat"><strong id="memoriseSavedCount">0</strong><small>Saved ayahs</small></div><div class="memorise-stat"><strong id="memoriseMasteredCount">0</strong><small>Marked learned</small></div><div class="memorise-stat"><strong id="memoriseDueCount">0</strong><small>Ready to review</small></div></div>
@@ -1214,32 +1314,57 @@ async function initQuranReader(){
  }catch(e){if(status)status.textContent="Could not load the Qur’an data: "+e.message+" · Check that data/quran-word-by-word.json is in your GitHub repository."}
 }
 function renderQuranReader(){
- if(!quranBundle)return;const verses=quranBundle.quran[String(quranChapter)]||[];const start=quranPageIndex*quranPerPage,end=Math.min(verses.length,start+quranPerPage);
+ if(!quranBundle)return;
+ const verses=quranBundle.quran[String(quranChapter)]||[];
+ const start=quranPageIndex*quranPerPage,end=Math.min(verses.length,start+quranPerPage);
  const host=document.getElementById("quranReaderVerses");host.innerHTML="";
+ const meta=quranBundle.surahs.find(x=>Number(x[0])===Number(quranChapter));
+ const rawName=meta?String(meta[1]):"Surah "+quranChapter;
+ const arabicName=(rawName.match(/\(([^)]+)\)/)||[])[1]||"";
+ const englishName=rawName.replace(/\s*\([^)]*\)/,"");
+ const page=document.createElement("section");page.className="mushaf-page";page.setAttribute("aria-label",englishName+" Mushaf reading page");
+ const plate=document.createElement("div");plate.className="mushaf-surah-plate";
+ const left=document.createElement("div");left.className="mushaf-surah-name";left.textContent=englishName;
+ const right=document.createElement("div");right.className="mushaf-surah-arabic arabic";right.textContent=arabicName;
+ const ornament=document.createElement("span");ornament.className="mushaf-ornament";ornament.textContent="۞";
+ plate.append(left,ornament,right);page.appendChild(plate);
+ const range=document.createElement("div");range.className="mushaf-page-range";range.textContent=`AYAT ${start+1}–${end}  ·  JUZ’ / READING`;page.appendChild(range);
+ if(quranChapter!==1&&quranChapter!==9&&start===0){
+  const basmala=document.createElement("div");basmala.className="mushaf-basmala arabic";basmala.lang="ar";basmala.textContent="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";page.appendChild(basmala);
+ }
  for(let i=start;i<end;i++){
   const verse=verses[i],words=verse[0]||[],key=quranChapter+":"+(i+1),am=quranBundle.amharic[key]||"";
   const article=document.createElement("article");article.className="reader-ayah";article.dataset.ayah=key;
-  const num=document.createElement("div");num.className="muted";num.textContent=key;article.appendChild(num);
-  const grid=document.createElement("div");grid.className="reader-word-grid";
-  words.forEach(w=>{
-   const card=document.createElement("div");card.className="reader-word";
-   const ar=document.createElement("div");ar.className="arabic";ar.lang="ar";ar.textContent=quranMarks?w[0]:stripArabicMarks(w[0]);card.appendChild(ar);
+  const num=document.createElement("div");num.className="mushaf-ayah-label";num.textContent=String(i+1).padStart(3,"0");article.appendChild(num);
+  const grid=document.createElement("div");grid.className="reader-word-grid";grid.setAttribute("aria-label",`Surah ${quranChapter}, ayah ${i+1}`);
+  words.forEach((w,wi)=>{
+   const card=document.createElement("button");card.type="button";card.className="reader-word";card.setAttribute("aria-label","Listen to "+w[0]);
+   const ar=document.createElement("span");ar.className="arabic";ar.lang="ar";ar.textContent=quranMarks?w[0]:stripArabicMarks(w[0]);card.appendChild(ar);
    if(quranShowTranslations){const en=document.createElement("small");en.textContent=w[2]||"";card.appendChild(en);const tr=document.createElement("small");tr.className="am";tr.textContent=w[1]||"";card.appendChild(tr)}
    card.addEventListener("click",()=>speak(w[0]));grid.appendChild(card);
   });
+  const endMark=document.createElement("span");endMark.className="ayah-end-mark";endMark.textContent="۞"+String(i+1).toLocaleString("ar-EG");grid.appendChild(endMark);
   article.appendChild(grid);
-  if(quranShowTranslations){const en=document.createElement("p");en.className="muted";en.textContent=verse[1]||"";article.appendChild(en);const amEl=document.createElement("p");amEl.className="amharic";amEl.textContent=am;article.appendChild(amEl)}
+  if(quranShowTranslations){
+   const translations=document.createElement("div");translations.className="mushaf-translations";
+   const en=document.createElement("p");en.className="mushaf-english";en.textContent=verse[1]||"";
+   const amEl=document.createElement("p");amEl.className="mushaf-amharic";amEl.lang="am";amEl.textContent=am;
+   translations.append(en,amEl);article.appendChild(translations);
+  }
   const actions=document.createElement("div");actions.className="ayah-actions";
-  const listen=document.createElement("button");listen.textContent="▶ Listen";listen.onclick=()=>speak(words.map(w=>w[0]).join(" "));
-  const recall=document.createElement("button");recall.textContent="◉ Hide for recall";recall.onclick=()=>{article.classList.toggle("recall-hidden");recall.textContent=article.classList.contains("recall-hidden")?"Reveal ayah":"◉ Hide for recall"};
-  const save=document.createElement("button");save.textContent="☆ Save to Hifz";save.onclick=()=>saveMemorisationAyah(key);
-  actions.append(listen,recall,save);article.appendChild(actions);host.appendChild(article);
+  const listen=document.createElement("button");listen.type="button";listen.textContent="▶ Listen";listen.onclick=()=>speak(words.map(w=>w[0]).join(" "));
+  const recall=document.createElement("button");recall.type="button";recall.textContent="◉ Recall";recall.onclick=()=>{article.classList.toggle("recall-hidden");recall.textContent=article.classList.contains("recall-hidden")?"Reveal ayah":"◉ Recall"};
+  const save=document.createElement("button");save.type="button";save.textContent="☆ Save";save.onclick=()=>saveMemorisationAyah(key);
+  actions.append(listen,recall,save);article.appendChild(actions);page.appendChild(article);
  }
- const pages=Math.max(1,Math.ceil(verses.length/quranPerPage));document.getElementById("quranPageLabel").textContent=`${quranPageIndex+1} / ${pages} · Surah ${quranChapter}`;
+ host.appendChild(page);
+ const pages=Math.max(1,Math.ceil(verses.length/quranPerPage));
+ document.getElementById("quranPageLabel").textContent=`${quranPageIndex+1} / ${pages}  ·  ${englishName}`;
  document.getElementById("quranSurahSelect").value=String(quranChapter);
  const bar=document.getElementById("mushafProgressBar");if(bar)bar.style.width=(verses.length?Math.min(100,(end/verses.length)*100):0)+"%";
+ const transBtn=document.getElementById("quranTranslationBtn");if(transBtn)transBtn.textContent=quranShowTranslations?"Translations ON":"Translations OFF";
+ const marksBtn=document.getElementById("quranMarksBtn");if(marksBtn)marksBtn.textContent=quranMarks?"Tashkīl ON":"Tashkīl OFF";
 }
-
 function quranPage(delta){if(!quranBundle)return;const n=(quranBundle.quran[String(quranChapter)]||[]).length;const max=Math.max(0,Math.ceil(n/quranPerPage)-1);quranPageIndex=Math.max(0,Math.min(max,quranPageIndex+delta));renderQuranReader()}
 function toggleQuranMarks(){quranMarks=!quranMarks;document.getElementById("quranMarksBtn").textContent=quranMarks?"تَشْكِيلٌ ON":"تَشْكِيلٌ OFF";renderQuranReader()}
 function toggleQuranTranslation(){quranShowTranslations=!quranShowTranslations;renderQuranReader()}
@@ -1276,7 +1401,7 @@ syncFerhanTabs(activeSection||'home');
 const HIFZ_KEY="ferhanHifzStudioV7";
 function readHifz(){try{return JSON.parse(localStorage.getItem(HIFZ_KEY)||"{}")}catch(e){return {}}}
 function writeHifz(data){localStorage.setItem(HIFZ_KEY,JSON.stringify(data));renderMemorisationStudio()}
-function toggleMushafMode(){const root=document.getElementById("quranReader");root.classList.toggle("mushaf-mode");document.getElementById("mushafModeBtn").textContent=root.classList.contains("mushaf-mode")?"▤ Standard view":"۞ Mushaf view"}
+function toggleMushafMode(){const root=document.getElementById("quranReader");const active=root.classList.toggle("mushaf-mode");root.classList.toggle("compact-reader",!active);document.getElementById("mushafModeBtn").textContent=active?"۞ Mushaf view ON":"▤ Compact view ON"}
 function toggleFocusMode(){const root=document.getElementById("quranReader");root.classList.toggle("focus-mode");document.getElementById("focusModeBtn").textContent=root.classList.contains("focus-mode")?"◎ Focus on":"◉ Focus"}
 function setReaderFontSize(value){document.querySelectorAll("#quranReader .reader-word .arabic").forEach(el=>el.style.fontSize=value+"px")}
 function saveCurrentAyahBookmark(){const key=quranChapter+":"+(quranPageIndex*quranPerPage+1);localStorage.setItem("ferhanQuranBookmarkV7",key);const status=document.getElementById("quranReaderStatus");status.textContent="Bookmark saved · "+key+" · This device only."}
