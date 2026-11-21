@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#123d35"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png"><meta name="google" content="notranslate">
-<title>ferhan — Quran Arabic Learning · V10</title>
+<title>ferhan — Quran Arabic Learning · V11</title>
 <style>
 @font-face{font-family:"Ferhan Uthmani";src:url("./assets/fonts/Uthmani.woff2") format("woff2"),url("./assets/fonts/Uthmani.woff") format("woff");font-display:swap}
 .arabic,.feed-ar,.hero-art{font-family:"Ferhan Uthmani","Noto Naskh Arabic","Amiri",serif}
@@ -564,7 +564,7 @@ body{background:var(--app-bg);color:var(--ink)}
 @media(prefers-reduced-motion:reduce){.mobile-tabbar,.mushaf-page,.reader-ayah{transition:none!important}}
 
 
-/* V10 — high-contrast native iPhone shell + true continuous Mushaf typography */
+/* V11 — high-contrast native iPhone shell + true continuous Mushaf typography */
 :root{
  --nav-ink:#173f35;--nav-muted:#52675d;--nav-active:#173f35;
  --gold-strong:#a8792f;--paper:#fbfaf6;--reader-ink:#193d32;
@@ -633,6 +633,63 @@ header>nav:not(.mobile-tabbar) button.active{background:#e9efe9!important;color:
  #quranReader .reader-word .arabic{font-size:clamp(30px,8vw,39px)!important;line-height:2.0!important}
  #quranReader .mushaf-translations .mushaf-english{font-size:14px!important}
  #quranReader .mushaf-translations .mushaf-amharic{font-size:15px!important}
+}
+
+
+/* V11 — decisive contrast + single fixed native mobile tab bar */
+:root{
+ --ink:#142c24; --muted:#43564c; --line:#d8d2c4;
+ --nav-ink:#123d35; --nav-muted:#40574c;
+}
+body{color:#142c24!important}
+header{background:#fbfaf6!important;color:#123d35!important}
+header .brand,header .brand span{color:#123d35!important;font-weight:900!important}
+header .brandmark{background:#d6ad62!important;color:#123d35!important;font-weight:900!important}
+header>nav:not(.mobile-tabbar) button{color:#29483b!important;font-weight:850!important}
+.section h2,.section h3,.section-head h2,main h1,main h2,main h3{color:#142c24!important;font-weight:850!important}
+.section .sub,.section p,.card p,.muted{color:#43564c!important}
+.tag,.kicker,.section-eyebrow{color:#80591f!important;font-weight:900!important}
+.btn,.tabs button,.quiz-option{font-weight:850!important}
+.btn.secondary{color:#123d35!important;background:#e7eee8!important;border:1px solid #cbd9ce!important}
+#quranReader .mushaf-surah-name,
+#quranReader .mushaf-surah-arabic,
+#quranReader .reader-word .arabic,
+#quranReader .mushaf-basmala{color:#123d35!important}
+#quranReader .mushaf-translations .mushaf-english{color:#243b31!important;font-weight:550!important}
+#quranReader .mushaf-translations .mushaf-amharic{color:#234b3c!important;font-weight:600!important}
+@media(max-width:900px), (hover:none) and (pointer:coarse){
+ body{padding-bottom:calc(78px + env(safe-area-inset-bottom))!important}
+ header{position:sticky!important;top:0!important;z-index:110!important;min-height:66px!important;padding:9px 16px!important;justify-content:flex-start!important}
+ header>nav:not(.mobile-tabbar){display:none!important}
+ body>nav.mobile-tabbar{
+   display:grid!important;position:fixed!important;top:auto!important;bottom:0!important;
+   left:0!important;right:0!important;width:100%!important;max-width:none!important;
+   height:auto!important;min-height:68px!important;
+   grid-template-columns:repeat(5,minmax(0,1fr))!important;
+   grid-auto-flow:column!important;align-items:center!important;justify-items:stretch!important;
+   gap:2px!important;margin:0!important;padding:7px 5px calc(7px + env(safe-area-inset-bottom))!important;
+   border:0!important;border-top:1px solid #d9d4c8!important;border-radius:17px 17px 0 0!important;
+   background:#fffefa!important;box-shadow:0 -8px 28px #142c241c!important;
+   z-index:9999!important;overflow:visible!important;flex-wrap:nowrap!important;
+ }
+ body>nav.mobile-tabbar button{
+   display:flex!important;position:static!important;float:none!important;
+   width:100%!important;min-width:0!important;min-height:51px!important;
+   flex-direction:column!important;align-items:center!important;justify-content:center!important;
+   gap:4px!important;padding:5px 1px!important;margin:0!important;
+   border:0!important;border-radius:12px!important;background:transparent!important;
+   color:#344f43!important;font:800 11px/1.15 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+   opacity:1!important;visibility:visible!important;white-space:nowrap!important;
+ }
+ body>nav.mobile-tabbar button .tab-icon{
+   display:block!important;font-size:22px!important;line-height:1!important;
+   color:#344f43!important;font-weight:900!important;opacity:1!important
+ }
+ body>nav.mobile-tabbar button.active{
+   color:#123d35!important;background:#e6eee7!important;font-weight:900!important
+ }
+ body>nav.mobile-tabbar button.active .tab-icon{color:#9b702b!important}
+ main{padding-bottom:calc(105px + env(safe-area-inset-bottom))!important}
 }
 
 </style>
@@ -1489,7 +1546,7 @@ function reviewNextMemorisation(){const entries=Object.entries(readHifz()).sort(
 function exportMemorisation(){const blob=new Blob([JSON.stringify(readHifz(),null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="ferhan-hifz-review.json";a.click();URL.revokeObjectURL(url)}
 
 
-/* V10: enforce one primary navigation on touch-sized iPhones and keep labels legible. */
+/* V11: enforce one primary navigation on touch-sized iPhones and keep labels legible. */
 (function enforceNativeMobileNavigation(){
  const apply=()=>{
   const desktop=document.querySelector('header>nav:not(.mobile-tabbar)');
