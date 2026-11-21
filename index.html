@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#123d35"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png"><meta name="google" content="notranslate">
-<title>ferhan — Quran Arabic Learning · V6</title>
+<title>ferhan — Quran Arabic Learning · V8</title>
 <style>
 @font-face{font-family:"Ferhan Uthmani";src:url("./assets/fonts/Uthmani.woff2") format("woff2"),url("./assets/fonts/Uthmani.woff") format("woff");font-display:swap}
 .arabic,.feed-ar,.hero-art{font-family:"Ferhan Uthmani","Noto Naskh Arabic","Amiri",serif}
@@ -229,11 +229,246 @@ footer{color:#89918a}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
+
+/* ── FERHAN 2026 product UI: visual-first dashboard + immersive reading feed ── */
+:root{--green:#173f35;--green2:#2d6b59;--gold:#c9a45f;--cream:#f7f5ef;--ink:#182820;--muted:#7b857e;--line:#ebe6dc}
+body{background:#f8f7f3;color:var(--ink);letter-spacing:-.018em}
+header{background:rgba(250,249,246,.91);color:var(--ink);border-bottom:1px solid #eae6de;box-shadow:0 8px 30px #24362c08;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.brand{color:#183d34}.brandmark{background:#183d34;color:#e9cf91;border:0;border-radius:13px}
+nav button{color:#58665e}nav button.active,nav button:hover{background:#eae8df;color:#173d34}
+.hero{position:relative;background:linear-gradient(130deg,#173d34,#255b4c 68%,#326e5b);border:0;border-radius:30px;box-shadow:0 22px 50px #173d3420;min-height:300px}
+.hero:after{content:"۞";position:absolute;right:8%;top:8%;font-size:210px;line-height:1;color:#ffffff0b;pointer-events:none}
+.hero h1{letter-spacing:-.065em;font-weight:720}.hero-art{z-index:1}
+.hero .btn.gold{background:#e7cc8f;color:#18352d}
+.section h2{letter-spacing:-.045em}.section-head{align-items:center}
+.card,.panel{border:1px solid #eeeae2;border-radius:23px;box-shadow:0 10px 32px #20352a08}
+.card{position:relative;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 42px #20352a12}
+#home .grid .card{min-height:180px;padding:22px 21px 18px 86px}
+#home .grid .card:before{position:absolute;left:20px;top:22px;width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:#f2ecdd;color:#98743d;font-size:25px}
+#home .grid .card:nth-child(1):before{content:"ا"}
+#home .grid .card:nth-child(2):before{content:"◌"}
+#home .grid .card:nth-child(3):before{content:"۞"}
+#home .grid .card:nth-child(4):before{content:"☷"}
+#home .grid .card:nth-child(5):before{content:"📖"}
+#home .grid .card:nth-child(6):before{content:"♫"}
+#home .grid .card p{font-size:12px;line-height:1.45;margin:5px 0 10px}
+#home .grid .card h3{font-size:17px}
+#home .grid .card .tag{font-size:9px}
+.btn{border-radius:999px;box-shadow:none}
+.btn.secondary{background:#f0efe9;color:#29483c;border:1px solid #e9e5dc}
+#scrollLearn .section-head{display:none}
+.feed-shell{max-width:820px;margin:0 auto}
+.feed-top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 4px 14px}
+.feed-status{min-width:130px}.feed-progress{width:180px;height:4px;background:#e7e2d8;border-radius:99px;margin-top:10px}
+.feed-progress span{background:#bd9855;border-radius:99px}
+.feed-toolbar{display:flex;align-items:center;gap:7px}
+.icon-btn{width:38px;height:38px;border-radius:50%;border:1px solid #e8e2d6;background:#fff;color:#24483b;font-weight:800;cursor:pointer}
+.tool-pill{border:1px solid #e8e2d6;border-radius:999px;background:#fff;padding:10px 13px;color:#24483b;font-size:11px;font-weight:800;cursor:pointer}
+.feed-track{height:min(76dvh,850px);min-height:570px;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;scroll-behavior:smooth;border:0;border-radius:28px;background:#eeeae1;box-shadow:0 20px 50px #263a2d12}
+.feed-card{min-height:100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always;display:flex;flex-direction:column;justify-content:space-between;gap:14px;padding:clamp(24px,5vw,48px);border:1px solid #e9e1d2;border-radius:28px;background:radial-gradient(circle at 88% 12%,#e5d3a955,transparent 27%),linear-gradient(155deg,#fffefa,#f4eee2);color:#1d3027}
+.feed-card:nth-child(3n+2){background:radial-gradient(circle at 12% 85%,#d5e4d755,transparent 30%),linear-gradient(145deg,#fffefa,#edf2e9)}
+.feed-card:nth-child(3n){background:radial-gradient(circle at 90% 90%,#e8d9b955,transparent 28%),linear-gradient(145deg,#fffefa,#f5eee3)}
+.feed-meta{display:flex;justify-content:space-between;gap:12px;color:#8c7955;font-size:10px;letter-spacing:.13em;font-weight:800}
+.feed-kind{align-self:center;border:1px solid #e6dcc8;border-radius:99px;padding:7px 13px;color:#94733e;background:#fffaf0;font-size:10px;font-weight:850;letter-spacing:.1em}
+.feed-title{text-align:center;font-size:clamp(18px,3vw,25px);margin:0;color:#26392f;letter-spacing:-.04em}
+.feed-ar{display:grid;place-items:center;min-height:170px;margin:0;color:#174638;font-size:clamp(42px,8vw,76px);line-height:1.95;text-align:center;text-shadow:none}
+.feed-hint{text-align:center;color:#9b8a6c;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.feed-reveal{display:grid;grid-template-columns:1fr 1fr;gap:10px;animation:revealIn .32s ease both}
+.feed-reveal[hidden]{display:none}
+.translation-panel{background:#ffffffc9;border:1px solid #e9e2d5;border-radius:17px;padding:14px}
+.translation-panel span{font-size:9px;letter-spacing:.15em;font-weight:900;color:#a18149}
+.translation-panel p{font-size:14px;line-height:1.65;color:#4d5c53;margin:7px 0 0}
+.amharic-panel p{font-size:15px}
+.feed-answer{min-height:24px;text-align:center;color:#92723d;font-size:13px;font-weight:650}
+.feed-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:auto}
+.feed-actions button{min-height:43px;border-radius:13px;border:1px solid #e6dfd1;background:#fff;color:#365044;font-size:12px;font-weight:750;box-shadow:0 4px 12px #283a2c08}
+.feed-actions button.primary{background:#1b473a;color:#fff;border-color:#1b473a}
+.feed-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#9a8c70;font-size:9px;letter-spacing:.12em;font-weight:800}
+.feed-link{color:#896a36;font-size:11px}
+.feed-dots{margin:12px 0}
+.feed-dots button{height:6px;width:6px;background:#d4ccbd}.feed-dots button.active{width:24px;background:#a78348}
+@keyframes revealIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:760px){
+ header{position:sticky;padding:10px 13px;display:block}
+ .brand{margin-bottom:8px}
+ nav{gap:5px}
+ nav button{font-size:11px;padding:7px 10px}
+ main{padding:14px 12px 45px}
+ .hero{min-height:260px;padding:27px 22px;border-radius:25px}
+ .hero-art{font-size:64px}
+ #home .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ #home .grid .card{padding:75px 13px 14px;min-height:176px;border-radius:19px}
+ #home .grid .card:before{left:13px;top:13px;width:48px;height:48px}
+ #home .grid .card h3{font-size:15px}
+ #home .grid .card p{font-size:11px}
+ #home .grid .card .btn{font-size:11px;padding:9px 12px}
+ .feed-top{padding:4px 1px 12px}
+ .feed-progress{width:120px}
+ .feed-toolbar{gap:5px}
+ .icon-btn{width:34px;height:34px}
+ .tool-pill{font-size:10px;padding:9px}
+ .feed-track{height:calc(100dvh - 205px);min-height:490px;border-radius:23px}
+ .feed-card{padding:22px 17px;border-radius:23px}
+ .feed-ar{min-height:135px;font-size:clamp(38px,9vw,61px)}
+ .feed-reveal{grid-template-columns:1fr;gap:7px;max-height:28vh;overflow:auto}
+ .translation-panel{padding:10px 12px}
+ .translation-panel p{font-size:13px;margin-top:4px}
+ .feed-actions button{min-height:40px;font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.feed-card,.feed-reveal{animation:none!important}}
+
+
+/* FERHAN native-app finish — unified interaction and mobile ergonomics */
+:root{--app-bg:#faf9f6;--surface:#fff;--forest:#173f35;--forest-soft:#eaf0eb;--gold-soft:#f7f0e1;--hairline:#ebe6dc;--shadow-soft:0 14px 40px rgba(24,48,37,.065)}
+body{background:var(--app-bg);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button,a,select,input{ -webkit-tap-highlight-color:transparent }
+button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #c49a4b88;outline-offset:3px}
+header{z-index:30;box-shadow:0 1px 0 rgba(27,48,38,.045)}
+.brandmark{box-shadow:0 5px 16px #173f3520}
+nav{max-width:100%;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap}
+nav::-webkit-scrollbar{display:none}
+nav button{white-space:nowrap;transition:background .18s,color .18s,transform .18s}
+nav button:active,.btn:active,.icon-btn:active{transform:scale(.97)}
+main{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+.section{animation:sectionIn .32s cubic-bezier(.2,.7,.2,1) both;scroll-margin-top:90px}
+@keyframes sectionIn{from{opacity:.55;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.section-head{padding:2px 0 4px;gap:16px}
+.section-head h2{font-size:clamp(25px,3vw,34px);font-weight:740;letter-spacing:-.055em}
+.section-head .sub{max-width:650px;line-height:1.55}
+.section-mark{width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:17px;background:linear-gradient(145deg,#f5efdf,#eee8da);color:#94723b;font-size:23px;box-shadow:inset 0 1px #fff}
+.section-head.has-mark{display:flex;align-items:center}
+.section-head-copy{min-width:0;flex:1}
+.card,.panel{box-shadow:var(--shadow-soft);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.card:active{transform:scale(.99)}
+.panel{padding:clamp(18px,3vw,28px)}
+.grid{gap:14px}
+.btn{min-height:42px;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:transform .16s ease,background .16s ease,box-shadow .16s ease}
+.btn.secondary{background:#f5f4ef}
+.tabs{gap:7px;overflow-x:auto;flex-wrap:nowrap;padding:2px 0 8px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{white-space:nowrap;min-height:40px}
+.quiz-option{min-height:54px;transition:background .18s,border-color .18s,transform .18s}
+.quiz-option:active{transform:scale(.99)}
+.word,.wbw-word,.reader-ayah,.surah-verse{box-shadow:0 5px 20px #243a2c08}
+.reader-toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:16px}
+.reader-toolbar select{flex:1;min-width:180px;min-height:44px}
+.reader-ayah{padding:18px;margin:12px 0;background:#fff;border:1px solid var(--hairline);border-radius:22px}
+.reader-word-grid{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;direction:rtl;margin:14px 0}
+.reader-word{min-width:84px;max-width:100%;padding:10px 12px;text-align:center;border:1px solid #eee7d9;border-radius:15px;background:#fcfbf8}
+.reader-word .arabic{font-size:clamp(25px,4vw,34px);margin:0;line-height:1.7}
+.reader-word small{display:block;color:#8a7651;font-size:11px;margin-top:3px}
+.reader-pagination{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;border-top:1px solid var(--hairline)}
+.academy-stage{align-items:center;padding:18px 20px}
+.stage-number{width:46px;height:46px;flex-basis:46px;border-radius:16px;background:#f3ecdc;color:#8b6a34}
+.academy-stage.done{border-color:#c8d9ce;background:#fbfdfb}
+.academy-stage.done .stage-number{background:#1b5948;color:white}
+#tajweedCards .card{min-height:190px}
+#tajweedCards .card h3{font-size:clamp(23px,3vw,30px);color:#1c4a3d;text-align:center;margin:18px 0}
+#tajweedCards .card .tag{font-size:10px}
+#tajweedPractical .panel,#tajweedPractical .card{min-width:0}
+.video{box-shadow:0 12px 34px #1b30241a}
+.modal-backdrop{backdrop-filter:blur(12px)}
+.modal-card{box-shadow:0 24px 80px #14291e30}
+.feed-track{scrollbar-width:none}
+.feed-track::-webkit-scrollbar{display:none}
+.feed-card{box-shadow:inset 0 1px #fff}
+.feed-actions button{min-height:46px;transition:transform .16s,background .16s}
+.feed-actions button:active{transform:scale(.98)}
+/* A persistent five-destination tab bar gives the small-screen app a native rhythm. */
+.mobile-tabbar{display:none}
+@media(max-width:760px){
+ header{padding:10px 15px 9px;display:flex;align-items:center;justify-content:center;min-height:58px}
+ header .brand{margin:0}
+ header nav{display:none}
+ main{padding:14px 13px calc(100px + env(safe-area-inset-bottom))}
+ .section{margin-top:24px;scroll-margin-top:72px}
+ .section-head{align-items:center!important;flex-direction:row!important;gap:12px;margin-bottom:13px}
+ .section-head h2{font-size:24px}
+ .section-mark{width:43px;height:43px;flex-basis:43px;border-radius:15px;font-size:20px}
+ .section-head .sub{font-size:12px;margin-top:3px}
+ .panel{padding:17px;border-radius:21px}
+ .card{padding:17px;border-radius:20px}
+ .grid{gap:10px}
+ .academy-stage{padding:15px;align-items:flex-start}
+ .academy-stage .controls{gap:7px}
+ .academy-stage .controls .btn{font-size:11px;padding:9px 12px}
+ .lesson-layout{gap:11px}
+ .lesson-layout>.panel{min-width:0}
+ .word-by-word{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .reader-ayah{padding:14px;border-radius:18px}
+ .reader-word{min-width:75px;padding:8px}
+ .reader-pagination .btn{padding:9px 12px;font-size:11px}
+ .mobile-tabbar{position:fixed;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:3px;z-index:60;left:10px;right:10px;bottom:calc(8px + env(safe-area-inset-bottom));padding:8px 7px 7px;border:1px solid #e9e4d9;border-radius:23px;background:rgba(255,255,252,.91);backdrop-filter:blur(24px) saturate(170%);-webkit-backdrop-filter:blur(24px) saturate(170%);box-shadow:0 12px 36px #182c2220}
+ .mobile-tabbar button{border:0;background:transparent;color:#8a9089;min-width:0;min-height:48px;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:650 9px/1.1 -apple-system,BlinkMacSystemFont,sans-serif;letter-spacing:.01em;cursor:pointer}
+ .mobile-tabbar button .tab-icon{font-size:20px;line-height:1.1}
+ .mobile-tabbar button.active{background:#edf2ed;color:#174538}
+ .mobile-tabbar button.active .tab-icon{color:#a27c3e}
+ .feed-track{height:calc(100dvh - 220px);min-height:460px;max-height:760px}
+ #scrollLearn{margin-top:12px}
+ #scrollLearn .feed-shell{width:100%}
+ #tajweedCards{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #tajweedCards .card{min-height:170px;padding:14px}
+ #tajweedCards .card p{font-size:12px}
+ #tajweedPractical{grid-template-columns:1fr!important}
+ #course .panel{padding:12px}
+ footer{padding-bottom:calc(100px + env(safe-area-inset-bottom))}
+}
+@media(max-width:390px){
+ .mobile-tabbar{left:7px;right:7px;grid-template-columns:repeat(5,minmax(0,1fr))}
+ .mobile-tabbar button{font-size:8px}
+ .hero h1{font-size:39px}
+ .feed-actions{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(prefers-reduced-motion:reduce){.section,.card,.btn,.feed-actions button{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+
+/* V7 · immersive Mushaf and memorisation studio */
+.mushaf-tools{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;align-items:center}
+.mushaf-tools .btn{min-height:42px;border-radius:999px}
+.mushaf-progress{height:5px;background:#e9e5da;border-radius:99px;overflow:hidden;margin:10px 0 16px}
+.mushaf-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#1d5b49,#c5a15a);transition:width .3s ease}
+#quranReader.mushaf-mode .panel{background:#f5f0e5;border-color:#e4dac6}
+#quranReader.mushaf-mode .reader-ayah{background:#fffdf7;border:1px solid #e4d8c2;box-shadow:0 8px 28px #49391b0d;padding:clamp(18px,4vw,30px);}
+#quranReader.mushaf-mode .reader-word-grid{gap:12px 10px;justify-content:space-around}
+#quranReader.mushaf-mode .reader-word{background:transparent;border:0;border-radius:0;min-width:0;padding:5px 7px}
+#quranReader.mushaf-mode .reader-word .arabic{font-size:clamp(30px,5vw,43px);line-height:2.15;color:#183f35}
+#quranReader.mushaf-mode .reader-ayah>div:first-child{display:flex;justify-content:center;align-items:center;gap:8px;color:#9b7a42;font-weight:700;font-size:12px;letter-spacing:.08em}
+#quranReader.mushaf-mode .reader-ayah>div:first-child:before,#quranReader.mushaf-mode .reader-ayah>div:first-child:after{content:'';height:1px;background:#e5d7bd;flex:1}
+#quranReader.focus-mode .reader-ayah:not(.active-ayah){opacity:.32;transform:scale(.985)}
+#quranReader .reader-ayah{transition:opacity .25s ease,transform .25s ease}
+.reader-ayah.active-ayah{outline:2px solid #c5a15a;outline-offset:2px}
+.reader-ayah .ayah-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px}
+.reader-ayah .ayah-actions button{border:1px solid #e6dfd1;background:#fbfaf6;color:#315b4d;border-radius:999px;padding:7px 12px;font-size:12px}
+.reader-ayah.recall-hidden .reader-word-grid{filter:blur(9px);user-select:none}
+.reader-ayah.recall-hidden .reader-word-grid:after{content:'Recall the ayah · tap Reveal';position:absolute;inset:0;display:grid;place-items:center;background:#f8f5edb8;color:#315b4d;font-weight:700;filter:none;backdrop-filter:blur(2px)}
+.reader-ayah.recall-hidden .reader-word-grid{position:relative}
+.memorise-dock{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0}
+.memorise-stat{background:#f7f5ef;border:1px solid #ece6d9;border-radius:16px;padding:12px;text-align:center}
+.memorise-stat strong{display:block;font-size:20px;color:#1c5545}
+.memorise-stat small{font-size:11px;color:#817b70}
+.memorise-list{display:grid;gap:8px;margin-top:10px}
+.memorise-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 13px;border:1px solid #ece6d9;border-radius:14px;background:#fff}
+.memorise-item button{border:0;background:#e9f1eb;color:#245542;border-radius:999px;padding:7px 10px}
+.reader-font-control{display:flex;align-items:center;gap:8px}
+.reader-font-control input{width:100px;accent-color:#1d5b49}
+@media(max-width:600px){.memorise-dock{grid-template-columns:repeat(3,1fr)}.mushaf-tools .btn{flex:1}.reader-font-control{width:100%;justify-content:space-between}}
+
+
+/* V8 · synchronized recitation studio */
+.sync-player{margin:16px 0 18px;padding:16px;border-radius:20px;background:linear-gradient(145deg,#092c25,#174c3e);color:#fff;box-shadow:0 12px 30px #0b342b20}
+.sync-player-top{display:flex;align-items:center;gap:9px;justify-content:space-between}.sync-player-top strong{margin-right:auto;color:#f5e7c4;font-size:13px}.sync-player-top .muted{color:#d3dfd7;font-variant-numeric:tabular-nums}
+.sync-live-dot{width:8px;height:8px;border-radius:50%;background:#d6b36b;box-shadow:0 0 0 4px #d6b36b25}.sync-seek{width:100%!important;margin:16px 0 10px;accent-color:#e2c27d;cursor:pointer}
+.sync-player-controls{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}.sync-icon-btn,.sync-play-btn{border:1px solid #ffffff35;background:#ffffff12;color:#fff;border-radius:999px;min-width:48px;min-height:44px;font-weight:800;cursor:pointer}.sync-play-btn{width:56px;height:56px;background:#e4c27d;color:#18372d;border:0;font-size:21px;box-shadow:0 5px 18px #0002}.sync-setting{display:flex;align-items:center;gap:7px;color:#e5e9e3;font-size:12px}.sync-setting select{background:#ffffff16;color:#fff;border:1px solid #ffffff35;padding:8px}.sync-setting select option{color:#17392f}.sync-setting input{accent-color:#d6b36b;width:16px;height:16px}
+.sync-verse-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:13px}.sync-verse-nav .btn{font-size:12px;padding:9px 12px}.sync-player .muted{color:#d3dfd7}.sync-word{transition:background .16s ease,border-color .16s ease,transform .16s ease}.sync-word[aria-current="true"]{background:#f8e8bc!important;border:2px solid #c79b45!important;box-shadow:0 0 0 5px #d6b36b28!important;transform:translateY(-3px) scale(1.025)}
+@media(max-width:600px){.sync-player{padding:14px;margin-left:-4px;margin-right:-4px}.sync-player-controls{gap:7px}.sync-setting{font-size:11px}.sync-verse-nav .btn{flex:1}.sync-word-grid{gap:6px}.sync-word{min-width:78px;padding:8px 7px}}
+
 </style>
 </head>
 <body>
 <header><div class="brand"><div class="brandmark">ف</div><span>ferhan · فَرْحَان</span></div>
 <nav><button class="active" data-go="home">Home</button><button data-go="academy">Academy</button><button data-go="lessons">Lessons</button><button data-go="practice">Repeat & practise</button><button data-go="recitation">Qur’an practice</button><button data-go="tajweed">Tajweed</button><button data-go="quiz">Quizzes</button><button data-go="course">Video course</button><button data-go="resources">Resources</button></nav></header>
+<nav class="mobile-tabbar" aria-label="Primary navigation"><button type="button" data-mobile-go="home" class="active"><span class="tab-icon">⌂</span><span>Home</span></button><button type="button" data-mobile-go="lessons"><span class="tab-icon">✧</span><span>Learn</span></button><button type="button" data-mobile-go="scrollLearn"><span class="tab-icon">﷽</span><span>Practice</span></button><button type="button" data-mobile-go="quranReader"><span class="tab-icon">▤</span><span>Qur’an</span></button><button type="button" data-mobile-go="tajweed"><span class="tab-icon">۞</span><span>Tajweed</span></button></nav>
 <main>
 <section class="hero" id="home">
 <div><span class="pill">فَرْحَان · QUR’AN ACADEMY</span><div class="kicker" style="margin-top:18px">READ · LISTEN · UNDERSTAND</div>
@@ -295,6 +530,19 @@ footer{color:#89918a}
 <p class="muted">Choose any surah. The Arabic words below highlight in time with the selected Quran Foundation reciter, using the API’s official word timing segments.</p>
 <div class="surah-tools"><label class="muted">Surah <select id="syncSurahSelect" onchange="chooseSyncSurah(this.value)"><option value="1">Loading all surahs…</option></select></label><label class="muted">Ayah <select id="syncVerseSelect" onchange="seekSyncedVerse(this.value)"><option value="1">Ayah 1</option></select></label></div>
 <div class="controls"><button class="btn gold" onclick="playSyncedChapter(Number(document.getElementById('syncSurahSelect').value))">▶ Play surah with word sync</button><button class="btn secondary" onclick="pauseSyncedPlayback()">Ⅱ Pause</button><button class="btn secondary" onclick="stopSyncedPlayback()">■ Stop</button><button class="btn secondary" onclick="configureTimingService()">↻ Check coverage</button></div>
+<div class="sync-player" aria-label="Synchronized recitation controls">
+ <div class="sync-player-top"><span class="sync-live-dot"></span><strong id="syncPlaybackLabel">Ready to recite</strong><span class="muted" id="syncTimeLabel">0:00 / 0:00</span></div>
+ <input id="syncSeek" class="sync-seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek recitation" onpointerdown="ferhanSeeking=true" ontouchstart="ferhanSeeking=true" oninput="previewSyncedSeek(this.value)" onchange="seekSyncedTime(this.value)" onpointerup="ferhanSeeking=false" ontouchend="ferhanSeeking=false">
+ <div class="sync-player-controls">
+  <button class="sync-icon-btn" type="button" onclick="seekSyncedRelative(-5)" aria-label="Back five seconds">↶ 5</button>
+  <button class="sync-play-btn" id="syncPlayToggle" type="button" onclick="toggleSyncedPlayback()" aria-label="Play or pause">▶</button>
+  <button class="sync-icon-btn" type="button" onclick="seekSyncedRelative(5)" aria-label="Forward five seconds">5 ↷</button>
+  <label class="sync-setting">Speed <select id="syncSpeed" onchange="setSyncedSpeed(this.value)"><option value="0.75">0.75×</option><option value="0.9">0.9×</option><option value="1" selected>1×</option><option value="1.1">1.1×</option><option value="1.25">1.25×</option></select></label>
+  <label class="sync-setting"><input id="syncLoopVerse" type="checkbox" onchange="toggleVerseLoop(this.checked)"> Repeat ayah</label>
+ </div>
+ <div class="sync-verse-nav"><button class="btn secondary" type="button" onclick="stepSyncedVerse(-1)">← Previous ayah</button><button class="btn secondary" type="button" onclick="stepSyncedVerse(1)">Next ayah →</button><button class="btn secondary" type="button" onclick="replaySyncedVerse()">↻ Replay ayah</button></div>
+ <p class="muted" id="syncLoopHint">Tap any Arabic word to jump to its verified audio timestamp.</p>
+</div>
 <p class="muted" id="syncStatus">Connects to Quran Foundation data published by the secure GitHub Actions workflow.</p>
 <div class="surah-verse" id="syncVerseDisplay"><div class="muted">Select a surah and press Play.</div></div>
 <p class="muted" id="syncCoverage">Word-timing coverage will appear after the first successful GitHub Actions run.</p>
@@ -375,7 +623,15 @@ footer{color:#89918a}
 <section class="section" id="scrollLearn" hidden>
  <div class="section-head"><div><h2>Scroll & learn · اقرأ خطوة خطوة</h2><p class="sub">Swipe through · listen · reveal · repeat</p></div></div>
  <div class="feed-shell">
-  <div class="feed-top"><div><span class="tag" id="feedCounter">LESSON 1</span><div class="feed-progress"><span id="feedProgressBar"></span></div></div><div class="controls"><button class="btn secondary" onclick="feedPrev()" aria-label="Previous card">‹</button><button class="btn secondary" id="feedAutoBtn" onclick="toggleFeedAuto()">Auto</button><button class="btn secondary" onclick="feedNext()" aria-label="Next card">›</button></div></div>
+  <div class="feed-top">
+   <div class="feed-status"><span class="tag" id="feedCounter">LESSON 1</span><div class="feed-progress"><span id="feedProgressBar"></span></div></div>
+   <div class="feed-toolbar">
+    <button class="icon-btn" onclick="feedPrev()" aria-label="Previous card">↑</button>
+    <button class="icon-btn" id="feedAutoBtn" onclick="toggleFeedAuto()" aria-label="Auto advance">▶</button>
+    <button class="icon-btn" onclick="feedNext()" aria-label="Next card">↓</button>
+    <button class="tool-pill" id="feedMarksBtn" onclick="toggleFeedMarks()">تَشْكِيل ON</button>
+   </div>
+  </div>
   <div class="feed-track" id="feedTrack" aria-label="Vertical Arabic learning lesson feed"></div>
   <div class="feed-dots" id="feedDots"></div>
   
@@ -389,8 +645,23 @@ footer{color:#89918a}
    <button class="btn secondary" id="quranMarksBtn" onclick="toggleQuranMarks()">تَشْكِيلٌ ON</button>
    <button class="btn secondary" onclick="toggleQuranTranslation()">EN + አማ</button>
   </div>
+  <div class="mushaf-tools">
+   <button class="btn gold" id="mushafModeBtn" onclick="toggleMushafMode()">۞ Mushaf view</button>
+   <button class="btn secondary" id="focusModeBtn" onclick="toggleFocusMode()">◉ Focus</button>
+   <button class="btn secondary" onclick="saveCurrentAyahBookmark()">☆ Bookmark ayah</button>
+   <button class="btn secondary" onclick="showMemorisationStudio()">✧ Memorisation</button>
+   <label class="reader-font-control muted">Arabic size <input id="readerFontSize" type="range" min="26" max="52" value="36" oninput="setReaderFontSize(this.value)"></label>
+  </div>
+  <div class="mushaf-progress" aria-label="Surah reading progress"><span id="mushafProgressBar"></span></div>
   <div class="muted" id="quranReaderStatus">Loading the Qur’an word-by-word dataset…</div>
   <div id="quranReaderVerses"></div>
+  <section class="panel" id="memorisationStudio" hidden style="margin-top:16px">
+   <div class="section-head"><div><div class="tag">YOUR HIFZ SPACE</div><h3>Memorisation studio</h3><p class="sub">Save ayahs to revise, practise recall, and track your own review rhythm.</p></div></div>
+   <div class="memorise-dock"><div class="memorise-stat"><strong id="memoriseSavedCount">0</strong><small>Saved ayahs</small></div><div class="memorise-stat"><strong id="memoriseMasteredCount">0</strong><small>Marked learned</small></div><div class="memorise-stat"><strong id="memoriseDueCount">0</strong><small>Ready to review</small></div></div>
+   <div class="controls"><button class="btn gold" onclick="reviewNextMemorisation()">Start recall session →</button><button class="btn secondary" onclick="exportMemorisation()">Export Hifz list</button></div>
+   <div id="memorisationList" class="memorise-list"></div>
+   <p class="muted" style="font-size:12px">Your review list is stored on this device. “Learned” is a personal tracker, not an assessment of recitation accuracy. Confirm memorisation with a qualified teacher.</p>
+  </section>
   <div class="reader-pagination"><button class="btn secondary" onclick="quranPage(-1)">← Previous</button><span class="muted" id="quranPageLabel">Page 1</span><button class="btn secondary" onclick="quranPage(1)">Next →</button></div>
  </div>
  <p class="muted">The complete text dataset contains all 114 surahs and 6,236 ayahs. Quran Foundation synchronization is configured to fetch chapter audio and word-level timing for all 114 surahs; actual coverage depends on the selected chapter-reciter and API permissions. Translations are study aids, not a replacement for tafsīr or a qualified teacher.</p>
@@ -643,97 +914,34 @@ resumeBookmark=function(){
 };
 renderShortSurah(112);loadV6State();maybeShowDailyPractice();
 
-// FERHAN — Quran Foundation synchronized recitation for all 114 chapters.
-// API credentials are used only by GitHub Actions; the browser downloads public timing JSON.
-let ferhanSyncAudio=new Audio(),ferhanSyncData=null,ferhanSyncChapter=null,ferhanSyncTick=null,ferhanSyncVerse=null,ferhanLastWord=null;
+// FERHAN V8 — verified word-level synchronized recitation studio.
+let ferhanSyncAudio=new Audio(),ferhanSyncData=null,ferhanSyncChapter=null,ferhanSyncTick=null,ferhanSyncVerse=null,ferhanLastWord=null,ferhanLoopVerse=false,ferhanSeeking=false;
+ferhanSyncAudio.preload="none";
 function syncEscape(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function populateSyncSurahSelect(){
- const sel=document.getElementById("syncSurahSelect");if(!sel||!quranBundle)return;
- const old=Number(sel.value)||1;
- sel.innerHTML=quranBundle.surahs.map(x=>`<option value="${x[0]}">${x[0]}. ${syncEscape(x[1])}</option>`).join("");
- sel.value=String(Math.min(114,Math.max(1,old)));
- updateSyncVerseSelect(Number(sel.value),1);
-}
-function updateSyncVerseSelect(chapter,selected=1){
- const sel=document.getElementById("syncVerseSelect");if(!sel||!quranBundle)return;
- const verses=quranBundle.quran[String(chapter)]||[];
- sel.innerHTML=verses.map((_,i)=>`<option value="${i+1}">Ayah ${i+1}</option>`).join("");
- sel.value=String(Math.min(verses.length,Math.max(1,selected)));
-}
-function chooseSyncSurah(chapter){
- chapter=Number(chapter);updateSyncVerseSelect(chapter,1);
- const display=document.getElementById("syncVerseDisplay");if(display)display.innerHTML='<div class="muted">Press Play to start synchronized recitation for this surah.</div>';
- if(ferhanSyncChapter!==chapter){ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);clearSyncHighlights();ferhanSyncData=null;ferhanSyncChapter=null;}
-}
-function renderSyncedVerse(verseNo){
- if(!quranBundle||!ferhanSyncChapter)return;
- const chapter=ferhanSyncChapter,verse=quranBundle.quran[String(chapter)]?.[verseNo-1];if(!verse)return;
- const words=verse[0]||[],key=chapter+":"+verseNo,am=quranBundle.amharic[key]||"",english=verse[1]||"";
- const host=document.getElementById("syncVerseDisplay");if(!host)return;
- host.innerHTML=`<div class="row" style="display:flex;justify-content:space-between;gap:8px;align-items:center"><strong>Surah ${chapter} · Ayah ${verseNo}</strong><span class="muted">${words.length} words</span></div><div class="sync-word-grid" dir="rtl">${words.map((w,i)=>`<button type="button" class="sync-word" id="sync-word-${i+1}" data-word-index="${i+1}" aria-label="Word ${i+1}: ${syncEscape(w[0])}"><span class="arabic" lang="ar" translate="no">${syncEscape(w[0])}</span><small>${syncEscape(w[1]||"")}</small><small class="sync-gloss">${syncEscape(w[2]||"")}</small></button>`).join("")}</div><p class="amharic" lang="am">${syncEscape(am)}</p><p class="muted">${syncEscape(english)}</p>`;
- ferhanSyncVerse=verseNo;ferhanLastWord=null;
-}
-function clearSyncHighlights(){
- document.querySelectorAll(".sync-word.sync-active,.sync-word.sync-verse-active,.surah-verse.sync-current").forEach(el=>el.classList.remove("sync-active","sync-verse-active","sync-current"));
-}
-function syncWordsAtTime(){
- if(!ferhanSyncData||!ferhanSyncChapter)return;
- const t=Math.round(ferhanSyncAudio.currentTime*1000);let active=null;
- for(const verse of (ferhanSyncData.timestamps||[])){
-  for(const seg of (verse.segments||[])){
-   if(t>=Number(seg[1])&&t<Number(seg[2])){active={verseKey:verse.verse_key,wordIndex:Number(seg[0])};break;}
-  }
-  if(active)break;
- }
- if(!active)return;
- const [chapter,verseNo]=active.verseKey.split(":").map(Number);if(chapter!==ferhanSyncChapter)return;
- if(ferhanSyncVerse!==verseNo){renderSyncedVerse(verseNo);const sel=document.getElementById("syncVerseSelect");if(sel)sel.value=String(verseNo);}
- const nextWord=active.wordIndex;
- if(ferhanLastWord!==nextWord){
-  document.querySelectorAll("#syncVerseDisplay .sync-word").forEach((el,i)=>el.classList.toggle("sync-active",i===nextWord-1));
-  const word=document.getElementById("sync-word-"+nextWord);if(word){word.setAttribute("aria-current","true");word.scrollIntoView({block:"nearest",inline:"nearest",behavior:"smooth"});}
-  ferhanLastWord=nextWord;
- }
-}
-async function configureTimingService(){
- const el=document.getElementById("syncStatus");if(el)el.textContent="Checking Quran Foundation timing files published by GitHub Actions…";
- try{
-  const r=await fetch("./data/recitation/index.json",{cache:"no-store"});if(!r.ok)throw new Error("Timing manifest not published yet. Run the GitHub Actions workflow.");
-  const d=await r.json();const n=(d.availableChapters||[]).length;
-  if(el)el.textContent=`Quran Foundation connected · ${n}/114 chapters have verified word-level timing for ${d.reciterName||"the configured reciter"}.`;
-  const coverage=document.getElementById("syncCoverage");if(coverage)coverage.textContent=`Available: ${n}/114 surahs · No guessed timings are used. ${d.unavailableChapters?.length||0} chapters did not return word-level timing.`;
- }catch(e){if(el)el.textContent="Timing data not ready: "+e.message;}
-}
-async function playSyncedChapter(chapter){
- chapter=Number(chapter);if(!Number.isInteger(chapter)||chapter<1||chapter>114){alert("Choose a surah from 1 to 114.");return;}
- const status=document.getElementById("syncStatus");if(status)status.textContent=`Loading Quran Foundation audio and word timings for surah ${chapter}…`;
- try{
-  if(!quranBundle)await initQuranReader();if(!quranBundle)throw new Error("The full Qur’an text could not be loaded.");
-  const response=await fetch(`./data/recitation/${chapter}.json`,{headers:{Accept:"application/json"},cache:"no-store"});
-  if(!response.ok)throw new Error("No published timing file for this surah yet. Run Update Quran recitation data in GitHub Actions.");
-  const data=await response.json();
-  if(!data.available||!data.audioUrl||!Array.isArray(data.timestamps)||!data.timestamps.some(v=>Array.isArray(v.segments)&&v.segments.length))throw new Error(data.reason||"This reciter has no verified word-level segments for this chapter.");
-  ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);clearSyncHighlights();
-  ferhanSyncData=data;ferhanSyncChapter=chapter;ferhanSyncVerse=null;ferhanLastWord=null;
-  const surahSel=document.getElementById("syncSurahSelect");if(surahSel)surahSel.value=String(chapter);
-  updateSyncVerseSelect(chapter,1);renderSyncedVerse(1);
-  ferhanSyncAudio.src=data.audioUrl;ferhanSyncAudio.currentTime=0;ferhanSyncAudio.playbackRate=1;
-  ferhanSyncAudio.ontimeupdate=syncWordsAtTime;
-  ferhanSyncAudio.onended=()=>{clearInterval(ferhanSyncTick);clearSyncHighlights();if(status)status.textContent=`Surah ${chapter} finished. Repeat the recitation and review the words.`;};
-  ferhanSyncAudio.onerror=()=>{if(status)status.textContent="The Quran Foundation audio URL could not be loaded. Check your connection.";};
-  show("recitation");await ferhanSyncAudio.play();
-  ferhanSyncTick=setInterval(syncWordsAtTime,60);
-  if(status)status.textContent=`Synchronized recitation playing · Surah ${chapter} · ${data.reciterName||"Quran Foundation reciter"} · word highlighting active`;
- }catch(error){if(status)status.textContent=`Synchronized playback unavailable: ${error.message}`;}
-}
-function seekSyncedVerse(value){
- if(!ferhanSyncData||!ferhanSyncChapter)return;
- const key=ferhanSyncChapter+":"+Number(value),v=ferhanSyncData.timestamps.find(x=>x.verse_key===key);
- if(!v)return;ferhanSyncAudio.currentTime=Math.max(0,Number(v.timestamp_from||0)/1000);syncWordsAtTime();
-}
-function pauseSyncedPlayback(){ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);const s=document.getElementById("syncStatus");if(s&&ferhanSyncChapter)s.textContent=`Paused · Surah ${ferhanSyncChapter}`;}
-function stopSyncedPlayback(){ferhanSyncAudio.pause();ferhanSyncAudio.currentTime=0;clearInterval(ferhanSyncTick);clearSyncHighlights();ferhanSyncData=null;ferhanSyncChapter=null;ferhanSyncVerse=null;const s=document.getElementById("syncStatus");if(s)s.textContent="Synchronized playback stopped.";}
-
+function syncFmtTime(seconds){if(!Number.isFinite(seconds))return"0:00";const n=Math.max(0,Math.floor(seconds));return `${Math.floor(n/60)}:${String(n%60).padStart(2,"0")}`;}
+function syncVerseRecord(verseNo){return ferhanSyncData?.timestamps?.find(x=>x.verse_key===`${ferhanSyncChapter}:${verseNo}`)||null;}
+function populateSyncSurahSelect(){const sel=document.getElementById("syncSurahSelect");if(!sel||!quranBundle)return;const old=Number(sel.value)||1;sel.innerHTML=quranBundle.surahs.map(x=>`<option value="${x[0]}">${x[0]}. ${syncEscape(x[1])}</option>`).join("");sel.value=String(Math.min(114,Math.max(1,old)));updateSyncVerseSelect(Number(sel.value),1);}
+function updateSyncVerseSelect(chapter,selected=1){const sel=document.getElementById("syncVerseSelect");if(!sel||!quranBundle)return;const verses=quranBundle.quran[String(chapter)]||[];sel.innerHTML=verses.map((_,i)=>`<option value="${i+1}">Ayah ${i+1}</option>`).join("");sel.value=String(Math.min(verses.length,Math.max(1,selected)));}
+function chooseSyncSurah(chapter){chapter=Number(chapter);if(ferhanSyncChapter!==chapter){stopSyncedPlayback();}updateSyncVerseSelect(chapter,1);const display=document.getElementById("syncVerseDisplay");if(display)display.innerHTML='<div class="muted">Press Play to start synchronized recitation for this surah.</div>';}
+function renderSyncedVerse(verseNo){if(!quranBundle||!ferhanSyncChapter)return;const chapter=ferhanSyncChapter,verse=quranBundle.quran[String(chapter)]?.[verseNo-1];if(!verse)return;const words=verse[0]||[],key=chapter+":"+verseNo,am=quranBundle.amharic[key]||"",english=verse[1]||"";const host=document.getElementById("syncVerseDisplay");if(!host)return;host.innerHTML=`<div class="row" style="display:flex;justify-content:space-between;gap:8px;align-items:center"><strong>Surah ${chapter} · Ayah ${verseNo}</strong><span class="muted">${words.length} words</span></div><div class="sync-word-grid" dir="rtl">${words.map((w,i)=>`<button type="button" class="sync-word" id="sync-word-${i+1}" data-word-index="${i+1}" onclick="seekSyncedWord(${i+1})" aria-label="Jump to word ${i+1}: ${syncEscape(w[0])}"><span class="arabic" lang="ar" translate="no">${syncEscape(w[0])}</span><small>${syncEscape(w[1]||"")}</small><small class="sync-gloss">${syncEscape(w[2]||"")}</small></button>`).join("")}</div><p class="amharic" lang="am">${syncEscape(am)}</p><p class="muted">${syncEscape(english)}</p>`;ferhanSyncVerse=verseNo;ferhanLastWord=null;}
+function clearSyncHighlights(){document.querySelectorAll("#syncVerseDisplay .sync-word").forEach(el=>{el.classList.remove("sync-active","sync-verse-active");el.removeAttribute("aria-current");});}
+function updateSyncTransport(){const duration=ferhanSyncAudio.duration||0,current=ferhanSyncAudio.currentTime||0,seek=document.getElementById("syncSeek"),time=document.getElementById("syncTimeLabel"),btn=document.getElementById("syncPlayToggle"),label=document.getElementById("syncPlaybackLabel");if(seek&&!ferhanSeeking)seek.value=String(duration?Math.round(current/duration*1000):0);if(time)time.textContent=`${syncFmtTime(current)} / ${syncFmtTime(duration)}`;if(btn){btn.textContent=ferhanSyncAudio.paused?"▶":"Ⅱ";btn.setAttribute("aria-label",ferhanSyncAudio.paused?"Play":"Pause");}if(label)label.textContent=ferhanSyncChapter?(ferhanSyncAudio.paused?"Recitation paused":"Now reciting · word sync active"):"Ready to recite";}
+function syncWordsAtTime(){if(!ferhanSyncData||!ferhanSyncChapter)return;const t=Math.round(ferhanSyncAudio.currentTime*1000);let active=null;for(const verse of (ferhanSyncData.timestamps||[])){for(const seg of (verse.segments||[])){if(t>=Number(seg[1])&&t<Number(seg[2])){active={verseKey:verse.verse_key,wordIndex:Number(seg[0])};break;}}if(active)break;}if(active){const [chapter,verseNo]=active.verseKey.split(":").map(Number);if(chapter===ferhanSyncChapter){if(ferhanSyncVerse!==verseNo){renderSyncedVerse(verseNo);const sel=document.getElementById("syncVerseSelect");if(sel)sel.value=String(verseNo);}const nextWord=active.wordIndex;if(ferhanLastWord!==nextWord){document.querySelectorAll("#syncVerseDisplay .sync-word").forEach((el,i)=>{el.classList.toggle("sync-active",i===nextWord-1);if(i===nextWord-1)el.setAttribute("aria-current","true");else el.removeAttribute("aria-current");});const word=document.getElementById("sync-word-"+nextWord);if(word)word.scrollIntoView({block:"nearest",inline:"nearest",behavior:"smooth"});ferhanLastWord=nextWord;}}}updateSyncTransport();}
+async function configureTimingService(){const el=document.getElementById("syncStatus");if(el)el.textContent="Checking published Quran Foundation timing files…";try{const r=await fetch("./data/recitation/index.json",{cache:"no-store"});if(!r.ok)throw new Error("Timing manifest is not published yet. Run the GitHub Actions workflow.");const d=await r.json(),n=(d.availableChapters||[]).length;if(el)el.textContent=`Quran Foundation connected · ${n}/114 chapters have verified word-level timing for ${d.reciterName||"the configured reciter"}.`;const coverage=document.getElementById("syncCoverage");if(coverage)coverage.textContent=`Available: ${n}/114 surahs · Verified timestamps only · ${d.unavailableChapters?.length||0} chapters currently unavailable.`;}catch(e){if(el)el.textContent="Timing data not ready: "+e.message;}}
+async function playSyncedChapter(chapter){chapter=Number(chapter);if(!Number.isInteger(chapter)||chapter<1||chapter>114){alert("Choose a surah from 1 to 114.");return;}const status=document.getElementById("syncStatus");if(status)status.textContent=`Loading verified audio and word timings for surah ${chapter}…`;try{if(!quranBundle)await initQuranReader();if(!quranBundle)throw new Error("The full Qur’an text could not be loaded.");const response=await fetch(`./data/recitation/${chapter}.json`,{headers:{Accept:"application/json"},cache:"no-store"});if(!response.ok)throw new Error("No published timing file for this surah. Run Update Quran recitation data in GitHub Actions.");const data=await response.json();if(!data.available||!data.audioUrl||!Array.isArray(data.timestamps)||!data.timestamps.some(v=>Array.isArray(v.segments)&&v.segments.length))throw new Error(data.reason||"This reciter has no verified word-level segments for this chapter.");ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);clearSyncHighlights();ferhanSyncData=data;ferhanSyncChapter=chapter;ferhanSyncVerse=null;ferhanLastWord=null;ferhanLoopVerse=false;const loop=document.getElementById("syncLoopVerse");if(loop)loop.checked=false;const surahSel=document.getElementById("syncSurahSelect");if(surahSel)surahSel.value=String(chapter);updateSyncVerseSelect(chapter,1);renderSyncedVerse(1);ferhanSyncAudio.src=data.audioUrl;ferhanSyncAudio.currentTime=0;ferhanSyncAudio.playbackRate=Number(document.getElementById("syncSpeed")?.value||1);ferhanSyncAudio.ontimeupdate=syncWordsAtTime;ferhanSyncAudio.ondurationchange=updateSyncTransport;ferhanSyncAudio.onplay=updateSyncTransport;ferhanSyncAudio.onpause=updateSyncTransport;ferhanSyncAudio.onended=()=>{clearInterval(ferhanSyncTick);clearSyncHighlights();updateSyncTransport();if(status)status.textContent=`Surah ${chapter} finished. Replay or choose another surah to continue.`;};ferhanSyncAudio.onerror=()=>{if(status)status.textContent="The audio stream could not be loaded. Check your connection and try again.";};show("recitation");await ferhanSyncAudio.play();clearInterval(ferhanSyncTick);ferhanSyncTick=setInterval(syncWordsAtTime,70);if(status)status.textContent=`Synchronized recitation playing · ${data.reciterName||"Quran Foundation reciter"} · verified word timing active`;updateSyncTransport();}catch(error){if(status)status.textContent=`Synchronized playback unavailable: ${error.message}`;}}
+function seekSyncedVerse(value){if(!ferhanSyncData||!ferhanSyncChapter)return;const v=syncVerseRecord(Number(value));if(!v)return;ferhanSyncAudio.currentTime=Math.max(0,Number(v.timestamp_from||v.segments?.[0]?.[1]||0)/1000);syncWordsAtTime();}
+function seekSyncedWord(wordIndex){const verse=syncVerseRecord(ferhanSyncVerse||1);const segment=verse?.segments?.find(s=>Number(s[0])===Number(wordIndex));if(!segment)return;ferhanSyncAudio.currentTime=Math.max(0,Number(segment[1])/1000);syncWordsAtTime();if(ferhanSyncAudio.paused)ferhanSyncAudio.play().then(()=>{ferhanSyncTick=setInterval(syncWordsAtTime,70);}).catch(()=>{});}
+function previewSyncedSeek(value){const d=ferhanSyncAudio.duration||0,t=d*Number(value)/1000;const label=document.getElementById("syncTimeLabel");if(label)label.textContent=`${syncFmtTime(t)} / ${syncFmtTime(d)}`;}
+function seekSyncedTime(value){ferhanSeeking=false;if(!ferhanSyncAudio.duration)return;ferhanSyncAudio.currentTime=ferhanSyncAudio.duration*Number(value)/1000;syncWordsAtTime();}
+function seekSyncedRelative(seconds){if(!ferhanSyncData)return;ferhanSyncAudio.currentTime=Math.max(0,Math.min(ferhanSyncAudio.duration||Infinity,ferhanSyncAudio.currentTime+seconds));syncWordsAtTime();}
+async function toggleSyncedPlayback(){if(!ferhanSyncData){await playSyncedChapter(Number(document.getElementById("syncSurahSelect")?.value||1));return;}if(ferhanSyncAudio.paused){try{await ferhanSyncAudio.play();clearInterval(ferhanSyncTick);ferhanSyncTick=setInterval(syncWordsAtTime,70);}catch(e){const s=document.getElementById("syncStatus");if(s)s.textContent="Playback needs a user tap. Press Play again.";}}else{ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);}updateSyncTransport();}
+function pauseSyncedPlayback(){ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);updateSyncTransport();const s=document.getElementById("syncStatus");if(s&&ferhanSyncChapter)s.textContent=`Paused · Surah ${ferhanSyncChapter}`;}
+function stopSyncedPlayback(){ferhanSyncAudio.pause();ferhanSyncAudio.currentTime=0;clearInterval(ferhanSyncTick);clearSyncHighlights();ferhanSyncData=null;ferhanSyncChapter=null;ferhanSyncVerse=null;ferhanLastWord=null;ferhanLoopVerse=false;updateSyncTransport();const s=document.getElementById("syncStatus");if(s)s.textContent="Synchronized playback stopped.";}
+function setSyncedSpeed(value){ferhanSyncAudio.playbackRate=Number(value)||1;}
+function toggleVerseLoop(enabled){ferhanLoopVerse=Boolean(enabled);const hint=document.getElementById("syncLoopHint");if(hint)hint.textContent=ferhanLoopVerse?"Repeat ayah is on · the current ayah will loop until you turn it off.":"Tap any Arabic word to jump to its verified audio timestamp.";}
+function replaySyncedVerse(){if(!ferhanSyncVerse)return;seekSyncedVerse(ferhanSyncVerse);if(ferhanSyncAudio.paused)toggleSyncedPlayback();}
+function stepSyncedVerse(delta){if(!ferhanSyncChapter||!quranBundle)return;const count=(quranBundle.quran[String(ferhanSyncChapter)]||[]).length,next=Math.max(1,Math.min(count,(ferhanSyncVerse||1)+delta));seekSyncedVerse(next);if(ferhanSyncAudio.paused)toggleSyncedPlayback();}
+ferhanSyncAudio.addEventListener("timeupdate",()=>{if(ferhanLoopVerse&&ferhanSyncVerse){const v=syncVerseRecord(ferhanSyncVerse);const end=Number(v?.timestamp_to||0)/1000;if(end>0&&ferhanSyncAudio.currentTime>=end-.035){ferhanSyncAudio.currentTime=Number(v.timestamp_from||0)/1000;}}});
 
 
 
@@ -898,32 +1106,26 @@ function buildExpandedReadingFeed(){
 }
 function feedCardHTML(x,i){
  const arabic=feedNoMarks?(x.plain||stripArabicMarks(x.ar||"")):(x.ar||"");
- const isQuran=x.kind==="quran";
- const extraSource=x.source?`<div class="feed-source">${escapeFeedHTML(x.source)}</div>`:"";
- const quranLink=isQuran?`<a class="feed-link" href="https://quran.com/${x.chapter}:${x.ayah}" target="_blank" rel="noopener">Open verified text & recitation ↗</a>`:"";
- const syncLink=isQuran?`<button onclick="show('recitation')">Open synchronized player</button>`:"";
+ const isQuran=x.kind==="quran",learned=feedLearned.has(i);
+ const quranLink=isQuran?`<a class="feed-link" href="https://quran.com/${x.chapter}:${x.ayah}" target="_blank" rel="noopener">Open verified recitation ↗</a>`:"";
  return `<article class="feed-card card-enter" id="feed-${i}" data-index="${i}">
   <div class="feed-meta"><span>${escapeFeedHTML(x.stage||"READING PRACTICE")}</span><span>${(i+1).toLocaleString()} / ${readingFeed.length.toLocaleString()}</span></div>
-  <div class="feed-main">
-   <div class="feed-kind">${escapeFeedHTML((x.kind||"lesson").toUpperCase())}</div>
-   <h2>${escapeFeedHTML(x.title||"Reading practice")}</h2>
-   <div class="feed-ar ${feedNoMarks?'no-diacritics':''}" id="feedArabic-${i}" dir="rtl" lang="ar">${escapeFeedHTML(arabic)}</div>
-   <p class="feed-copy">${escapeFeedHTML(x.en||"")}</p>
-   <div class="feed-translation"><div><b>አማርኛ</b><br>${escapeFeedHTML(x.am||"")}</div><div><b>Practice</b><br>${escapeFeedHTML(x.task||"Read aloud and repeat.")}</div></div>
-   ${extraSource}
-   <div class="feed-actions">
-    <button class="primary" onclick="speakFeedItem(${i})">🔊 Listen</button>
-    <button onclick="toggleFeedMarks()">تَشْكِيلٌ ${feedNoMarks?'OFF':'ON'}</button>
-    <button onclick="toggleFeedFlip(${i})">◈ Flip card</button>
-    <button onclick="revealFeed(${i})">Check answer</button>
-    ${syncLink}
-    ${quranLink}
-    <button onclick="markFeedLearned(${i},this)">☆ Learned</button>
-    <button onclick="feedNext()">Next →</button>
-   </div>
-   <div class="feed-answer" id="feedAnswer-${i}"></div>
+  <div class="feed-kind">${isQuran?"۞ QUR’AN · "+escapeFeedHTML(x.chapter+":"+x.ayah):"✦ "+escapeFeedHTML((x.kind||"lesson").toUpperCase())}</div>
+  <h2 class="feed-title">${escapeFeedHTML(x.title||"Reading practice")}</h2>
+  <div class="feed-ar ${feedNoMarks?'no-diacritics':''}" id="feedArabic-${i}" dir="rtl" lang="ar">${escapeFeedHTML(arabic)}</div>
+  <div class="feed-hint">Read aloud · take your time</div>
+  <div class="feed-reveal" id="feedReveal-${i}" hidden>
+   <div class="translation-panel"><span>ENGLISH</span><p>${escapeFeedHTML(x.en||"")}</p></div>
+   <div class="translation-panel amharic-panel"><span>አማርኛ</span><p>${escapeFeedHTML(x.am||"")}</p></div>
   </div>
-  <div class="feed-meta"><span>READ · LISTEN · INFER · REPEAT</span><span>${isQuran?'QUR’AN READING':'DAILY LEARNING'}</span></div>
+  <div class="feed-answer" id="feedAnswer-${i}" aria-live="polite"></div>
+  <div class="feed-actions">
+   <button class="primary" onclick="speakFeedItem(${i})">◖)) Listen</button>
+   <button onclick="revealFeed(${i})">◉ Check answer</button>
+   <button onclick="toggleFeedFlip(${i})">↻ Translation</button>
+   <button class="${learned?'primary':''}" onclick="markFeedLearned(${i},this)">${learned?'✓ Learned':'☆ Mark learned'}</button>
+  </div>
+  <div class="feed-bottom"><span>FERHAN · READ / LISTEN / REPEAT</span>${quranLink}</div>
  </article>`;
 }
 function appendFeedBatch(){
@@ -946,6 +1148,7 @@ function renderFeed(){
  };
 }
 let feedAutoTimer=null,feedLearned=new Set();
+try{feedLearned=new Set(JSON.parse(localStorage.getItem("ferhanFeedLearned")||"[]"))}catch(e){}
 function updateFeedControls(){
  const item=readingFeed[feedIndex]||readingFeed[0];
  const c=document.getElementById("feedCounter");if(c)c.textContent=`${(feedIndex+1).toLocaleString()} / ${readingFeed.length.toLocaleString()} · ${item?.stage||"READING"}`;
@@ -966,27 +1169,31 @@ function feedGo(i){
 function feedNext(){feedGo(feedIndex+1)}
 function feedPrev(){feedGo(feedIndex-1)}
 function toggleFeedFlip(i){
- const card=document.getElementById("feed-"+i);if(!card)return;
- card.classList.toggle("details-hidden");
- const b=card.querySelector('[onclick^="toggleFeedFlip"]');
- if(b)b.textContent=card.classList.contains("details-hidden")?"◈ Show meaning":"◈ Hide meaning";
- card.classList.remove("card-enter");void card.offsetWidth;card.classList.add("card-enter");
+ const panel=document.getElementById("feedReveal-"+i);if(!panel)return;
+ panel.hidden=!panel.hidden;
+ const card=document.getElementById("feed-"+i);
+ if(card){card.classList.toggle("translation-open",!panel.hidden);card.classList.remove("card-enter");void card.offsetWidth;card.classList.add("card-enter")}
 }
 function markFeedLearned(i,button){
- if(feedLearned.has(i)){feedLearned.delete(i);button.textContent="☆ Learned";}
- else{feedLearned.add(i);button.textContent="✓ Learned";}
- button.classList.toggle("primary",feedLearned.has(i));
+ if(feedLearned.has(i))feedLearned.delete(i);else feedLearned.add(i);
+ try{localStorage.setItem("ferhanFeedLearned",JSON.stringify([...feedLearned]))}catch(e){}
+ if(button){button.textContent=feedLearned.has(i)?"✓ Learned":"☆ Mark learned";button.classList.toggle("primary",feedLearned.has(i))}
 }
 function toggleFeedAuto(){
  const b=document.getElementById("feedAutoBtn");
- if(feedAutoTimer){clearInterval(feedAutoTimer);feedAutoTimer=null;if(b)b.textContent="Auto";return;}
+ if(feedAutoTimer){clearInterval(feedAutoTimer);feedAutoTimer=null;if(b)b.textContent="▶";return;}
  feedAutoTimer=setInterval(()=>{if(feedIndex>=readingFeed.length-1){toggleFeedAuto();return;}feedNext()},8500);
- if(b)b.textContent="Pause";
+ if(b)b.textContent="Ⅱ";
 }
 function speakFeedItem(i){const x=readingFeed[i];if(x?.ar)speak(x.ar)}
-function revealFeed(i){const x=readingFeed[i];const el=document.getElementById("feedAnswer-"+i);if(el)el.textContent=x?.answer||"Read carefully, listen, and compare with a trusted source."}
+function revealFeed(i){
+ const x=readingFeed[i],el=document.getElementById("feedAnswer-"+i);
+ if(el)el.textContent=x?.answer||"Listen once more, then compare your recitation with a trusted reciter or teacher.";
+ const panel=document.getElementById("feedReveal-"+i);if(panel)panel.hidden=false;
+}
 function toggleFeedMarks(){
  feedNoMarks=!feedNoMarks;
+ const marksBtn=document.getElementById("feedMarksBtn");if(marksBtn)marksBtn.textContent="تَشْكِيل "+(feedNoMarks?"OFF":"ON");
  document.querySelectorAll(".feed-ar").forEach(el=>{const i=Number(el.id.replace("feedArabic-",""));const x=readingFeed[i];if(x)el.textContent=feedNoMarks?(x.plain||stripArabicMarks(x.ar||"")):(x.ar||"");el.classList.toggle("no-diacritics",feedNoMarks)});
  document.querySelectorAll(".feed-actions button").forEach(b=>{if(b.textContent.includes("تَشْكِيلٌ"))b.textContent="تَشْكِيلٌ "+(feedNoMarks?"OFF":"ON")});
 }
@@ -1011,28 +1218,78 @@ function renderQuranReader(){
  const host=document.getElementById("quranReaderVerses");host.innerHTML="";
  for(let i=start;i<end;i++){
   const verse=verses[i],words=verse[0]||[],key=quranChapter+":"+(i+1),am=quranBundle.amharic[key]||"";
-  const article=document.createElement("article");article.className="reader-ayah";
+  const article=document.createElement("article");article.className="reader-ayah";article.dataset.ayah=key;
   const num=document.createElement("div");num.className="muted";num.textContent=key;article.appendChild(num);
   const grid=document.createElement("div");grid.className="reader-word-grid";
   words.forEach(w=>{
    const card=document.createElement("div");card.className="reader-word";
    const ar=document.createElement("div");ar.className="arabic";ar.lang="ar";ar.textContent=quranMarks?w[0]:stripArabicMarks(w[0]);card.appendChild(ar);
-   if(quranShowTranslations){const en=document.createElement("small");en.textContent=w[2]||"";card.appendChild(en);const tr=document.createElement("small");tr.textContent=w[1]||"";card.appendChild(tr)}
+   if(quranShowTranslations){const en=document.createElement("small");en.textContent=w[2]||"";card.appendChild(en);const tr=document.createElement("small");tr.className="am";tr.textContent=w[1]||"";card.appendChild(tr)}
    card.addEventListener("click",()=>speak(w[0]));grid.appendChild(card);
   });
   article.appendChild(grid);
   if(quranShowTranslations){const en=document.createElement("p");en.className="muted";en.textContent=verse[1]||"";article.appendChild(en);const amEl=document.createElement("p");amEl.className="amharic";amEl.textContent=am;article.appendChild(amEl)}
-  host.appendChild(article);
+  const actions=document.createElement("div");actions.className="ayah-actions";
+  const listen=document.createElement("button");listen.textContent="▶ Listen";listen.onclick=()=>speak(words.map(w=>w[0]).join(" "));
+  const recall=document.createElement("button");recall.textContent="◉ Hide for recall";recall.onclick=()=>{article.classList.toggle("recall-hidden");recall.textContent=article.classList.contains("recall-hidden")?"Reveal ayah":"◉ Hide for recall"};
+  const save=document.createElement("button");save.textContent="☆ Save to Hifz";save.onclick=()=>saveMemorisationAyah(key);
+  actions.append(listen,recall,save);article.appendChild(actions);host.appendChild(article);
  }
  const pages=Math.max(1,Math.ceil(verses.length/quranPerPage));document.getElementById("quranPageLabel").textContent=`${quranPageIndex+1} / ${pages} · Surah ${quranChapter}`;
  document.getElementById("quranSurahSelect").value=String(quranChapter);
+ const bar=document.getElementById("mushafProgressBar");if(bar)bar.style.width=(verses.length?Math.min(100,(end/verses.length)*100):0)+"%";
 }
+
 function quranPage(delta){if(!quranBundle)return;const n=(quranBundle.quran[String(quranChapter)]||[]).length;const max=Math.max(0,Math.ceil(n/quranPerPage)-1);quranPageIndex=Math.max(0,Math.min(max,quranPageIndex+delta));renderQuranReader()}
 function toggleQuranMarks(){quranMarks=!quranMarks;document.getElementById("quranMarksBtn").textContent=quranMarks?"تَشْكِيلٌ ON":"تَشْكِيلٌ OFF";renderQuranReader()}
 function toggleQuranTranslation(){quranShowTranslations=!quranShowTranslations;renderQuranReader()}
 const showFerhanBase=show;
 show=function(id){showFerhanBase(id);if(id==="scrollLearn"&&!document.getElementById("feedTrack").children.length)renderFeed();if((id==="quranReader"||id==="recitation")&&!quranBundle)initQuranReader();if(id==="recitation"&&quranBundle)populateSyncSurahSelect()};
 
+/* Native-feeling navigation, section identity and responsive accessibility. */
+const ferhanSectionMarks={academy:['✧','YOUR JOURNEY'],lessons:['ا','LEARN ARABIC'],practice:['◖','SPEAK & REPEAT'],recitation:['۞','RECITATION'],tajweed:['۞','RECITATION RULES'],quiz:['✳','TEST YOUR KNOWLEDGE'],course:['▷','WATCH & LEARN'],resources:['⌘','KEEP EXPLORING'],quranReader:['۞','THE COMPLETE QUR’AN']};
+Object.entries(ferhanSectionMarks).forEach(([id,meta])=>{
+ const section=document.getElementById(id);if(!section)return;
+ const head=section.querySelector('.section-head');if(!head||head.querySelector('.section-mark'))return;
+ const copy=head.firstElementChild;if(!copy)return;
+ copy.classList.add('section-head-copy');
+ const mark=document.createElement('div');mark.className='section-mark';mark.setAttribute('aria-hidden','true');mark.textContent=meta[0];
+ const label=document.createElement('div');label.className='section-eyebrow';label.textContent=meta[1];
+ label.style.cssText='font-size:9px;font-weight:850;letter-spacing:.15em;color:#9a7a45;margin-bottom:3px';
+ copy.insertBefore(label,copy.firstChild);head.insertBefore(mark,copy);head.classList.add('has-mark');
+});
+function syncFerhanTabs(id){
+ document.querySelectorAll('.mobile-tabbar button').forEach(b=>{
+  const target=b.dataset.mobileGo;const active=target===id||(target==='scrollLearn'&&id==='recitation');
+  b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');
+ });
+}
+document.querySelectorAll('.mobile-tabbar button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.mobileGo)));
+const ferhanShowWithTabs=show;
+show=function(id){ferhanShowWithTabs(id);syncFerhanTabs(id)};
+syncFerhanTabs(activeSection||'home');
+
+
 </script>
-<script>if("serviceWorker" in navigator && location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));}</script>
+<script>if("serviceWorker" in navigator && location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));}
+/* V7 Mushaf presentation and local Hifz review tools. */
+const HIFZ_KEY="ferhanHifzStudioV7";
+function readHifz(){try{return JSON.parse(localStorage.getItem(HIFZ_KEY)||"{}")}catch(e){return {}}}
+function writeHifz(data){localStorage.setItem(HIFZ_KEY,JSON.stringify(data));renderMemorisationStudio()}
+function toggleMushafMode(){const root=document.getElementById("quranReader");root.classList.toggle("mushaf-mode");document.getElementById("mushafModeBtn").textContent=root.classList.contains("mushaf-mode")?"▤ Standard view":"۞ Mushaf view"}
+function toggleFocusMode(){const root=document.getElementById("quranReader");root.classList.toggle("focus-mode");document.getElementById("focusModeBtn").textContent=root.classList.contains("focus-mode")?"◎ Focus on":"◉ Focus"}
+function setReaderFontSize(value){document.querySelectorAll("#quranReader .reader-word .arabic").forEach(el=>el.style.fontSize=value+"px")}
+function saveCurrentAyahBookmark(){const key=quranChapter+":"+(quranPageIndex*quranPerPage+1);localStorage.setItem("ferhanQuranBookmarkV7",key);const status=document.getElementById("quranReaderStatus");status.textContent="Bookmark saved · "+key+" · This device only."}
+function saveMemorisationAyah(key){const data=readHifz();if(!data[key])data[key]={savedAt:Date.now(),learned:false,reviews:0,lastReview:0};writeHifz(data)}
+function showMemorisationStudio(){const el=document.getElementById("memorisationStudio");el.hidden=false;renderMemorisationStudio();el.scrollIntoView({behavior:"smooth",block:"start"})}
+function renderMemorisationStudio(){const data=readHifz(),entries=Object.entries(data),now=Date.now();const learned=entries.filter(([,v])=>v.learned).length;const due=entries.filter(([,v])=>!v.learned||!v.lastReview||now-v.lastReview>86400000).length;
+ const put=(id,n)=>{const el=document.getElementById(id);if(el)el.textContent=n};put("memoriseSavedCount",entries.length);put("memoriseMasteredCount",learned);put("memoriseDueCount",due);
+ const list=document.getElementById("memorisationList");if(!list)return;list.innerHTML="";if(!entries.length){list.innerHTML='<p class="muted">No ayahs saved yet. Use “Save to Hifz” on any ayah to build your revision list.</p>';return}
+ entries.sort((a,b)=>(a[1].lastReview||0)-(b[1].lastReview||0)).forEach(([key,v])=>{const row=document.createElement("div");row.className="memorise-item";const label=document.createElement("span");label.textContent=key+(v.learned?" · Learned":" · Review");const actions=document.createElement("div");actions.style.display="flex";actions.style.gap="6px";const review=document.createElement("button");review.textContent="Review";review.onclick=()=>openHifzAyah(key);const done=document.createElement("button");done.textContent=v.learned?"Learned ✓":"Mark learned";done.onclick=()=>{const d=readHifz();d[key].learned=!d[key].learned;d[key].lastReview=Date.now();d[key].reviews=(d[key].reviews||0)+1;writeHifz(d)};const remove=document.createElement("button");remove.textContent="×";remove.setAttribute("aria-label","Remove "+key);remove.onclick=()=>{const d=readHifz();delete d[key];writeHifz(d)};actions.append(review,done,remove);row.append(label,actions);list.appendChild(row)})
+}
+function openHifzAyah(key){const [chapter,ayah]=key.split(":").map(Number);quranChapter=chapter;quranPageIndex=Math.floor((ayah-1)/quranPerPage);document.getElementById("quranSurahSelect").value=String(chapter);renderQuranReader();const card=document.querySelector('[data-ayah="'+key+'"]');if(card){card.scrollIntoView({behavior:"smooth",block:"center"});card.classList.add("active-ayah");card.classList.add("recall-hidden");const btn=card.querySelector(".ayah-actions button:nth-child(2)");if(btn)btn.textContent="Reveal ayah"}}
+function reviewNextMemorisation(){const entries=Object.entries(readHifz()).sort((a,b)=>(a[1].lastReview||0)-(b[1].lastReview||0));if(!entries.length){alert("Save an ayah to your Hifz list first.");return}openHifzAyah(entries[0][0])}
+function exportMemorisation(){const blob=new Blob([JSON.stringify(readHifz(),null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="ferhan-hifz-review.json";a.click();URL.revokeObjectURL(url)}
+
+</script>
 </body></html>

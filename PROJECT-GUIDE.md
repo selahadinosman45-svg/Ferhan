@@ -48,3 +48,26 @@ Qur’anic text and translations should be checked against a trusted mushaf and 
 - Daily reading includes language facts, light jokes, Arabic proverbs and short hadith excerpts labelled with collection references.
 - Tajweed practice includes active drills for articulation, ghunnah, qalqalah, madd, nūn sākinah, mīm sākinah, sun/moon letters and stopping.
 - Device-generated Arabic speech is a practice aid only. It does not certify pronunciation or Tajweed.
+
+
+## Native mobile interface refinement — November 2026
+
+- Added a persistent five-destination mobile tab bar for Home, Learn, Reading Practice, Qur’an and Tajweed, with active-state feedback and safe-area spacing for iPhone devices.
+- Refined section identity across Academy, Lessons, Repeat Practice, Recitation, Tajweed, Quizzes, Video Course, Resources and the full Qur’an reader using consistent icon marks and section labels.
+- Unified button, card, panel, reader, quiz, lesson-tab and modal styling; improved touch targets, focus visibility, reduced-motion handling and small-screen layouts.
+- Added responsive word-card styling in the full Qur’an reader and more consistent layouts for Tajweed drills and lesson navigation.
+- Updated the service-worker cache to `ferhan-academy-v5` so installed copies can refresh the new interface.
+- Existing Qur’an text, translations, learning content, audio workflow, local progress and privacy model are retained.
+
+## V7 · Mushaf and memorisation studio
+
+The Qur'an reader includes an optional Mushaf-style presentation, focus mode, adjustable Arabic type size, verse-level listen and recall-hide controls, and a local Hifz list. Learners can save ayahs, revisit the oldest review first, mark items as personally learned, remove items, and export their list as JSON. Hifz data is stored in this browser under `ferhanHifzStudioV7`; it is separate from the Quran text dataset and is not synced between devices. The service-worker cache is versioned `ferhan-academy-v7` so installed copies can receive the updated shell.
+
+
+## V8 · synchronized word-by-word recitation
+
+The full-surah player uses Quran Foundation chapter audio and its published word-level timing segments. While audio plays, the active Arabic word is highlighted and brought into view. Each word is also tappable to seek to that word's official start timestamp. The transport includes seeking, five-second skip, speed presets, play/pause, ayah previous/next, ayah replay, and optional current-ayah looping.
+
+To publish timing data, configure repository secrets `QF_CLIENT_ID` and `QF_CLIENT_SECRET`, plus repository variable `QF_CHAPTER_RECITER_ID` (and optionally `QF_RECITER_NAME`). Run **Actions → Update Quran recitation data → Run workflow**. The workflow publishes `data/recitation/index.json` and per-surah JSON. Until the workflow has run successfully, the player reports timing data unavailable rather than inventing timestamps. Credentials are used only in GitHub Actions and are not included in the public app. Audio streaming requires internet access.
+
+The service-worker shell cache is now `ferhan-academy-v8`; existing V7 Hifz and bookmark storage keys are deliberately retained so local progress is not discarded by this update.

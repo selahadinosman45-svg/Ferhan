@@ -153,3 +153,47 @@ The scroll lessons are introductory learning material, not a substitute for a qu
 - The expanded feed contains 6,236 ayah reading cards (more than 77,000 Arabic word tokens in the source dataset), in addition to the original foundation lessons and daily reading cards. It is progressively rendered to avoid inserting thousands of cards into the page at once.
 
 Hadith excerpts are labelled with their cited collections and numbers. Proverbs and invented language jokes are explicitly labelled separately from hadith. Browser speech synthesis is not a Tajweed-certified reciter; use the linked recitation/video resources and a qualified teacher for pronunciation correction. The supplied Amharic translations and Quran word glosses retain the attribution and review notes already documented above.
+
+
+## FERHAN visual refresh (2026)
+
+This revision introduces a visual-first, mobile-friendly interface inspired by the reference screenshots supplied with the project: warm ivory surfaces, deep emerald accents, muted gold details, compact icon-led learning tiles, and a less text-heavy dashboard.
+
+### Reading practice
+- Vertical snap-scrolling cards with animated transitions.
+- Previous / next navigation, reading progress, and optional timed auto-advance.
+- Arabic tashkīl on/off control.
+- Translation reveal for English and Amharic.
+- Listen, check answer, and mark learned actions.
+- Learned-card state is saved locally in the browser.
+- Service-worker cache version bumped so installed app shells can refresh.
+
+The supplied Figma URL could not be fetched in this environment (restricted access), so the visual direction was implemented from the screenshots attached to the request. Qur’anic text and translation data remain the project's existing dataset; translations are study aids and recitation should be checked with a qualified teacher.
+
+
+## Native mobile interface refinement — November 2026
+
+- Added a persistent five-destination mobile tab bar for Home, Learn, Reading Practice, Qur’an and Tajweed, with active-state feedback and safe-area spacing for iPhone devices.
+- Refined section identity across Academy, Lessons, Repeat Practice, Recitation, Tajweed, Quizzes, Video Course, Resources and the full Qur’an reader using consistent icon marks and section labels.
+- Unified button, card, panel, reader, quiz, lesson-tab and modal styling; improved touch targets, focus visibility, reduced-motion handling and small-screen layouts.
+- Added responsive word-card styling in the full Qur’an reader and more consistent layouts for Tajweed drills and lesson navigation.
+- Updated the service-worker cache to `ferhan-academy-v5` so installed copies can refresh the new interface.
+- Existing Qur’an text, translations, learning content, audio workflow, local progress and privacy model are retained.
+
+
+## V8 — synchronized word-by-word recitation studio
+
+The recitation player now includes a seekable transport, playback speed presets, five-second skip controls, ayah previous/next and replay, optional current-ayah looping, and tap-to-seek Arabic words. Highlighting continues to use the official word-level timing segments supplied in `data/recitation/`; it never estimates word boundaries.
+
+### Enable synchronized audio and timestamps
+
+The repository workflow `.github/workflows/update-quran-data.yml` downloads chapter audio and word timing data from the Quran Foundation Content API. Configure these repository settings before running **Actions → Update Quran recitation data → Run workflow**:
+
+- Secret `QF_CLIENT_ID`
+- Secret `QF_CLIENT_SECRET`
+- Variable `QF_CHAPTER_RECITER_ID` (a Quran Foundation chapter-reciter ID)
+- Optional variable `QF_RECITER_NAME`
+
+The workflow publishes `data/recitation/index.json` and one JSON file per surah. Until that workflow completes successfully and publishes data, the UI will report that verified timing files are unavailable; no audio/timing data is fabricated. API credentials remain in GitHub Actions and are never shipped to the browser.
+
+The player requires an internet connection for streaming audio. Browser playback must be started by a user gesture.

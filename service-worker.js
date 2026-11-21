@@ -1,4 +1,4 @@
-const CACHE = "ferhan-academy-v3";
+const CACHE = "ferhan-academy-v8";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./assets/fonts/Uthmani.woff2", "./assets/icons/icon-192.png", "./assets/icons/icon-512.png"];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting()));
