@@ -9,10 +9,11 @@ FERHAN is a static Arabic and Amharic Quran-learning website. It is hosted on Gi
 - Arabic + Amharic academy, lessons, repeat practice, Tajweed and quizzes.
 - TikTok-style vertical snap-scroll micro-lessons: swipe through letters, letter forms, harakāt, tanwīn, sukūn, shaddah, blending, vocabulary, basic naḥw, ṣarf, and unvowelled reading inference.
 - Each micro-lesson includes Arabic text, Amharic and English explanations, listen/repeat speech, reveal/check answers, and a with/without-tashkīl comparison.
-- Full Qur’an reader for all 114 surahs with word-by-word Arabic, transliteration and English glosses, plus Amharic verse translations; toggle tashkīl on/off.
+- Expanded curriculum: letter dots and joining, long vowels, hamzah, sun/moon letters, reading blends, everyday and Qur’anic vocabulary, question words, nominal/verbal sentences, gender/adjective agreement, iḍāfah, case endings, dual, attached pronouns, imperative, roots and patterns, and contextual unvowelled reading drills.
+- Complete Qur’an reader: all 114 surahs and 6,236 ayahs, with word-by-word Arabic, transliteration, English glosses and Amharic verse translations; toggle tashkīl on/off.
 - Browser speech synthesis for Arabic words and phrases where an Arabic voice is available.
 - Al-Fatihah word-by-word study and short-surah lessons.
-- Synchronized chapter playback and word highlighting for chapters 1, 112, 113 and 114.
+- Synchronized chapter playback and word highlighting are configured for chapters 1, 112, 113 and 114. The complete 114-surah text reader is separate from this limited synchronized-audio feature.
 - Local bookmarks, lesson completion, memorisation checklists and JSON backup/restore.
 - No learner account is required. Progress remains in the learner's browser.
 
@@ -81,11 +82,7 @@ If your default branch is not `main`, select the actual branch.
 2. Select **Update Quran recitation data**.
 3. Press **Run workflow**.
 4. Wait for the run to complete successfully.
-5. Confirm that the workflow creates:
-   - `data/recitation/1.json`
-   - `data/recitation/112.json`
-   - `data/recitation/113.json`
-   - `data/recitation/114.json`
+5. Confirm that the workflow creates `data/recitation/index.json` and chapter files `data/recitation/1.json` through `data/recitation/114.json`. The manifest lists the chapters that returned valid word-level timing segments.
 
 The workflow also runs automatically every Monday at 02:17 UTC. You can run it manually whenever you want to refresh the data.
 
@@ -128,7 +125,7 @@ The scroll lessons are introductory learning material, not a substitute for a qu
 - The supplied QuranWBW Uthmani font is bundled locally and applied to Arabic learning and Qur’an text.
 - QuranWBW application icons are included for the installable PWA.
 - A web app manifest and service worker provide installability and offline caching of the app shell and previously opened same-origin data.
-- The supplied full Qur’an word-by-word dataset and the Amharic translation data remain in `data/quran-word-by-word.json`.
+- The supplied complete Qur’an word-by-word dataset (114 surahs, 6,236 ayahs) and all 6,236 matching Amharic verse translations remain in `data/quran-word-by-word.json`. The reader loads all 114 surahs from this file. The GitHub Actions workflow now requests chapter audio and word-level timing for all 114 surahs from Quran Foundation.
 
 ## Important deployment notes
 
@@ -136,3 +133,12 @@ The scroll lessons are introductory learning material, not a substitute for a qu
 - The initial app shell is cached on first successful visit. Qur’an data and other same-origin resources are cached after they are fetched; open the surahs you want available offline while connected.
 - Audio and browser speech availability depend on the device, network and installed Arabic voices. Speech synthesis is a pronunciation aid, not a tajweed-certified reciter.
 - The GitHub Actions workflow is the only place Quran Foundation credentials are used. Keep `QF_CLIENT_SECRET` in GitHub Actions Secrets, never in the browser app.
+
+
+## Full-Qur’an synchronized recitation update
+
+- The GitHub Actions workflow requests chapter audio and `segments=true` timing data for every chapter number from 1 to 114. Quran Foundation documents each word timing as a one-based `[word_index, start_ms, end_ms]` tuple.
+- The website includes a full-Qur’an synchronized player with a surah selector, ayah selector, play/pause/stop controls, and live Arabic word highlighting.
+- Run **Actions → Update Quran recitation data → Run workflow** after upload. The generated `data/recitation/index.json` reports the exact chapters with available word-level timings. A chapter can be unavailable if the selected chapter-reciter has no timing segments for it.
+- `QF_CHAPTER_RECITER_ID` must be the chapter-reciter ID from Quran Foundation's `/resources/chapter_reciters` resource, not an ayah-by-ayah recitation ID. Keep `QF_CLIENT_ID` and `QF_CLIENT_SECRET` in GitHub Actions Secrets. Optionally set `QF_RECITER_NAME` in Actions Variables.
+- Audio and timing are Quran Foundation content. Review the Quran Foundation Developer Terms for permitted caching, storage, and redistribution before publishing generated files.

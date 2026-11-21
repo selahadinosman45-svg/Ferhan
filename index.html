@@ -27,6 +27,7 @@ input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;borde
 .academy-stage.done .stage-number{background:var(--green);color:white}.stage-copy{flex:1}.stage-copy h3{margin:0 0 4px}.stage-copy p{margin:0;color:var(--muted);font-size:14px}
 .word-by-word{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:15px}
 .wbw-word{background:white;border:1px solid var(--line);border-radius:15px;padding:12px;text-align:center;cursor:pointer;min-height:140px}
+.sync-word-grid{display:flex;flex-wrap:wrap;flex-direction:row-reverse;gap:8px;justify-content:flex-start;margin:14px 0}.sync-word{border:1px solid var(--line);background:#f8f8f4;border-radius:13px;padding:9px 11px;min-width:90px;cursor:default;text-align:center}.sync-word .arabic{font-size:clamp(26px,4vw,34px);line-height:1.7;margin:0}.sync-word small{display:block;color:var(--muted);font-size:11px}.sync-word .sync-gloss{color:var(--green2);font-weight:700}.sync-word.sync-active{background:#e2f6e9!important;border:2px solid #17865d!important;box-shadow:0 0 0 4px #17865d22!important;transform:translateY(-2px)}
 .wbw-word.active{border:2px solid var(--gold);background:#fffaf0;box-shadow:0 0 0 3px #d6ad6220}.wbw-word.sync-active,.sync-word.active{border:2px solid #1d8a63!important;background:#e7f6ee!important;box-shadow:0 0 0 4px #1d8a6320!important;outline:2px solid #1d8a6340}
 .wbw-word .arabic{font-size:32px;line-height:1.5;margin:0 0 5px}.wbw-word .latin{font-size:12px;color:#9a7735;font-weight:700}.wbw-word .gloss{font-size:14px;color:var(--ink);margin-top:5px}
 .resource-card a{color:var(--green2);font-weight:800;text-decoration:none}.resource-card a:hover{text-decoration:underline}
@@ -124,10 +125,20 @@ input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;borde
 
 
 <section class="section" id="recitation" hidden><div class="section-head"><div><h2>Qur’an recitation practice</h2><p class="sub">Listen to each ayah, repeat it, and move at your own pace.</p></div></div>
+<div class="panel" id="fullQuranSyncPanel" style="margin-bottom:16px">
+<div class="tag">ALL 114 SURAHS · QURAN FOUNDATION AUDIO</div>
+<h3>Full Qur’an · synchronized recitation</h3>
+<p class="muted">Choose any surah. The Arabic words below highlight in time with the selected Quran Foundation reciter, using the API’s official word timing segments.</p>
+<div class="surah-tools"><label class="muted">Surah <select id="syncSurahSelect" onchange="chooseSyncSurah(this.value)"><option value="1">Loading all surahs…</option></select></label><label class="muted">Ayah <select id="syncVerseSelect" onchange="seekSyncedVerse(this.value)"><option value="1">Ayah 1</option></select></label></div>
+<div class="controls"><button class="btn gold" onclick="playSyncedChapter(Number(document.getElementById('syncSurahSelect').value))">▶ Play surah with word sync</button><button class="btn secondary" onclick="pauseSyncedPlayback()">Ⅱ Pause</button><button class="btn secondary" onclick="stopSyncedPlayback()">■ Stop</button><button class="btn secondary" onclick="configureTimingService()">↻ Check coverage</button></div>
+<p class="muted" id="syncStatus">Connects to Quran Foundation data published by the secure GitHub Actions workflow.</p>
+<div class="surah-verse" id="syncVerseDisplay"><div class="muted">Select a surah and press Play.</div></div>
+<p class="muted" id="syncCoverage">Word-timing coverage will appear after the first successful GitHub Actions run.</p>
+</div>
 <div class="panel">
 <div class="notice"><strong>Live word highlighting:</strong> FERHAN loads verified recitation audio and word timestamps published through GitHub Actions. No Worker URL or API credentials are needed in the browser.</div>
 <div class="controls"><button class="btn gold" onclick="configureTimingService()">↻ Check GitHub data</button><button class="btn secondary" onclick="playSyncedChapter(1)">▶ Play Al-Fātiḥah with word sync</button></div>
-<p class="muted" id="syncStatus">GitHub-hosted recitation data will load when published by the repository workflow.</p>
+<p class="muted" id="legacySyncStatus">GitHub-hosted recitation data is checked in the full-Qur’an player above.</p>
 <div class="tag">SURAH 1 · AL-FĀTIḤAH · الفاتحة</div>
 <h3>Verse-by-verse listening</h3>
 <p class="amharic">እያንዳንዱን አንቀጽ ያዳምጡ፣ በቀስታ ይድገሙ፣ ከዚያ ወደ ቀጣዩ ይሂዱ። የአማርኛ ማብራሪያዎቹ አጭር የትርጉም መመሪያዎች ናቸው፤ ለትክክለኛ ትርጉም የታመነ ተፍሲር ይጠቀሙ።</p>
@@ -136,7 +147,7 @@ input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;borde
 <p class="amharic">ቃሉን ይንኩ፤ የዐረብኛ ቃሉን፣ አጠራሩን እና አጭር የአማርኛ የመማሪያ ፍቺውን ይመልከቱ።</p>
 <label class="muted" for="wbwAyah">Choose an ayah</label> <select id="wbwAyah" onchange="renderWordStudy(Number(this.value))"><option value="0">Ayah 1</option><option value="1">Ayah 2</option><option value="2">Ayah 3</option><option value="3">Ayah 4</option><option value="4">Ayah 5</option><option value="5">Ayah 6</option><option value="6">Ayah 7</option></select>
 <div id="wordStudy" class="word-by-word"></div>
-<p class="muted" id="wordStudyHint">Select a word to focus it and hear a device-generated pronunciation. Device speech is only a practice aid, not Qur’anic recitation.</p><div class="notice">Word focus is currently tap-to-select, not automatically synchronised to the reciter. Accurate timed highlighting needs verified word timestamps matched to the chosen recording; ferhan does not estimate those timings.</div>
+<p class="muted" id="wordStudyHint">Select a word to focus it and hear a device-generated pronunciation. Device speech is only a practice aid, not Qur’anic recitation.</p><div class="notice">For automatic word-by-word highlighting, use the full-Qur’an synchronized player above. This Al-Fātiḥah study panel remains available for manual word selection and pronunciation practice.</div>
 <div class="controls"><button class="btn secondary" onclick="speakFocusedWord()">▶ Pronounce selected word</button><a class="btn secondary" href="https://quran.com/al-fatihah" target="_blank" rel="noopener" style="text-decoration:none">Quran.com word-by-word audio ↗</a></div>
 </div>
 <div id="ayahList" class="grid" style="grid-template-columns:1fr;gap:10px"></div>
@@ -200,7 +211,7 @@ input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;borde
  </div>
 </section>
 <section class="section" id="quranReader" hidden>
- <div class="section-head"><div><h2>Full Qur’an word-by-word reader</h2><p class="sub">Arabic text with English glosses, Amharic verse translation, transliteration, and a diacritic toggle.</p></div></div>
+ <div class="section-head"><div><h2>Complete Qur’an · all 114 surahs</h2><p class="sub">Read all 6,236 ayahs in Arabic, word by word, with transliteration, English glosses, Amharic verse translations, and a tashkīl on/off toggle.</p></div></div>
  <div class="panel">
   <div class="reader-toolbar">
    <select id="quranSurahSelect" aria-label="Choose surah"></select>
@@ -211,7 +222,7 @@ input[type=range]{width:150px;accent-color:var(--green)}select{padding:9px;borde
   <div id="quranReaderVerses"></div>
   <div class="reader-pagination"><button class="btn secondary" onclick="quranPage(-1)">← Previous</button><span class="muted" id="quranPageLabel">Page 1</span><button class="btn secondary" onclick="quranPage(1)">Next →</button></div>
  </div>
- <p class="muted">Word-by-word English/transliteration and Amharic verse translations are carried over from the supplied Ferhan reader file. Translation is an aid to study, not a replacement for tafsīr or a qualified teacher.</p>
+ <p class="muted">The complete text dataset contains all 114 surahs and 6,236 ayahs. Quran Foundation synchronization is configured to fetch chapter audio and word-level timing for all 114 surahs; actual coverage depends on the selected chapter-reciter and API permissions. Translations are study aids, not a replacement for tafsīr or a qualified teacher.</p>
 </section>
 
 </main><div class="modal-backdrop" id="practiceModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><button class="modal-close" onclick="closePracticeModal()" aria-label="Close">×</button><div class="tag">ferhan DAILY REVISION</div><h2 id="modalTitle">A little revision today</h2><p class="amharic">ዛሬ አጭር የመድገም ልምምድ ያድርጉ። በቀስታ ያዳምጡ፣ ይድገሙ፣ ከዚያ እውቀትዎን ይፈትሹ።</p><div class="word"><strong>1 · Listen</strong><p class="muted">Choose one ayah and listen carefully.</p><button class="btn secondary" onclick="closePracticeModal();show('recitation')">Open recitation</button></div><div class="word" style="margin-top:10px"><strong>2 · Recall</strong><p class="muted">Try to recite from memory, then check the text.</p><button class="btn secondary" onclick="closePracticeModal();show('quiz')">Open full quiz</button></div><div class="word" style="margin-top:10px"><strong>3 · Pop-up quiz</strong><p>How many verses are in Surah Al-Ikhlas?</p><div class="controls"><button class="btn secondary" onclick="dailyQuizAnswer(3)">3</button><button class="btn secondary" onclick="dailyQuizAnswer(4)">4</button><button class="btn secondary" onclick="dailyQuizAnswer(5)">5</button></div><div class="feedback" id="dailyQuizFeedback"></div></div><div class="controls"><button class="btn" onclick="dismissDaily()">I’ll practise later</button></div></div></div><footer>ferhan · فَرْحَان — Learn steadily, practise patiently. <br>Learning support only; for Qur’anic recitation rules and correction, learn with a qualified teacher. <br><span style="font-size:12px">Bookmarks and progress are saved locally in this browser. Clearing browser data or switching devices may remove or not carry over this progress.</span></footer>
@@ -461,28 +472,42 @@ resumeBookmark=function(){
 };
 renderShortSurah(112);loadV6State();maybeShowDailyPractice();
 
-// FERHAN V6.1 — synchronized word highlighting.
-// Recitation data is published as static JSON by GitHub Actions.
-// No Quran Foundation secret or access token is ever sent to the browser.
-// GitHub Pages mode: timing data is generated securely by GitHub Actions
-// and published as static JSON. No browser-side API credentials or Worker URL.
-let ferhanSyncAudio=new Audio(),ferhanSyncData=null,ferhanSyncChapter=null,ferhanSyncTick=null;
-function configureTimingService(){
- const el=document.getElementById("syncStatus");
- if(el)el.textContent="GitHub Quran data is used automatically. Checking published recitation data…";
- fetch("./data/recitation/1.json",{cache:"no-store"})
-  .then(r=>{if(!r.ok)throw new Error("Quran data has not been published yet. Run the GitHub Actions workflow.");return r.json();})
-  .then(d=>{if(!d.audioUrl||!Array.isArray(d.timestamps))throw new Error("Published data is incomplete.");if(el)el.textContent="GitHub Quran data connected · "+(d.reciterName||"Configured reciter");})
-  .catch(e=>{if(el)el.textContent="GitHub data unavailable: "+e.message;});
+// FERHAN — Quran Foundation synchronized recitation for all 114 chapters.
+// API credentials are used only by GitHub Actions; the browser downloads public timing JSON.
+let ferhanSyncAudio=new Audio(),ferhanSyncData=null,ferhanSyncChapter=null,ferhanSyncTick=null,ferhanSyncVerse=null,ferhanLastWord=null;
+function syncEscape(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function populateSyncSurahSelect(){
+ const sel=document.getElementById("syncSurahSelect");if(!sel||!quranBundle)return;
+ const old=Number(sel.value)||1;
+ sel.innerHTML=quranBundle.surahs.map(x=>`<option value="${x[0]}">${x[0]}. ${syncEscape(x[1])}</option>`).join("");
+ sel.value=String(Math.min(114,Math.max(1,old)));
+ updateSyncVerseSelect(Number(sel.value),1);
+}
+function updateSyncVerseSelect(chapter,selected=1){
+ const sel=document.getElementById("syncVerseSelect");if(!sel||!quranBundle)return;
+ const verses=quranBundle.quran[String(chapter)]||[];
+ sel.innerHTML=verses.map((_,i)=>`<option value="${i+1}">Ayah ${i+1}</option>`).join("");
+ sel.value=String(Math.min(verses.length,Math.max(1,selected)));
+}
+function chooseSyncSurah(chapter){
+ chapter=Number(chapter);updateSyncVerseSelect(chapter,1);
+ const display=document.getElementById("syncVerseDisplay");if(display)display.innerHTML='<div class="muted">Press Play to start synchronized recitation for this surah.</div>';
+ if(ferhanSyncChapter!==chapter){ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);clearSyncHighlights();ferhanSyncData=null;ferhanSyncChapter=null;}
+}
+function renderSyncedVerse(verseNo){
+ if(!quranBundle||!ferhanSyncChapter)return;
+ const chapter=ferhanSyncChapter,verse=quranBundle.quran[String(chapter)]?.[verseNo-1];if(!verse)return;
+ const words=verse[0]||[],key=chapter+":"+verseNo,am=quranBundle.amharic[key]||"",english=verse[1]||"";
+ const host=document.getElementById("syncVerseDisplay");if(!host)return;
+ host.innerHTML=`<div class="row" style="display:flex;justify-content:space-between;gap:8px;align-items:center"><strong>Surah ${chapter} · Ayah ${verseNo}</strong><span class="muted">${words.length} words</span></div><div class="sync-word-grid" dir="rtl">${words.map((w,i)=>`<button type="button" class="sync-word" id="sync-word-${i+1}" data-word-index="${i+1}" aria-label="Word ${i+1}: ${syncEscape(w[0])}"><span class="arabic" lang="ar" translate="no">${syncEscape(w[0])}</span><small>${syncEscape(w[1]||"")}</small><small class="sync-gloss">${syncEscape(w[2]||"")}</small></button>`).join("")}</div><p class="amharic" lang="am">${syncEscape(am)}</p><p class="muted">${syncEscape(english)}</p>`;
+ ferhanSyncVerse=verseNo;ferhanLastWord=null;
 }
 function clearSyncHighlights(){
- document.querySelectorAll(".wbw-word.sync-active,.wbw-word.active").forEach(el=>el.classList.remove("sync-active"));
- document.querySelectorAll(".surah-verse.sync-current").forEach(el=>el.classList.remove("sync-current"));
+ document.querySelectorAll(".sync-word.sync-active,.sync-word.sync-verse-active,.surah-verse.sync-current").forEach(el=>el.classList.remove("sync-active","sync-verse-active","sync-current"));
 }
 function syncWordsAtTime(){
  if(!ferhanSyncData||!ferhanSyncChapter)return;
- const t=Math.round(ferhanSyncAudio.currentTime*1000);
- let active=null;
+ const t=Math.round(ferhanSyncAudio.currentTime*1000);let active=null;
  for(const verse of (ferhanSyncData.timestamps||[])){
   for(const seg of (verse.segments||[])){
    if(t>=Number(seg[1])&&t<Number(seg[2])){active={verseKey:verse.verse_key,wordIndex:Number(seg[0])};break;}
@@ -490,63 +515,53 @@ function syncWordsAtTime(){
   if(active)break;
  }
  if(!active)return;
- const [chapter,verseNo]=active.verseKey.split(":").map(Number);
- if(chapter!==ferhanSyncChapter)return;
- if(chapter===1){
-  const ayah=verseNo-1;
-  if(selectedAyah!==ayah){
-   const sel=document.getElementById("wbwAyah");if(sel)sel.value=String(ayah);
-   renderWordStudy(ayah);
-  }
-  document.querySelectorAll("#wordStudy .wbw-word").forEach((el,i)=>{
-   el.classList.toggle("sync-active",i===active.wordIndex-1);
-  });
-  document.querySelectorAll("#ayahList .word").forEach((el,i)=>el.classList.toggle("sync-current",i===ayah));
- }else{
-  if(activeShortSurah!==chapter||shortAyahIndex!==verseNo-1){
-   activeShortSurah=chapter;shortAyahIndex=verseNo-1;shortSurahUsed=true;
-   const selector=document.getElementById("shortSurahSelect");if(selector)selector.value=String(chapter);
-   renderShortSurah(chapter,verseNo-1);
-  }
-  const verseEl=document.getElementById("short-ayah-"+(verseNo-1));
-  if(verseEl){
-   verseEl.classList.add("sync-current");
-   verseEl.querySelectorAll(".wbw-word").forEach((el,i)=>el.classList.toggle("sync-active",i===active.wordIndex-1));
-  }
+ const [chapter,verseNo]=active.verseKey.split(":").map(Number);if(chapter!==ferhanSyncChapter)return;
+ if(ferhanSyncVerse!==verseNo){renderSyncedVerse(verseNo);const sel=document.getElementById("syncVerseSelect");if(sel)sel.value=String(verseNo);}
+ const nextWord=active.wordIndex;
+ if(ferhanLastWord!==nextWord){
+  document.querySelectorAll("#syncVerseDisplay .sync-word").forEach((el,i)=>el.classList.toggle("sync-active",i===nextWord-1));
+  const word=document.getElementById("sync-word-"+nextWord);if(word){word.setAttribute("aria-current","true");word.scrollIntoView({block:"nearest",inline:"nearest",behavior:"smooth"});}
+  ferhanLastWord=nextWord;
  }
+}
+async function configureTimingService(){
+ const el=document.getElementById("syncStatus");if(el)el.textContent="Checking Quran Foundation timing files published by GitHub Actions…";
+ try{
+  const r=await fetch("./data/recitation/index.json",{cache:"no-store"});if(!r.ok)throw new Error("Timing manifest not published yet. Run the GitHub Actions workflow.");
+  const d=await r.json();const n=(d.availableChapters||[]).length;
+  if(el)el.textContent=`Quran Foundation connected · ${n}/114 chapters have verified word-level timing for ${d.reciterName||"the configured reciter"}.`;
+  const coverage=document.getElementById("syncCoverage");if(coverage)coverage.textContent=`Available: ${n}/114 surahs · No guessed timings are used. ${d.unavailableChapters?.length||0} chapters did not return word-level timing.`;
+ }catch(e){if(el)el.textContent="Timing data not ready: "+e.message;}
 }
 async function playSyncedChapter(chapter){
- chapter=Number(chapter);
- if(![1,112,113,114].includes(chapter)){alert("Synchronized playback is currently set up for Al-Fātiḥah and surahs 112–114.");return;}
- const status=document.getElementById(chapter===1?"syncStatus":"shortSurahStatus");
- if(status)status.textContent="Loading verified recitation audio and word timestamps…";
+ chapter=Number(chapter);if(!Number.isInteger(chapter)||chapter<1||chapter>114){alert("Choose a surah from 1 to 114.");return;}
+ const status=document.getElementById("syncStatus");if(status)status.textContent=`Loading Quran Foundation audio and word timings for surah ${chapter}…`;
  try{
+  if(!quranBundle)await initQuranReader();if(!quranBundle)throw new Error("The full Qur’an text could not be loaded.");
   const response=await fetch(`./data/recitation/${chapter}.json`,{headers:{Accept:"application/json"},cache:"no-store"});
-  if(!response.ok)throw new Error("GitHub Quran data is not published for this surah yet. Open GitHub Actions and run Update Quran recitation data.");
+  if(!response.ok)throw new Error("No published timing file for this surah yet. Run Update Quran recitation data in GitHub Actions.");
   const data=await response.json();
-  if(!data.audioUrl||!Array.isArray(data.timestamps)||!data.timestamps.length)throw new Error("No verified word timing data was returned for this surah.");
-  if(!data.timestamps.some(v=>Array.isArray(v.segments)&&v.segments.length))throw new Error("This reciter/chapter has no word-level segments available.");
+  if(!data.available||!data.audioUrl||!Array.isArray(data.timestamps)||!data.timestamps.some(v=>Array.isArray(v.segments)&&v.segments.length))throw new Error(data.reason||"This reciter has no verified word-level segments for this chapter.");
   ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);clearSyncHighlights();
-  ferhanSyncData=data;ferhanSyncChapter=chapter;
-  ferhanSyncAudio.src=data.audioUrl;ferhanSyncAudio.currentTime=0;
-  ferhanSyncAudio.playbackRate=chapter===1?voiceRate:1;
+  ferhanSyncData=data;ferhanSyncChapter=chapter;ferhanSyncVerse=null;ferhanLastWord=null;
+  const surahSel=document.getElementById("syncSurahSelect");if(surahSel)surahSel.value=String(chapter);
+  updateSyncVerseSelect(chapter,1);renderSyncedVerse(1);
+  ferhanSyncAudio.src=data.audioUrl;ferhanSyncAudio.currentTime=0;ferhanSyncAudio.playbackRate=1;
   ferhanSyncAudio.ontimeupdate=syncWordsAtTime;
-  ferhanSyncAudio.onended=()=>{clearInterval(ferhanSyncTick);clearSyncHighlights();if(status)status.textContent="Recitation finished. Review the highlighted words and repeat aloud.";};
-  ferhanSyncAudio.onerror=()=>{if(status)status.textContent="Chapter audio could not be loaded. Check the published audio URL and internet connection.";};
-  if(chapter===1){show("recitation");}
-  else{show("recitation");renderShortSurah(chapter,0);}
-  await ferhanSyncAudio.play();
-  ferhanSyncTick=setInterval(syncWordsAtTime,80);
-  if(status)status.textContent=`Synchronized recitation playing · Surah ${chapter} · ${data.reciterName||"Configured reciter"} · word highlighting enabled`;
- }catch(error){
-  if(status)status.textContent=`Sync unavailable: ${error.message}`;
- }
+  ferhanSyncAudio.onended=()=>{clearInterval(ferhanSyncTick);clearSyncHighlights();if(status)status.textContent=`Surah ${chapter} finished. Repeat the recitation and review the words.`;};
+  ferhanSyncAudio.onerror=()=>{if(status)status.textContent="The Quran Foundation audio URL could not be loaded. Check your connection.";};
+  show("recitation");await ferhanSyncAudio.play();
+  ferhanSyncTick=setInterval(syncWordsAtTime,60);
+  if(status)status.textContent=`Synchronized recitation playing · Surah ${chapter} · ${data.reciterName||"Quran Foundation reciter"} · word highlighting active`;
+ }catch(error){if(status)status.textContent=`Synchronized playback unavailable: ${error.message}`;}
 }
-function stopSyncedPlayback(){
- ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);clearSyncHighlights();
- const status=document.getElementById("syncStatus");if(status)status.textContent="Synchronized playback stopped.";
- const shortStatus=document.getElementById("shortSurahStatus");if(shortStatus)shortStatus.textContent="Synchronized playback stopped.";
+function seekSyncedVerse(value){
+ if(!ferhanSyncData||!ferhanSyncChapter)return;
+ const key=ferhanSyncChapter+":"+Number(value),v=ferhanSyncData.timestamps.find(x=>x.verse_key===key);
+ if(!v)return;ferhanSyncAudio.currentTime=Math.max(0,Number(v.timestamp_from||0)/1000);syncWordsAtTime();
 }
+function pauseSyncedPlayback(){ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);const s=document.getElementById("syncStatus");if(s&&ferhanSyncChapter)s.textContent=`Paused · Surah ${ferhanSyncChapter}`;}
+function stopSyncedPlayback(){ferhanSyncAudio.pause();ferhanSyncAudio.currentTime=0;clearInterval(ferhanSyncTick);clearSyncHighlights();ferhanSyncData=null;ferhanSyncChapter=null;ferhanSyncVerse=null;const s=document.getElementById("syncStatus");if(s)s.textContent="Synchronized playback stopped.";}
 
 
 
@@ -594,6 +609,40 @@ const microLessons = [
  {stage:"06 · ṢARF",title:"A root can produce many words",ar:"عَلِمَ  عِلْمٌ  عَالِمٌ",plain:"علم علم عالم",am:"ع ل م ሥር ፊደሎች ከዕውቀት ጋር የተያያዙ ቃላትን ያመነጫሉ።",en:"The root ع ل م relates to knowing: ʿalima (he knew), ʿilm (knowledge), ʿālim (scholar/one who knows).",task:"Find the three root consonants.",answer:"ع ل م. Root recognition helps expand vocabulary.",kind:"recall"},
  {stage:"07 · READ WITHOUT MARKS",title:"Use context, not guesswork",ar:"عَلِمَ  /  عِلْمٌ",plain:"علم / علم",am:"ያለ ሐረካት የተጻፈው علم በአውድ መሠረት የተለያየ ንባብ ሊኖረው ይችላል።",en:"The consonant skeleton علم can represent different forms. Syntax and sentence context help decide whether it is a verb or noun.",task:"Why is unvowelled Arabic sometimes ambiguous?",answer:"Short vowels are often omitted. Grammar, morphology and context help identify the intended reading.",kind:"unmarked"},
  {stage:"08 · QUR’AN BRIDGE",title:"Apply the foundation to Al-Fātiḥah",ar:"بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",plain:"بسم الله الرحمن الرحيم",am:"በተማሩት ፊደላት፣ ሐረካት፣ ሸዳና ቃላት አሁን በቁርኣን አንቀጽ ላይ ይለማመዱ።",en:"Move from isolated letters to a short Qur’anic phrase. Listen, follow the words, and repeat slowly.",task:"Listen to the phrase, then read it aloud.",answer:"Bismi-llāhi r-raḥmāni r-raḥīm. Continue in the Qur’an reader for word-by-word meanings.",kind:"quran"}
+ ,{stage:"01 · LETTERS",title:"Dots distinguish similar letters",ar:"بَ  تَ  ثَ  نَ  يَ",plain:"ب ت ث ن ي",am:"የነጥቦች ብዛትና ቦታ ፊደሎችን ይለያሉ። በታች አንድ ነጥብ ب፣ በላይ ሁለት ت፣ በላይ ሶስት ث ነው።",en:"Dots are essential: ب has one below, ت has two above, ث has three above. ن and ي also differ by dot position.",task:"Read each letter aloud and identify its dots.",answer:"ب = bāʾ, ت = tāʾ, ث = thāʾ, ن = nūn, ي = yāʾ.",kind:"recall"}
+ ,{stage:"01 · LETTERS",title:"Six letters do not join forward",ar:"ا  د  ذ  ر  ز  و",plain:"ا د ذ ر ز و",am:"እነዚህ ስድስት ፊደሎች ከኋላቸው ካለው ፊደል ጋር አይገናኙም።",en:"Alif, dāl, dhāl, rāʾ, zāy and wāw do not connect to the following letter. They may connect to the preceding one.",task:"Which letter breaks the connection in دَرَسَ?",answer:"د does not join to the following ر. The word is still read continuously: darasa.",kind:"recall"}
+ ,{stage:"01 · LETTERS",title:"Long vowels: ا و ي",ar:"بَا  بُو  بِي",plain:"با بو بي",am:"አሊፍ፣ ዋውና ያ በተገቢው አውድ ረጅም ā፣ ū፣ ī ድምፅ ሊያመለክቱ ይችላሉ።",en:"After a matching short vowel, ا lengthens fatḥah to ā, و lengthens ḍammah to ū, and ي lengthens kasrah to ī.",task:"Read بَا، بُو، بِي slowly.",answer:"Bā, bū, bī. Keep the long vowel longer than a short vowel.",kind:"infer"}
+ ,{stage:"02 · HARAKAT",title:"Hamzah is a consonant",ar:"أَ  إِ  ؤُ  ئِ",plain:"أ إ ؤ ئ",am:"ሐምዛ (ء) የግሎታል መቆሚያ ድምፅ ነው፤ በአሊፍ፣ ዋው ወይም ያ ላይ ሊጻፍ ይችላል።",en:"Hamzah (ء) represents a glottal stop. Its written seat may be alif, wāw or yāʾ; the seat does not change its identity.",task:"Find the hamzah in أَ and ئِ.",answer:"Both contain hamzah. The vowel marks show a and i respectively.",kind:"recall"}
+ ,{stage:"02 · HARAKAT",title:"Madd sign and dagger alif",ar:"هَٰذَا  الرَّحْمَٰنُ",plain:"هذا الرحمن",am:"በቁርኣን ጽሑፍ የሚታዩ የማድ ምልክቶች የረጅም ንባብን ሊያመለክቱ ይችላሉ።",en:"Qur’anic orthography uses signs such as dagger alif (ٰ) to indicate a long ā sound in particular words. Follow a trusted muṣḥaf and reciter.",task:"Listen to هَٰذَا and repeat the long vowel.",answer:"Hādhā: the ā is lengthened. Exact recitation timing belongs to tajwīd study.",kind:"quran"}
+ ,{stage:"02 · HARAKAT",title:"Sun letters and assimilation",ar:"الشَّمْسُ  النَّاسُ",plain:"الشمس الناس",am:"ከፀሐይ ፊደሎች በፊት የال ላም ድምፅ ይዋሃዳል፤ ሸዳው ይህን ያሳያል።",en:"Before a sun letter, the lām of ال assimilates; the sun letter carries shaddah: ash-shams, an-nās.",task:"Why is شّ doubled in الشَّمْسُ?",answer:"ش is a sun letter, so the article's lām assimilates into it.",kind:"infer"}
+ ,{stage:"02 · HARAKAT",title:"Moon letters keep the lām",ar:"الْقَمَرُ  الْكِتَابُ",plain:"القمر الكتاب",am:"ከጨረቃ ፊደሎች በፊት የال ላም በግልጽ ይነበባል።",en:"Before a moon letter, the lām in ال is pronounced clearly: al-qamar, al-kitāb.",task:"Listen and compare الْقَمَرُ with الشَّمْسُ.",answer:"Al-qamar keeps the lām; ash-shams assimilates it.",kind:"compare"}
+ ,{stage:"03 · BLENDING",title:"Read a two-syllable word",ar:"قَلَمٌ",plain:"قلم",am:"ቃሉን በትክክል በሁለት የድምፅ ክፍሎች ያንብቡ።",en:"qalamun means a pen. Notice the fatḥah on qāf and lām, and tanwīn ḍamm on mīm.",task:"Read قَلَمٌ, then say its meaning.",answer:"Qalamun — a pen — ብዕር.",kind:"infer"}
+ ,{stage:"03 · BLENDING",title:"Read a word with a long vowel",ar:"كَبِيرٌ",plain:"كبير",am:"كَبِيرٌ ትልቅ ማለት ነው፤ ī ረጅም ድምፅን ይጠብቁ።",en:"Kabīrun means big/great. The yāʾ lengthens the kasrah to ī.",task:"Which sound is long in كَبِيرٌ?",answer:"The ī sound in bī is long.",kind:"infer"}
+ ,{stage:"03 · BLENDING",title:"Read a word with shaddah",ar:"مُدَرِّسٌ",plain:"مدرس",am:"ሸዳ ያለበትን ተነባቢ በጥንቃቄ ያጠናክሩ።",en:"Mudarrisun means a male teacher. The rāʾ with shaddah is doubled: mudarris.",task:"Which consonant is doubled in مُدَرِّسٌ?",answer:"رّ (rāʾ) is doubled.",kind:"infer"}
+ ,{stage:"04 · VOCABULARY",title:"Everyday verbs: go and come",ar:"ذَهَبَ  جَاءَ",plain:"ذهب جاء",am:"ذَهَبَ ሄደ፤ جَاءَ መጣ።",en:"Two useful past-tense verbs: dhahaba = he went; jāʾa = he came.",task:"Which verb means 'he came'?",answer:"جَاءَ means 'he came'.",kind:"recall"}
+ ,{stage:"04 · VOCABULARY",title:"Question words",ar:"مَنْ؟  مَا؟  أَيْنَ؟  مَتَى؟",plain:"من ما أين متى",am:"مَنْ ማን?፤ مَا ምን?፤ أَيْنَ የት?፤ مَتَى መቼ?።",en:"Learn common question words: man (who), mā (what), ayna (where), matā (when).",task:"Ask 'Where?' in Arabic.",answer:"أَيْنَ؟ means 'Where?'.",kind:"recall"}
+ ,{stage:"04 · VOCABULARY",title:"Useful Qur’anic words",ar:"رَبٌّ  نُورٌ  حَقٌّ",plain:"رب نور حق",am:"رَبٌّ ጌታ፤ نُورٌ ብርሃን፤ حَقٌّ እውነት/حق።",en:"Three frequent words: rabb = Lord; nūr = light; ḥaqq = truth/right. Meanings depend on context.",task:"Which word means 'light'?",answer:"نُورٌ means light — ብርሃን.",kind:"recall"}
+ ,{stage:"05 · NAḤW",title:"Masculine and feminine nouns",ar:"مُسْلِمٌ  مُسْلِمَةٌ",plain:"مسلم مسلمة",am:"ة በብዙ ስሞች የሴት ቅርጽን ያመለክታል፤ ግን ሁሉም ሴት ስሞች በة አያበቁም።",en:"Many feminine nouns and adjectives use tāʾ marbūṭah (ة), as in muslimah. This is a common pattern, not an absolute rule.",task:"Which form is feminine?",answer:"مُسْلِمَةٌ is the feminine form.",kind:"recall"}
+ ,{stage:"05 · NAḤW",title:"Adjective agreement",ar:"بَيْتٌ كَبِيرٌ",plain:"بيت كبير",am:"በዚህ ምሳሌ ገላጩ ከሚገልጸው ስም ጋር በወሲብና በውሳኔ ይስማማል።",en:"In this indefinite masculine singular example, the adjective كبيرٌ follows بيتٌ and agrees in gender, number and definiteness.",task:"Which word is the adjective?",answer:"كَبِيرٌ (big) describes بَيْتٌ (house).",kind:"recall"}
+ ,{stage:"05 · NAḤW",title:"Possession: iḍāfah",ar:"كِتَابُ الطَّالِبِ",plain:"كتاب الطالب",am:"የስም ጥምረት (إضافة) ባለቤትነትን ወይም ግንኙነትን ያሳያል።",en:"Iḍāfah links two nouns: kitābu ṭ-ṭālibi = the student's book. The second noun is genitive (majrūr).",task:"Which noun is the possessor?",answer:"الطَّالِبِ (the student) is the second noun and is majrūr.",kind:"recall"}
+ ,{stage:"05 · NAḤW",title:"Three introductory case endings",ar:"ـُ  ـَ  ـِ",plain:"ـُ ـَ ـِ",am:"ዳማ፣ ፈትሓና ከስራ በመሠረታዊ ምሳሌዎች ረፍዕ፣ ነስብና ጀርን ሊያመለክቱ ይችላሉ።",en:"Introductory case markers: ḍammah often marks nominative (rafʿ), fatḥah accusative (naṣb), and kasrah genitive (jarr). Full rules have exceptions and detail.",task:"Which short vowel commonly marks jarr?",answer:"Kasrah (ـِ) commonly marks the genitive case.",kind:"recall"}
+ ,{stage:"05 · NAḤW",title:"A verbal sentence",ar:"كَتَبَ الطَّالِبُ الدَّرْسَ",plain:"كتب الطالب الدرس",am:"የግስ ዓረፍተ ነገር፦ ተማሪው ትምህርቱን ጻፈ።",en:"A basic verbal sentence: kataba (verb) + aṭ-ṭālibu (subject/doer) + ad-darsa (object).",task:"Find the verb in كَتَبَ الطَّالِبُ الدَّرْسَ.",answer:"كَتَبَ is the verb; الطَّالِبُ is the doer; الدَّرْسَ is the object.",kind:"recall"}
+ ,{stage:"05 · NAḤW",title:"Prepositions: مِنْ and إِلَى",ar:"مِنَ الْبَيْتِ إِلَى الْمَسْجِدِ",plain:"من البيت إلى المسجد",am:"مِنْ ከ፤ إِلَى ወደ። ከእነዚህ በኋላ የሚመጡ ስሞች በጀር ይመጣሉ።",en:"Min = from; ilā = to. Nouns following prepositions are genitive (majrūr): al-bayti, al-masjidi.",task:"Which word means 'to'?",answer:"إِلَى means 'to/towards'.",kind:"recall"}
+ ,{stage:"05 · NAḤW",title:"Singular and dual",ar:"طَالِبٌ  طَالِبَانِ",plain:"طالب طالبان",am:"በመደበኛ ሁኔታ የሙዝና ቅርጽ ሁለት ነገሮችን ያመለክታል።",en:"Ṭālibun is one male student; ṭālibāni is two male students in the nominative form. Dual endings change with case.",task:"Which form refers to two students?",answer:"طَالِبَانِ is the dual form here.",kind:"recall"}
+ ,{stage:"05 · NAḤW",title:"Attached pronouns",ar:"كِتَابِي  كِتَابُكَ  كِتَابُهُ",plain:"كتابي كتابك كتابه",am:"የተያያዙ ተውላጠ ስሞች ባለቤትነትን ያሳያሉ።",en:"Attached pronouns: kitābī = my book; kitābuka = your (masculine) book; kitābuhu = his book.",task:"Which form means 'my book'?",answer:"كِتَابِي means 'my book'.",kind:"recall"}
+ ,{stage:"06 · ṢARF",title:"Imperative: a simple command",ar:"اُكْتُبْ  اِقْرَأْ",plain:"اكتب اقرأ",am:"اُكْتُبْ ጻፍ፤ اِقْرَأْ አንብብ። እነዚህ ለአንድ ወንድ ሰው የተሰጡ ትእዛዞች ናቸው።",en:"Introductory masculine singular imperatives: uktub = write; iqraʾ = read. Other addressee forms differ.",task:"Say 'Read!' in Arabic.",answer:"اِقْرَأْ means 'Read!'.",kind:"recall"}
+ ,{stage:"06 · ṢARF",title:"Root and pattern: teaching",ar:"عَلَّمَ  مُعَلِّمٌ  تَعْلِيمٌ",plain:"علم معلم تعليم",am:"ع ل م ሥር በተለያዩ ቅርጾች አስተማረ፣ አስተማሪ፣ ማስተማር የሚሉ ቃላትን ይፈጥራል።",en:"From ع ل م: ʿallama = he taught; muʿallim = teacher; taʿlīm = teaching/education. Notice how patterns add meaning.",task:"Find the shared root consonants.",answer:"ع ل م are the shared root consonants.",kind:"recall"}
+ ,{stage:"06 · ṢARF",title:"The active and passive participle",ar:"كَاتِبٌ  مَكْتُوبٌ",plain:"كاتب مكتوب",am:"كَاتِبٌ ጻፊ፤ مَكْتُوبٌ የተጻፈ።",en:"From ك ت ب: kātib = writer (active participle); maktūb = written (passive participle).",task:"Which word means 'written'?",answer:"مَكْتُوبٌ means 'written'.",kind:"recall"}
+ ,{stage:"06 · ṢARF",title:"Negation with لَا",ar:"لَا أَعْلَمُ",plain:"لا أعلم",am:"لَا أَعْلَمُ አላውቅም ማለት ነው።",en:"Lā can negate a present/imperfect verb: lā aʿlamu = I do not know. Negation patterns vary by tense and construction.",task:"What does لَا do in this sentence?",answer:"It negates the verb: 'I do not know.'",kind:"recall"}
+ ,{stage:"07 · READ WITHOUT MARKS",title:"Infer a word from sentence context",ar:"ذَهَبَ الطَّالِبُ إِلَى الْبَيْتِ",plain:"ذهب الطالب إلى البيت",am:"ከሐረካት ውጭ ያለውን ጽሑፍ በቃላት፣ በናሕውና በአውድ ያንብቡ።",en:"Use known vocabulary and grammar to infer the sentence: the student went to the house. Then verify with the fully marked form.",task:"Identify the verb in the unmarked sentence.",answer:"ذهب = ذَهَبَ, 'he went'. The subject is الطالب and destination is البيت.",kind:"unmarked"}
+ ,{stage:"07 · READ WITHOUT MARKS",title:"One spelling, more than one reading",ar:"عَلِمَ  عِلْمٌ",plain:"علم علم",am:"ያለ ሐረካት علم የሚለው ፊደል ቅደም ተከተል በአውድ መሠረት ግስ ወይም ስም ሊሆን ይችላል።",en:"The consonant sequence علم can be ʿalima (he knew) or ʿilm (knowledge). Syntax and context disambiguate it.",task:"Which reading means 'knowledge'?",answer:"عِلْمٌ (ʿilmun) means knowledge.",kind:"unmarked"}
+ ,{stage:"07 · READ WITHOUT MARKS",title:"Read a short unmarked phrase",ar:"بسم الله",plain:"بسم الله",am:"አጭር የቁርኣን ሐረግን በማያያዝ ያንብቡ፤ ከዚያ ምልክቶቹን ይመልከቱ።",en:"Try to read the phrase from memory and context, then compare: بِسْمِ اللَّهِ. Do not treat every unmarked string as uniquely readable.",task:"Reveal the fully marked phrase after trying yourself.",answer:"بِسْمِ اللَّهِ — bi-smi llāh.",kind:"unmarked"}
+ ,{stage:"07 · READ WITHOUT MARKS",title:"Use syntax to locate the subject",ar:"قَالَ الرَّسُولُ الْحَقَّ",plain:"قال الرسول الحق",am:"በዓረፍተ ነገሩ ውስጥ ግሱንና ፈጻሚውን ይፈልጉ።",en:"In this marked practice example, qāla is the verb and ar-rasūlu is the subject. The final word is the object in this constructed sentence.",task:"Which word is the subject/doer?",answer:"الرَّسُولُ is the subject/doer (fāʿil) in this example.",kind:"recall"}
+ ,{stage:"08 · QUR’AN BRIDGE",title:"Spot the long vowel in Al-Fātiḥah",ar:"الرَّحْمَٰنِ الرَّحِيمِ",plain:"الرحمن الرحيم",am:"በሱራ አል-ፋቲሓ ውስጥ ያሉ ቃላትን በረጅም ድምፅ ምልክቶች ይለዩ።",en:"Listen to ar-Raḥmāni r-Raḥīm. Notice the long ā in Raḥmān and long ī in Raḥīm.",task:"Name the two long vowels you hear.",answer:"Ā in الرَّحْمَٰنِ and ī in الرَّحِيمِ.",kind:"quran"}
+ ,{stage:"08 · QUR’AN BRIDGE",title:"Recognise a preposition in Qur’anic text",ar:"بِسْمِ اللَّهِ",plain:"بسم الله",am:"بِـ በ/በስም የሚለው የቅድመ አገናኝ በተያያዘ ቅርጽ መጥቷል።",en:"The initial bi- is a preposition attached to ism: bi-smi llāh. Attached prepositions are common in Arabic.",task:"Identify the preposition attached to اسم.",answer:"بِـ is the preposition bi- ('with/in/by').",kind:"quran"}
+ ,{stage:"08 · QUR’AN BRIDGE",title:"A repeat-and-understand routine",ar:"الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",plain:"الحمد لله رب العالمين",am:"መጀመሪያ ያዳምጡ፣ በቃላት ይከፋፍሉ፣ ያንብቡ፣ ትርጉሙን ያረጋግጡ።",en:"A practical routine: listen to a reliable reciter, follow each word, read with tashkīl, explain the grammar, then repeat from memory.",task:"Read the phrase, then tap Listen and repeat it twice.",answer:"Al-ḥamdu lillāhi rabbi l-ʿālamīn. Use the Qur’an reader for word-by-word study.",kind:"quran"}
+ ,{stage:"08 · QUR’AN BRIDGE",title:"Review: what helps unmarked reading?",ar:"مُفْرَدَاتٌ + نَحْوٌ + صَرْفٌ + سِيَاقٌ",plain:"مفردات نحو صرف سياق",am:"ያለ ሐረካት ንባብ ለመገመት ቃላት፣ ሰዋሰው፣ ቃል አወቃቀርና አውድ ያስፈልጋሉ።",en:"Vocabulary + grammar (naḥw) + morphology (ṣarf) + context work together. When uncertain, consult the marked text and a qualified teacher.",task:"Name two tools that help infer an unmarked word.",answer:"Any two: vocabulary, naḥw, ṣarf, sentence context.",kind:"recall"}
+
 ];
 let feedIndex=0,feedMarked=false,feedNoMarks=false;
 function renderFeed(){
@@ -620,8 +669,8 @@ async function initQuranReader(){
   quranBundle=await r.json();const sel=document.getElementById("quranSurahSelect");
   sel.innerHTML=quranBundle.surahs.map(x=>`<option value="${x[0]}">${x[0]}. ${x[1]}</option>`).join("");
   sel.value="1";sel.onchange=()=>{quranChapter=Number(sel.value);quranPageIndex=0;renderQuranReader()};
-  if(status)status.textContent="Qur’an dataset loaded · 114 surahs · word-by-word English and Amharic verse translations.";
-  renderQuranReader();
+  if(status)status.textContent="Complete Qur’an loaded · 114 surahs · 6,236 ayahs · Arabic word-by-word · English glosses · Amharic verse translations.";
+  renderQuranReader();populateSyncSurahSelect();configureTimingService();
  }catch(e){if(status)status.textContent="Could not load the Qur’an data: "+e.message+" · Check that data/quran-word-by-word.json is in your GitHub repository."}
 }
 function renderQuranReader(){
@@ -649,7 +698,7 @@ function quranPage(delta){if(!quranBundle)return;const n=(quranBundle.quran[Stri
 function toggleQuranMarks(){quranMarks=!quranMarks;document.getElementById("quranMarksBtn").textContent=quranMarks?"تَشْكِيلٌ ON":"تَشْكِيلٌ OFF";renderQuranReader()}
 function toggleQuranTranslation(){quranShowTranslations=!quranShowTranslations;renderQuranReader()}
 const showFerhanBase=show;
-show=function(id){showFerhanBase(id);if(id==="scrollLearn"&&!document.getElementById("feedTrack").children.length)renderFeed();if(id==="quranReader"&&!quranBundle)initQuranReader()};
+show=function(id){showFerhanBase(id);if(id==="scrollLearn"&&!document.getElementById("feedTrack").children.length)renderFeed();if((id==="quranReader"||id==="recitation")&&!quranBundle)initQuranReader();if(id==="recitation"&&quranBundle)populateSyncSurahSelect()};
 
 </script>
 <script>if("serviceWorker" in navigator && location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));}</script>

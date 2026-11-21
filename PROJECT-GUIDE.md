@@ -5,12 +5,12 @@ This folder is the deployable static website.
 ## Main learning areas
 - Home dashboard and learner progress
 - Academy roadmap and staged Arabic foundations
-- Lessons and vertical swipe/scroll micro-lessons
+- 57 lessons and vertical swipe/scroll micro-lessons, including extra reading drills
 - Repeat-and-practise reading exercises
-- Qur’an reading and word-by-word study
+- Complete Qur’an reader: all 114 surahs and 6,236 ayahs, with Arabic word-by-word text, transliteration, English glosses and Amharic verse translations
 - Tajweed reference and quizzes
 - Video-course/resource area
-- Recitation playback and synchronized word timing for configured short surahs
+- Quran Foundation synchronized recitation player for all 114 surahs, subject to each chapter-reciter response providing word-level timing segments
 
 ## Language support
 - Arabic source text
@@ -31,3 +31,12 @@ Deploy the folder contents to the root of a GitHub repository, enable GitHub Pag
 
 ## Data and learning quality
 Qur’anic text and translations should be checked against a trusted mushaf and qualified teachers. The Amharic translation is retained from the supplied source and should be reviewed by a qualified Amharic-speaking Qur’an teacher. Browser-generated speech is not a substitute for qualified recitation instruction.
+
+
+## Full-Qur’an synchronized recitation update
+
+- The GitHub Actions workflow requests chapter audio and `segments=true` timing data for every chapter number from 1 to 114. Quran Foundation documents each word timing as a one-based `[word_index, start_ms, end_ms]` tuple.
+- The website includes a full-Qur’an synchronized player with a surah selector, ayah selector, play/pause/stop controls, and live Arabic word highlighting.
+- Run **Actions → Update Quran recitation data → Run workflow** after upload. The generated `data/recitation/index.json` reports the exact chapters with available word-level timings. A chapter can be unavailable if the selected chapter-reciter has no timing segments for it.
+- `QF_CHAPTER_RECITER_ID` must be the chapter-reciter ID from Quran Foundation's `/resources/chapter_reciters` resource, not an ayah-by-ayah recitation ID. Keep `QF_CLIENT_ID` and `QF_CLIENT_SECRET` in GitHub Actions Secrets. Optionally set `QF_RECITER_NAME` in Actions Variables.
+- Audio and timing are Quran Foundation content. Review the Quran Foundation Developer Terms for permitted caching, storage, and redistribution before publishing generated files.
