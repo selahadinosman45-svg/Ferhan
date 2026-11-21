@@ -1,0 +1,22 @@
+{
+  "name": "FERHAN Quran Learning Academy",
+  "short_name": "FERHAN",
+  "description": "Learn Arabic reading, grammar, morphology, Tajweed and the Qur’an with English and Amharic support.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f5ef",
+  "theme_color": "#123d35",
+  "icons": [
+    {
+      "src": "./assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

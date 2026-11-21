@@ -1,4 +1,6 @@
-# FERHAN — Quran Arabic Learning (GitHub-only)
+# FERHAN — Quran Learning Academy
+
+A mobile-friendly, installable Quran and Arabic learning academy with English and Amharic support.
 
 FERHAN is a static Arabic and Amharic Quran-learning website. It is hosted on GitHub Pages. Quran Foundation chapter audio and word-level timing data are retrieved by GitHub Actions and published as static JSON files.
 
@@ -119,3 +121,18 @@ Bookmarks, lesson completion and memorisation checklists remain in browser local
 The full Qur’an word-by-word Arabic text, transliteration and English glosses were carried over from the supplied “Ferhan Quran Learning for Adults” HTML file. That source credits Quranwbw.com (with credits there to quran.com, tanzil.net and seventysixnine.com). The Amharic ayah translations are included unmodified and attributed in the source file to Muhammed Sadiq & Muhammed Sani Habib (am.sadiq, Tanzil.net, 2012). Word-level Amharic glosses remain available for Al-Fātiḥah in the academy's existing word study. Please retain these attributions and have translations reviewed by a qualified teacher.
 
 The scroll lessons are introductory learning material, not a substitute for a qualified Arabic or Qur’an teacher. Unvowelled Arabic can be ambiguous; use vocabulary, morphology, syntax and context, and verify recitation against a trusted mushaf and teacher. Browser voice output depends on installed device voices and may not model tajweed accurately.
+
+
+## Integrated additions in this build
+
+- The supplied QuranWBW Uthmani font is bundled locally and applied to Arabic learning and Qur’an text.
+- QuranWBW application icons are included for the installable PWA.
+- A web app manifest and service worker provide installability and offline caching of the app shell and previously opened same-origin data.
+- The supplied full Qur’an word-by-word dataset and the Amharic translation data remain in `data/quran-word-by-word.json`.
+
+## Important deployment notes
+
+- Serve this project over HTTPS (GitHub Pages does this automatically). Service workers and install prompts do not work from a local `file://` URL.
+- The initial app shell is cached on first successful visit. Qur’an data and other same-origin resources are cached after they are fetched; open the surahs you want available offline while connected.
+- Audio and browser speech availability depend on the device, network and installed Arabic voices. Speech synthesis is a pronunciation aid, not a tajweed-certified reciter.
+- The GitHub Actions workflow is the only place Quran Foundation credentials are used. Keep `QF_CLIENT_SECRET` in GitHub Actions Secrets, never in the browser app.

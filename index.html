@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#123d35"><meta name="google" content="notranslate">
+<meta name="theme-color" content="#123d35"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png"><meta name="google" content="notranslate">
 <title>ferhan — Quran Arabic Learning · V6</title>
 <style>
+@font-face{font-family:"Ferhan Uthmani";src:url("./assets/fonts/Uthmani.woff2") format("woff2"),url("./assets/fonts/Uthmani.woff") format("woff");font-display:swap}
+.arabic,.feed-ar,.hero-art{font-family:"Ferhan Uthmani","Noto Naskh Arabic","Amiri",serif}
+
 :root{--green:#123d35;--green2:#1d5a4b;--gold:#d6ad62;--cream:#f7f5ef;--ink:#1e2925;--muted:#66736d;--line:#e5e2d9;--white:#fff}
 *{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
 header{background:var(--green);color:white;padding:18px max(22px,calc((100% - 1160px)/2));display:flex;align-items:center;justify-content:space-between;gap:18px;position:sticky;top:0;z-index:5}
@@ -648,4 +651,6 @@ function toggleQuranTranslation(){quranShowTranslations=!quranShowTranslations;r
 const showFerhanBase=show;
 show=function(id){showFerhanBase(id);if(id==="scrollLearn"&&!document.getElementById("feedTrack").children.length)renderFeed();if(id==="quranReader"&&!quranBundle)initQuranReader()};
 
-</script></body></html>
+</script>
+<script>if("serviceWorker" in navigator && location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));}</script>
+</body></html>
