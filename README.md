@@ -197,3 +197,11 @@ The repository workflow `.github/workflows/update-quran-data.yml` downloads chap
 The workflow publishes `data/recitation/index.json` and one JSON file per surah. Until that workflow completes successfully and publishes data, the UI will report that verified timing files are unavailable; no audio/timing data is fabricated. API credentials remain in GitHub Actions and are never shipped to the browser.
 
 The player requires an internet connection for streaming audio. Browser playback must be started by a user gesture.
+
+
+## V10 mobile navigation and Mushaf readability update
+
+- On touch-sized iPhones, the desktop horizontal header navigation is explicitly hidden; the five-destination bottom tab bar is the only primary navigation.
+- Navigation labels and section headings use high-contrast forest/ink colours with gold reserved for active accents.
+- Quran reading uses a continuous RTL Mushaf-style Arabic line with tappable words, ayah ornaments, and clearly separated English and Amharic translation panels. Word gloss tiles are hidden in the Mushaf presentation.
+- Service-worker cache is bumped to `ferhan-academy-v10` so deployed devices fetch the updated interface.

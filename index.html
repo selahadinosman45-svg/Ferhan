@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#123d35"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png"><meta name="google" content="notranslate">
-<title>ferhan — Quran Arabic Learning · V8</title>
+<title>ferhan — Quran Arabic Learning · V10</title>
 <style>
 @font-face{font-family:"Ferhan Uthmani";src:url("./assets/fonts/Uthmani.woff2") format("woff2"),url("./assets/fonts/Uthmani.woff") format("woff");font-display:swap}
 .arabic,.feed-ar,.hero-art{font-family:"Ferhan Uthmani","Noto Naskh Arabic","Amiri",serif}
@@ -562,6 +562,78 @@ body{background:var(--app-bg);color:var(--ink)}
  #quranReader .reader-pagination .btn{font-size:11px;padding:8px 10px}
 }
 @media(prefers-reduced-motion:reduce){.mobile-tabbar,.mushaf-page,.reader-ayah{transition:none!important}}
+
+
+/* V10 — high-contrast native iPhone shell + true continuous Mushaf typography */
+:root{
+ --nav-ink:#173f35;--nav-muted:#52675d;--nav-active:#173f35;
+ --gold-strong:#a8792f;--paper:#fbfaf6;--reader-ink:#193d32;
+}
+header{background:#fbfaf6!important;color:var(--nav-ink)!important;border-bottom:1px solid #e8e1d4}
+header .brand{color:#173f35!important}
+header .brandmark{color:#123d35!important}
+header>nav:not(.mobile-tabbar) button{color:#52675d!important;font-weight:750}
+header>nav:not(.mobile-tabbar) button.active{background:#e9efe9!important;color:#173f35!important;border:1px solid #cddbcf}
+.section-eyebrow{color:#946b2e!important}
+.section-head h2,.section h2,.section h3{color:#172d25}
+.sub,.muted{color:#5d6c64}
+.btn.secondary{background:#eaf0eb!important;color:#173f35!important;border:1px solid #d3e0d6!important}
+.btn.gold{background:linear-gradient(135deg,#f2d99d,#c79d50)!important;color:#18392f!important}
+.mobile-tabbar{color:#263e34}
+.mobile-tabbar button{color:#52675d!important}
+.mobile-tabbar button .tab-icon{color:#52675d!important}
+.mobile-tabbar button.active{background:#e7efe8!important;color:#123d35!important}
+.mobile-tabbar button.active .tab-icon{color:#a8792f!important}
+#quranReader .mushaf-page{background:#fffefa!important}
+#quranReader .mushaf-surah-plate{color:#936f39!important}
+#quranReader .mushaf-surah-name{color:#80602f!important}
+#quranReader .mushaf-surah-arabic{color:#173f35!important}
+#quranReader .mushaf-page-range{color:#806b48!important}
+#quranReader .reader-ayah{background:transparent!important}
+#quranReader .reader-word-grid{
+ display:block!important;direction:rtl!important;text-align:justify!important;
+ text-align-last:right!important;line-height:2.45!important;word-spacing:2px!important;
+ margin:0!important;padding:2px 0!important;
+}
+#quranReader .reader-word{
+ display:inline!important;vertical-align:baseline!important;
+ min-width:0!important;width:auto!important;height:auto!important;
+ padding:0 1px!important;margin:0!important;border:0!important;border-radius:0!important;
+ background:transparent!important;box-shadow:none!important;color:#173f35!important;
+ font:inherit!important;cursor:pointer!important;white-space:normal!important;
+}
+#quranReader .reader-word .arabic{
+ display:inline!important;font-family:"Ferhan Uthmani","Noto Naskh Arabic","Amiri",serif!important;
+ font-size:clamp(31px,5.6vw,45px)!important;line-height:2.05!important;
+ color:#173f35!important;white-space:normal!important;
+}
+#quranReader .reader-word:active .arabic{color:#a8792f!important;background:#f6edd9}
+#quranReader .reader-word small{display:none!important}
+#quranReader .ayah-end-mark{display:inline-flex!important;vertical-align:middle!important;color:#a8792f!important}
+#quranReader .mushaf-translations{
+ background:#f6f4ed!important;border-left:3px solid #c5a15d!important;
+ border-radius:0 12px 12px 0!important;padding:12px 14px!important;
+}
+#quranReader .mushaf-translations .mushaf-english{color:#34483e!important;font-size:15px!important;line-height:1.7!important}
+#quranReader .mushaf-translations .mushaf-amharic{color:#315b4b!important;font-size:16px!important;line-height:1.8!important}
+#quranReader .ayah-actions button{color:#315b4b!important;background:#f5f4ee!important;border-color:#ded8ca!important}
+#quranReader .mushaf-basmala{color:#173f35!important}
+@media (hover:none) and (pointer:coarse){
+ header>nav:not(.mobile-tabbar){display:none!important}
+ .mobile-tabbar{display:grid!important}
+}
+@media(max-width:760px){
+ header>nav:not(.mobile-tabbar){display:none!important}
+ .mobile-tabbar{display:grid!important}
+ .mobile-tabbar button{font-size:10px!important;color:#52675d!important}
+ .mobile-tabbar button .tab-icon{font-size:22px!important;color:#52675d!important}
+ .mobile-tabbar button.active{color:#173f35!important;background:#e8f0e9!important}
+ #quranReader .mushaf-page{min-height:0!important;padding:28px 20px 30px!important}
+ #quranReader .reader-word-grid{line-height:2.35!important;word-spacing:1px!important}
+ #quranReader .reader-word .arabic{font-size:clamp(30px,8vw,39px)!important;line-height:2.0!important}
+ #quranReader .mushaf-translations .mushaf-english{font-size:14px!important}
+ #quranReader .mushaf-translations .mushaf-amharic{font-size:15px!important}
+}
 
 </style>
 </head>
@@ -1415,6 +1487,22 @@ function renderMemorisationStudio(){const data=readHifz(),entries=Object.entries
 function openHifzAyah(key){const [chapter,ayah]=key.split(":").map(Number);quranChapter=chapter;quranPageIndex=Math.floor((ayah-1)/quranPerPage);document.getElementById("quranSurahSelect").value=String(chapter);renderQuranReader();const card=document.querySelector('[data-ayah="'+key+'"]');if(card){card.scrollIntoView({behavior:"smooth",block:"center"});card.classList.add("active-ayah");card.classList.add("recall-hidden");const btn=card.querySelector(".ayah-actions button:nth-child(2)");if(btn)btn.textContent="Reveal ayah"}}
 function reviewNextMemorisation(){const entries=Object.entries(readHifz()).sort((a,b)=>(a[1].lastReview||0)-(b[1].lastReview||0));if(!entries.length){alert("Save an ayah to your Hifz list first.");return}openHifzAyah(entries[0][0])}
 function exportMemorisation(){const blob=new Blob([JSON.stringify(readHifz(),null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="ferhan-hifz-review.json";a.click();URL.revokeObjectURL(url)}
+
+
+/* V10: enforce one primary navigation on touch-sized iPhones and keep labels legible. */
+(function enforceNativeMobileNavigation(){
+ const apply=()=>{
+  const desktop=document.querySelector('header>nav:not(.mobile-tabbar)');
+  const tabs=document.querySelector('.mobile-tabbar');
+  const mobile=window.matchMedia('(max-width: 760px)').matches ||
+    (navigator.maxTouchPoints>1 && window.innerWidth<900);
+  if(desktop) desktop.style.setProperty('display',mobile?'none':'flex','important');
+  if(tabs) tabs.style.setProperty('display',mobile?'grid':'none','important');
+ };
+ apply();
+ window.addEventListener('resize',apply,{passive:true});
+ window.addEventListener('orientationchange',()=>setTimeout(apply,80),{passive:true});
+})();
 
 </script>
 </body></html>

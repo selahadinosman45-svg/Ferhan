@@ -78,3 +78,11 @@ The service-worker shell cache is now `ferhan-academy-v8`; existing V7 Hifz and 
 - The reader can switch between Mushaf view and compact word-card view.
 - Mobile navigation is a five-destination, safe-area-aware iPhone-style bottom tab bar. The desktop top navigation remains unchanged.
 - The rest of the learning sections retain their existing layouts; this release concentrates the major visual change in the Qur'an reader and improves contrast and navigation styling.
+
+
+## V10 mobile navigation and Mushaf readability update
+
+- On touch-sized iPhones, the desktop horizontal header navigation is explicitly hidden; the five-destination bottom tab bar is the only primary navigation.
+- Navigation labels and section headings use high-contrast forest/ink colours with gold reserved for active accents.
+- Quran reading uses a continuous RTL Mushaf-style Arabic line with tappable words, ayah ornaments, and clearly separated English and Amharic translation panels. Word gloss tiles are hidden in the Mushaf presentation.
+- Service-worker cache is bumped to `ferhan-academy-v10` so deployed devices fetch the updated interface.
