@@ -141,6 +141,94 @@ footer{color:#758078}
  #tajweedPractical{grid-template-columns:1fr!important}
 }
 
+
+/* FERHAN — quiet, premium product-page design */
+:root{
+ --green:#183d35;--green2:#286a5a;--gold:#c49a4b;--cream:#f6f1e8;
+ --ink:#17231f;--muted:#78817b;--line:#e8e1d6;--white:#fff;
+ --navy:#172330;--softgold:#f3e5c6;
+}
+html{scroll-behavior:smooth}
+body{background:#fbfaf7;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;letter-spacing:-.012em}
+header{background:rgba(251,250,247,.88);backdrop-filter:saturate(180%) blur(22px);-webkit-backdrop-filter:saturate(180%) blur(22px);color:var(--ink);border:0;border-bottom:1px solid #e9e5dd;box-shadow:none;padding:13px max(22px,calc((100% - 1180px)/2)}
+.brand{letter-spacing:-.035em;color:#17251f;font-size:16px}
+.brandmark{width:34px;height:34px;background:#173d34;color:#f4d78e;border:0;box-shadow:none;font-size:20px}
+nav button{color:#58645d;border:0;border-radius:999px;padding:9px 12px;font-size:13px;font-weight:650}
+nav button.active,nav button:hover{background:#ece9e1;color:#15241e;border:0}
+main{max-width:1160px;padding:34px 24px 80px}
+.hero{background:linear-gradient(130deg,#f7efe0 0%,#f3e8d2 56%,#e9e2d4 100%);color:#192821;border:1px solid #eee4d3;border-radius:32px;box-shadow:0 18px 55px #5a4a2c0b;padding:clamp(34px,6vw,72px);min-height:310px}
+.hero h1{font-size:clamp(42px,6.5vw,76px);font-weight:720;letter-spacing:-.065em;line-height:.99;margin:18px 0}
+.hero p{color:#68756d}.hero .kicker{color:#99733b}.hero .pill{color:#725a32;border:1px solid #d8c59f;background:#ffffff70}
+.hero-art{color:#b58b42;text-shadow:none;font-size:clamp(76px,11vw,130px)}
+.hero-art small{color:#776a52}
+.hero-minimal{font-size:17px!important;font-weight:600;letter-spacing:.02em;color:#69756e!important}
+.section{margin-top:42px}.section h2{font-size:clamp(24px,3vw,34px);letter-spacing:-.045em;font-weight:700;color:#182720}
+.sub{font-size:14px;color:#7a837d}
+.card,.panel{background:#fff;border:1px solid #eeeae2;border-radius:24px;box-shadow:0 8px 32px #1b2c2308}
+.card{padding:24px;transition:transform .25s ease,box-shadow .25s ease}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 42px #1b2c2312;border-color:#e4d7bb}
+.card h3{font-size:19px;letter-spacing:-.03em}
+.card p{color:#7b837d;line-height:1.55}
+.tag,.kicker{color:#98743d;letter-spacing:.13em}
+.btn{border-radius:999px;background:#173d34;color:white;padding:11px 18px;box-shadow:none;font-size:13px}
+.btn.gold{background:#e6c77f;color:#1c2a22}
+.btn.secondary{background:#f2f0eb;color:#29372f;border:1px solid #ebe6dc}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.03)}
+.panel{padding:26px}
+input,select{background:#fff;border:1px solid #e6e1d8!important;border-radius:12px!important;padding:10px 12px}
+.progress{background:#eeeae2}.progress span{background:#c69c51}
+.feed-shell{max-width:760px}
+.feed-top{border:0;background:transparent;padding:8px 2px 14px}
+.feed-top .tag{font-size:11px}
+.feed-progress{width:160px;height:4px;border-radius:99px;background:#e9e4da;margin-top:9px;overflow:hidden}
+.feed-progress span{display:block;height:100%;width:0;background:#b9914c;transition:width .3s}
+.feed-track{height:min(76vh,820px);min-height:540px;border:1px solid #e9e1d2;border-radius:30px;background:#f3eee4;box-shadow:0 18px 50px #25352b0d;scrollbar-width:none}
+.feed-track::-webkit-scrollbar{display:none}
+.feed-card{background:radial-gradient(circle at 85% 10%,#e6cf9b55,transparent 28%),linear-gradient(155deg,#fffdf8,#f5eee1);color:#1a2a23;padding:clamp(24px,5vw,46px);gap:20px;transition:background .3s}
+.feed-card:nth-child(3n+2),.feed-card:nth-child(3n){background:radial-gradient(circle at 85% 10%,#e7d7b555,transparent 30%),linear-gradient(155deg,#fffdf9,#f3eee6)}
+.feed-card.card-enter{animation:cardIn .42s cubic-bezier(.2,.8,.2,1) both}
+@keyframes cardIn{from{opacity:.45;transform:translateY(18px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.feed-meta{color:#927447;font-size:10px;letter-spacing:.14em}
+.feed-kind{color:#8c6c37;border:1px solid #d9c69f;background:#fff9ed;border-radius:999px;padding:7px 12px}
+.feed-main h2{color:#1b2a23;font-size:clamp(22px,4vw,30px);letter-spacing:-.04em}
+.feed-ar{color:#1b4338;text-shadow:none;font-size:clamp(44px,9vw,82px);line-height:1.9;margin:22px 0}
+.feed-ar.no-diacritics{color:#1b4338}
+.feed-copy{color:#53635a;line-height:1.8;font-size:16px}
+.feed-translation>div{background:#ffffffbd;border:1px solid #e8dfcf;border-radius:18px;color:#46534c;line-height:1.7;padding:15px}
+.feed-translation b{color:#98743b}
+.feed-actions{gap:8px}
+.feed-actions button{border:1px solid #e5ddcf;background:#fff;color:#304239;border-radius:999px;padding:10px 13px;font-size:12px;box-shadow:0 3px 10px #283a2c08}
+.feed-actions button.primary{background:#1a4439;color:#fff;border-color:#1a4439}
+.feed-answer{color:#886a35;min-height:38px}
+.feed-link{color:#86652e!important}
+.feed-dots button{background:#d8d0c2}.feed-dots button.active{background:#98733a}
+.feed-card.details-hidden .feed-copy,.feed-card.details-hidden .feed-translation,.feed-card.details-hidden .feed-source{filter:blur(8px);opacity:.16;transition:filter .3s,opacity .3s}
+.feed-card.details-hidden .feed-copy{user-select:none}
+.feed-card .feed-copy,.feed-card .feed-translation{transition:filter .3s,opacity .3s}
+.reader-ayah,.surah-verse,.word,.wbw-word{border-radius:20px;border-color:#e9e3d8}
+.reader-ayah .arabic,.surah-verse .arabic{color:#1a4439}
+.quiz-option{border-radius:15px;border-color:#e9e3d8}
+.quiz-option.correct{background:#edf6ee}.quiz-option.wrong{background:#fbefeb}
+.modal-card{border-radius:28px}
+footer{color:#89918a}
+@media(max-width:760px){
+ header{padding:11px 14px;gap:8px}
+ .brand{font-size:15px}
+ header nav{width:100%;overflow-x:auto;flex-wrap:nowrap;padding:2px 0 4px}
+ nav button{white-space:nowrap;font-size:12px;padding:8px 11px}
+ main{padding:17px 13px 58px}
+ .hero{min-height:260px;border-radius:25px;padding:30px 24px}
+ .hero-art{font-size:76px}
+ .section{margin-top:34px}
+ .card,.panel{border-radius:21px;padding:19px}
+ .feed-track{height:calc(100dvh - 225px);min-height:500px;border-radius:24px}
+ .feed-card{padding:23px 18px}
+ .feed-translation{grid-template-columns:1fr}
+ .feed-actions button{padding:9px 11px}
+ .feed-progress{width:120px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
 </style>
 </head>
 <body>
@@ -148,9 +236,9 @@ footer{color:#758078}
 <nav><button class="active" data-go="home">Home</button><button data-go="academy">Academy</button><button data-go="lessons">Lessons</button><button data-go="practice">Repeat & practise</button><button data-go="recitation">Qur’an practice</button><button data-go="tajweed">Tajweed</button><button data-go="quiz">Quizzes</button><button data-go="course">Video course</button><button data-go="resources">Resources</button></nav></header>
 <main>
 <section class="hero" id="home">
-<div><span class="pill">ferhan V6 · ARABIC + AMHARIC</span><div class="kicker" style="margin-top:18px">A calm, step-by-step path</div>
-<h1>Learn to read the<br>Qur’an with confidence.</h1>
-<p>Start with Arabic letters, build pronunciation and reading skills, then practise with short quizzes and guided repetition. Explanations are in Amharic, with Arabic examples.</p>
+<div><span class="pill">فَرْحَان · QUR’AN ACADEMY</span><div class="kicker" style="margin-top:18px">READ · LISTEN · UNDERSTAND</div>
+<h1>Closer to the<br>Qur’an. Every day.</h1>
+<p class="hero-minimal">Arabic · English · አማርኛ</p>
 <button class="btn gold" onclick="show('lessons')">Start learning →</button></div>
 <div class="hero-art">اقْرَأْ<small>READ · LISTEN · REPEAT</small></div>
 </section>
@@ -160,7 +248,7 @@ footer{color:#758078}
 <div class="controls"><button class="btn gold" onclick="resumeBookmark()">↗ Resume learning</button><button class="btn secondary" onclick="show('lessons')">Start from lessons</button><button class="btn secondary" onclick="exportBackup()">↓ Export backup</button><label class="btn secondary" style="cursor:pointer">↑ Import backup<input id="backupInput" type="file" accept="application/json,.json" hidden onchange="importBackup(event)"></label></div>
 </div>
 </section>
-<section class="section"><div class="section-head"><div><h2>Your learning path</h2><p class="sub">Short sessions designed for adult learners.</p></div><span class="tag" id="progressLabel">0 of 6 topics completed</span><button class="btn gold" onclick="openDaily()">✦ Daily practice</button></div><div class="progress"><span id="progressBar"></span></div>
+<section class="section"><div class="section-head"><div><h2>Your learning path</h2><p class="sub">Your daily learning space</p></div><span class="tag" id="progressLabel">0 of 6 topics completed</span><button class="btn gold" onclick="openDaily()">✦ Daily practice</button></div><div class="progress"><span id="progressBar"></span></div>
 <div class="grid" style="margin-top:15px">
 <div class="card"><div class="tag">01 · FOUNDATIONS</div><h3>Arabic letters</h3><p>Recognise the shapes and names of the Arabic alphabet.</p><button class="btn secondary" onclick="show('lessons')">Open lesson</button></div>
 <div class="card"><div class="tag">02 · SOUND</div><h3>Short vowels</h3><p>Learn fatḥah, kasrah and ḍammah with listening practice.</p><button class="btn secondary" onclick="loadLesson(1);show('lessons')">Open lesson</button></div>
@@ -285,12 +373,12 @@ footer{color:#758078}
 <p class="muted">Video playback is provided by YouTube. The two original playlists remain hosted on YouTube. Choose a lesson in the player; pause and repeat short sections with the practice tools. Exact lesson titles and timestamp chapters can be added once the playlist lesson sequence is confirmed.</p></div></section>
 
 <section class="section" id="scrollLearn" hidden>
- <div class="section-head"><div><h2>Scroll & learn · اقرأ خطوة خطوة</h2><p class="sub">Read, listen, test your reading and keep scrolling through the complete practice library.</p></div></div>
+ <div class="section-head"><div><h2>Scroll & learn · اقرأ خطوة خطوة</h2><p class="sub">Swipe through · listen · reveal · repeat</p></div></div>
  <div class="feed-shell">
-  <div class="feed-top"><span class="tag" id="feedCounter">LESSON 1</span><div class="controls"><button class="btn secondary" onclick="feedPrev()">↑ Previous</button><button class="btn secondary" onclick="feedNext()">↓ Next</button></div></div>
+  <div class="feed-top"><div><span class="tag" id="feedCounter">LESSON 1</span><div class="feed-progress"><span id="feedProgressBar"></span></div></div><div class="controls"><button class="btn secondary" onclick="feedPrev()" aria-label="Previous card">‹</button><button class="btn secondary" id="feedAutoBtn" onclick="toggleFeedAuto()">Auto</button><button class="btn secondary" onclick="feedNext()" aria-label="Next card">›</button></div></div>
   <div class="feed-track" id="feedTrack" aria-label="Vertical Arabic learning lesson feed"></div>
   <div class="feed-dots" id="feedDots"></div>
-  <p class="muted">For Qur’anic recitation, use the synchronized player or a trusted reciter. Device voice is a pronunciation aid only.</p>
+  
  </div>
 </section>
 <section class="section" id="quranReader" hidden>
@@ -346,7 +434,7 @@ const quizData=[
 {q:"Which symbol is Shaddah?",o:["ْ","ّ","َ"],a:1,e:"Shaddah (ّ) indicates a doubled or strengthened consonant."},
 {q:"What is a good way to improve recitation?",o:["Rush through the text","Listen, repeat and seek teacher feedback","Ignore pronunciation"],a:1,e:"Listen carefully, repeat slowly and ask a qualified teacher to correct your recitation."}
 ];
-function show(id){document.querySelectorAll("main>section").forEach(s=>{s.hidden=(id==="home" ? !["home","resumePanel"].includes(s.id) : s.id!==id)});document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.go===id));activeSection=id;saveBookmark(false);if(id==="scrollLearn"){renderFeed();if(!quranBundle)initQuranReader();}if(id==="tajweed")renderTajweedPractice();window.scrollTo({top:0,behavior:"smooth"})}
+function show(id){if(id!=="scrollLearn"&&feedAutoTimer){clearInterval(feedAutoTimer);feedAutoTimer=null;const autoBtn=document.getElementById("feedAutoBtn");if(autoBtn)autoBtn.textContent="Auto";}document.querySelectorAll("main>section").forEach(s=>{s.hidden=(id==="home" ? !["home","resumePanel"].includes(s.id) : s.id!==id)});document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.go===id));activeSection=id;saveBookmark(false);if(id==="scrollLearn"){renderFeed();if(!quranBundle)initQuranReader();}if(id==="tajweed")renderTajweedPractice();window.scrollTo({top:0,behavior:"smooth"})}
 document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.go)));
 function renderLesson(){let l=lessons[currentLesson];document.getElementById("lessonTag").textContent="LESSON "+(currentLesson+1);document.getElementById("lessonTitle").textContent=l.title;document.getElementById("lessonAm").textContent=l.am;document.getElementById("lessonArabic").textContent=l.ar;document.getElementById("lessonTranslit").textContent=l.latin;document.getElementById("lessonTabs").innerHTML=lessons.map((x,i)=>`<button class="${i===currentLesson?'active':''}" onclick="loadLesson(${i})">${i+1}</button>`).join("");document.getElementById("letterGrid").innerHTML=l.words.map(w=>`<div class="word"><div class="arabic" translate="no">${w[0]}</div><strong>${w[1]}</strong><span class="muted">${w[2]}</span><button class="btn secondary" style="margin-top:8px;padding:6px 10px" onclick="speak(${JSON.stringify(w[0])})">▶</button></div>`).join("");}
 function loadLesson(i){currentLesson=i;renderLesson();saveBookmark(false)}
@@ -814,7 +902,7 @@ function feedCardHTML(x,i){
  const extraSource=x.source?`<div class="feed-source">${escapeFeedHTML(x.source)}</div>`:"";
  const quranLink=isQuran?`<a class="feed-link" href="https://quran.com/${x.chapter}:${x.ayah}" target="_blank" rel="noopener">Open verified text & recitation ↗</a>`:"";
  const syncLink=isQuran?`<button onclick="show('recitation')">Open synchronized player</button>`:"";
- return `<article class="feed-card" id="feed-${i}" data-index="${i}">
+ return `<article class="feed-card card-enter" id="feed-${i}" data-index="${i}">
   <div class="feed-meta"><span>${escapeFeedHTML(x.stage||"READING PRACTICE")}</span><span>${(i+1).toLocaleString()} / ${readingFeed.length.toLocaleString()}</span></div>
   <div class="feed-main">
    <div class="feed-kind">${escapeFeedHTML((x.kind||"lesson").toUpperCase())}</div>
@@ -826,10 +914,12 @@ function feedCardHTML(x,i){
    <div class="feed-actions">
     <button class="primary" onclick="speakFeedItem(${i})">🔊 Listen</button>
     <button onclick="toggleFeedMarks()">تَشْكِيلٌ ${feedNoMarks?'OFF':'ON'}</button>
-    <button onclick="revealFeed(${i})">Reveal / check</button>
+    <button onclick="toggleFeedFlip(${i})">◈ Flip card</button>
+    <button onclick="revealFeed(${i})">Check answer</button>
     ${syncLink}
     ${quranLink}
-    <button onclick="feedNext()">Next ↓</button>
+    <button onclick="markFeedLearned(${i},this)">☆ Learned</button>
+    <button onclick="feedNext()">Next →</button>
    </div>
    <div class="feed-answer" id="feedAnswer-${i}"></div>
   </div>
@@ -855,9 +945,11 @@ function renderFeed(){
   if(host.scrollTop+host.clientHeight>host.scrollHeight-host.clientHeight*2)appendFeedBatch();
  };
 }
+let feedAutoTimer=null,feedLearned=new Set();
 function updateFeedControls(){
  const item=readingFeed[feedIndex]||readingFeed[0];
  const c=document.getElementById("feedCounter");if(c)c.textContent=`${(feedIndex+1).toLocaleString()} / ${readingFeed.length.toLocaleString()} · ${item?.stage||"READING"}`;
+ const bar=document.getElementById("feedProgressBar");if(bar)bar.style.width=`${((feedIndex+1)/Math.max(1,readingFeed.length))*100}%`;
  const dots=document.getElementById("feedDots");if(dots){
   const from=Math.max(0,Math.min(readingFeed.length-9,feedIndex-4));
   dots.innerHTML=Array.from({length:Math.min(9,readingFeed.length-from)},(_,n)=>{const i=from+n;return `<button class="${i===feedIndex?'active':''}" aria-label="Go to lesson ${i+1}" onclick="feedGo(${i})"></button>`}).join("");
@@ -867,10 +959,30 @@ function feedGo(i){
  feedIndex=Math.max(0,Math.min(readingFeed.length-1,i));
  const host=document.getElementById("feedTrack");
  while(feedRenderedCount<=feedIndex)appendFeedBatch();
- document.getElementById("feed-"+feedIndex)?.scrollIntoView({behavior:"smooth",block:"start"});updateFeedControls();
+ const target=document.getElementById("feed-"+feedIndex);
+ if(target){target.classList.remove("card-enter");void target.offsetWidth;target.classList.add("card-enter");target.scrollIntoView({behavior:"smooth",block:"start"});}
+ updateFeedControls();
 }
 function feedNext(){feedGo(feedIndex+1)}
 function feedPrev(){feedGo(feedIndex-1)}
+function toggleFeedFlip(i){
+ const card=document.getElementById("feed-"+i);if(!card)return;
+ card.classList.toggle("details-hidden");
+ const b=card.querySelector('[onclick^="toggleFeedFlip"]');
+ if(b)b.textContent=card.classList.contains("details-hidden")?"◈ Show meaning":"◈ Hide meaning";
+ card.classList.remove("card-enter");void card.offsetWidth;card.classList.add("card-enter");
+}
+function markFeedLearned(i,button){
+ if(feedLearned.has(i)){feedLearned.delete(i);button.textContent="☆ Learned";}
+ else{feedLearned.add(i);button.textContent="✓ Learned";}
+ button.classList.toggle("primary",feedLearned.has(i));
+}
+function toggleFeedAuto(){
+ const b=document.getElementById("feedAutoBtn");
+ if(feedAutoTimer){clearInterval(feedAutoTimer);feedAutoTimer=null;if(b)b.textContent="Auto";return;}
+ feedAutoTimer=setInterval(()=>{if(feedIndex>=readingFeed.length-1){toggleFeedAuto();return;}feedNext()},8500);
+ if(b)b.textContent="Pause";
+}
 function speakFeedItem(i){const x=readingFeed[i];if(x?.ar)speak(x.ar)}
 function revealFeed(i){const x=readingFeed[i];const el=document.getElementById("feedAnswer-"+i);if(el)el.textContent=x?.answer||"Read carefully, listen, and compare with a trusted source."}
 function toggleFeedMarks(){
