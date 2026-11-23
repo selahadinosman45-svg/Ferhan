@@ -659,137 +659,59 @@ function setVoiceRate(v){voiceRate=Number(v);ayahAudio.playbackRate=voiceRate}
 function loadSavedProgress(){try{const raw=JSON.parse(localStorage.getItem("ferhanProgress")||"{}");done=new Set(raw.done||[]);updateProgress()}catch(e){}}
 const originalMarkComplete=markComplete;
 markComplete=function(){done.add(currentLesson);updateProgress();try{localStorage.setItem("ferhanProgress",JSON.stringify({done:[...done]}))}catch(e){}alert("Lesson progress saved on this device.")};
+// Keep the site's original speech engine for words and sentences.
+// Letter cards speak directly from the tap handler so iOS Safari does not
+// lose the user-activation window while waiting for a remote MP3 to fail.
 const originalSpeak=speak;
-speak=function(txt){
- const value=String(txt||"").trim();
- if(!value)return false;
- // A single Arabic letter (with or without a harakah) uses a recorded letter-name clip.
- const tokens=value.split(/\s+/).filter(Boolean);
- const clean=t=>t.replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,"");
- const bases=tokens.map(clean);
- if(bases.length&&bases.every(ch=>Array.from(ch).length===1&&FERHAN_LETTER_AUDIO[ch])){
-   return playRecordedLetterSequence(bases);
- }
- // Whole words and sentences use the original Arabic TTS path; it is not used for letter drills.
- if(typeof originalSpeak==="function")return originalSpeak(value);
- return false;
-};
+speak=originalSpeak;
+window.speak=speak;
 
-// Recorded Arabic letter-name audio (MIT-licensed source repository; see attribution below).
-// Audio is streamed from jsDelivr and cached by the browser; the Quran Foundation player remains separate.
-const FERHAN_LETTER_AUDIO={
- "ا":"alif.mp3","ب":"baa.mp3","ت":"taa.mp3","ث":"thaa.mp3","ج":"jiim.mp3",
- "ح":"haa'.mp3","خ":"khaa.mp3","د":"daal.mp3","ذ":"thaal.mp3","ر":"raa.mp3",
- "ز":"zaay.mp3","س":"siin.mp3","ش":"shiin.mp3","ص":"saad.mp3","ض":"daad.mp3",
- "ط":"taa'.mp3","ظ":"thaa'.mp3","ع":"àyn.mp3","غ":"ghayn.mp3","ف":"faa.mp3",
- "ق":"qaaf.mp3","ك":"kaaf.mp3","ل":"laam.mp3","م":"miim.mp3","ن":"nuun.mp3",
- "ه":"haa.mp3","و":"waaw.mp3","ي":"yaa.mp3"
+const FERHAN_ARABIC_LETTER_NAMES={
+ "ا":"أَلِف","ب":"بَاء","ت":"تَاء","ث":"ثَاء","ج":"جِيم",
+ "ح":"حَاء","خ":"خَاء","د":"دَال","ذ":"ذَال","ر":"رَاء",
+ "ز":"زَاي","س":"سِين","ش":"شِين","ص":"صَاد","ض":"ضَاد",
+ "ط":"طَاء","ظ":"ظَاء","ع":"عَيْن","غ":"غَيْن","ف":"فَاء",
+ "ق":"قَاف","ك":"كَاف","ل":"لَام","م":"مِيم","ن":"نُون",
+ "ه":"هَاء","و":"وَاو","ي":"يَاء"
 };
-const FERHAN_LETTER_AUDIO_BASES=[
- "https://cdn.jsdelivr.net/gh/razunatmohammed88-cyber/arabic-alphabet-audio@main/",
- "https://raw.githubusercontent.com/razunatmohammed88-cyber/arabic-alphabet-audio/main/"
-];
-let ferhanLetterAudio=null,ferhanLetterQueue=[],ferhanLetterQueueIndex=0,ferhanLetterButton=null;
-function ferhanLetterStatus(message){
- const status=document.getElementById("letterAudioStatus");
- if(status)status.textContent=message;
-}
-function ferhanResetLetterButton(){
- if(ferhanLetterButton){ferhanLetterButton.disabled=false;ferhanLetterButton.textContent="▶";}
- ferhanLetterButton=null;
-}
-function playRecordedLetterSequence(letters,button){
- if(!Array.isArray(letters)||!letters.length)return false;
- if(ferhanLetterAudio){ferhanLetterAudio.pause();ferhanLetterAudio.onended=null;ferhanLetterAudio.onerror=null;}
- ferhanResetLetterButton();
- ferhanLetterQueue=letters.map(x=>String(x||"").replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,"")).filter(Boolean);
- ferhanLetterQueueIndex=0;
- ferhanLetterButton=button||null;
- if(ferhanLetterButton){ferhanLetterButton.disabled=true;ferhanLetterButton.textContent="…";}
- ferhanLetterStatus(`Playing ${ferhanLetterQueue.length} letter sound${ferhanLetterQueue.length===1?"":"s"}…`);
- playNextRecordedLetter();
- return true;
-}
-function playNextRecordedLetter(){
- if(ferhanLetterQueueIndex>=ferhanLetterQueue.length){
-  ferhanResetLetterButton();
-  ferhanLetterStatus("Pronunciation finished. Choose another letter to practise again.");
-  return;
- }
- const letter=ferhanLetterQueue[ferhanLetterQueueIndex++];
- const file=FERHAN_LETTER_AUDIO[letter];
- if(!file){ferhanLetterStatus(`No recording is mapped for ${letter}.`);playNextRecordedLetter();return;}
- let completed=false;
- const finish=()=>{
-  if(completed)return;
-  completed=true;
-  window.setTimeout(playNextRecordedLetter,300);
- };
- const fail=(message)=>{
-  if(completed)return;
-  completed=true;
-  ferhanResetLetterButton();
-  ferhanLetterStatus(message);
- };
- const speakLetterName=()=>{
-  if(completed)return;
-  const names={
-   "ا":"أَلِف","ب":"بَاء","ت":"تَاء","ث":"ثَاء","ج":"جِيم","ح":"حَاء","خ":"خَاء",
-   "د":"دَال","ذ":"ذَال","ر":"رَاء","ز":"زَاي","س":"سِين","ش":"شِين","ص":"صَاد",
-   "ض":"ضَاد","ط":"طَاء","ظ":"ظَاء","ع":"عَيْن","غ":"غَيْن","ف":"فَاء","ق":"قَاف",
-   "ك":"كَاف","ل":"لَام","م":"مِيم","ن":"نُون","ه":"هَاء","و":"وَاو","ي":"يَاء"
-  };
-  const phrase=names[letter]||letter;
-  // Try streamed Arabic speech audio if the recorded clip is unavailable.
-  const tts=new Audio();
-  ferhanLetterAudio=tts;
-  tts.preload="auto";
-  tts.onended=finish;
-  tts.onerror=()=>{
-   if(completed)return;
-   // Last resort: use the device's Arabic speech engine.
-   if("speechSynthesis" in window && "SpeechSynthesisUtterance" in window){
-    try{
-     speechSynthesis.cancel();
-     const u=new SpeechSynthesisUtterance(phrase);
-     u.lang="ar-SA";u.rate=.72;u.pitch=1;
-     const voices=speechSynthesis.getVoices()||[];
-     const arVoice=voices.find(v=>/^ar([-_]|$)/i.test(v.lang||""));
-     if(arVoice)u.voice=arVoice;
-     u.onend=finish;
-     u.onerror=()=>fail("Your device could not pronounce this letter. Install or enable an Arabic speech voice in device settings.");
-     ferhanLetterStatus("Using your device's Arabic speech voice…");
-     speechSynthesis.speak(u);
-     return;
-    }catch(e){}
-   }
-   fail("Letter audio is unavailable. Check your connection or enable an Arabic speech voice on your device.");
-  };
-  tts.src="https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=ar&q="+encodeURIComponent(phrase);
-  ferhanLetterStatus("Loading Arabic pronunciation…");
-  const ttsPlay=tts.play();
-  if(ttsPlay&&typeof ttsPlay.catch==="function")ttsPlay.catch(()=>tts.onerror());
- };
- const trySource=(sourceIndex)=>{
-  if(completed)return;
-  if(sourceIndex>=FERHAN_LETTER_AUDIO_BASES.length){speakLetterName();return;}
-  const audio=new Audio();
-  ferhanLetterAudio=audio;
-  audio.preload="auto";
-  audio.onended=finish;
-  audio.onerror=()=>trySource(sourceIndex+1);
-  audio.src=FERHAN_LETTER_AUDIO_BASES[sourceIndex]+encodeURIComponent(file);
-  const playResult=audio.play();
-  if(playResult&&typeof playResult.catch==="function")playResult.catch(()=>trySource(sourceIndex+1));
- };
- trySource(0);
-}
 function playLetterSound(letter,button){
- const base=String(letter||"").replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,"");
- return playRecordedLetterSequence([base],button);
+ const clean=String(letter||"").replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,"");
+ const base=Array.from(clean)[0]||"";
+ if(!base){ferhanLetterStatus("Choose a letter to hear its pronunciation.");return false;}
+ if(!("speechSynthesis" in window)||!("SpeechSynthesisUtterance" in window)){
+  ferhanLetterStatus("Arabic speech is not supported in this browser. Try an updated Safari or Chrome browser.");
+  return false;
+ }
+ // The vowel drill buttons carry the exact marked form; the main speaker
+ // button carries no Arabic text and therefore plays the letter name.
+ const vowelText=button&&button.querySelector?button.querySelector(".vowel-ar"):null;
+ const buttonArabic=button&&!vowelText?String(button.textContent||"").trim():"";
+ const phrase=(vowelText&&vowelText.textContent.trim())||
+   (/^[\u0600-\u06FF\u064B-\u065F\u0670]+$/.test(buttonArabic)?buttonArabic:(FERHAN_ARABIC_LETTER_NAMES[base]||base));
+ try{
+  speechSynthesis.cancel();
+  const utterance=new SpeechSynthesisUtterance(phrase);
+  utterance.lang="ar-SA";
+  utterance.rate=.72;
+  utterance.pitch=1;
+  const voices=speechSynthesis.getVoices?speechSynthesis.getVoices():[];
+  const arabicVoice=voices.find(v=>/^ar([-_]|$)/i.test(v.lang||""));
+  if(arabicVoice)utterance.voice=arabicVoice;
+  utterance.onstart=()=>ferhanLetterStatus("Playing Arabic pronunciation…");
+  utterance.onend=()=>ferhanLetterStatus("Pronunciation finished. Choose another letter to practise again.");
+  utterance.onerror=(event)=>ferhanLetterStatus("Arabic speech could not start"+(event&&event.error?" ("+event.error+")":"")+". Enable an Arabic voice in your device settings and try again.");
+  ferhanLetterStatus(arabicVoice?"Using "+arabicVoice.name+" · Arabic pronunciation":"Starting your device's Arabic speech voice…");
+  // Both calls happen synchronously inside the speaker button's click event.
+  if(typeof speechSynthesis.resume==="function")speechSynthesis.resume();
+  speechSynthesis.speak(utterance);
+  return true;
+ }catch(error){
+  ferhanLetterStatus("Audio could not start. Check your device's Arabic speech settings and try again.");
+  return false;
+ }
 }
 window.playLetterSound=playLetterSound;
-window.playRecordedLetterSequence=playRecordedLetterSequence;
+
 
 // Local-only bookmark: no login, server, or cloud account.
 let activeSection="home";
