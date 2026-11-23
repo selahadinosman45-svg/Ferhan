@@ -640,45 +640,72 @@ speak=function(txt){
 // Audio is streamed from jsDelivr and cached by the browser; the Quran Foundation player remains separate.
 const FERHAN_LETTER_AUDIO={
  "ا":"alif.mp3","ب":"baa.mp3","ت":"taa.mp3","ث":"thaa.mp3","ج":"jiim.mp3",
- "ح":"haa%27.mp3","خ":"khaa.mp3","د":"daal.mp3","ذ":"thaal.mp3","ر":"raa.mp3",
+ "ح":"haa'.mp3","خ":"khaa.mp3","د":"daal.mp3","ذ":"thaal.mp3","ر":"raa.mp3",
  "ز":"zaay.mp3","س":"siin.mp3","ش":"shiin.mp3","ص":"saad.mp3","ض":"daad.mp3",
- "ط":"taa%27.mp3","ظ":"thaa%27.mp3","ع":"%C3%A0yn.mp3","غ":"ghayn.mp3","ف":"faa.mp3",
+ "ط":"taa'.mp3","ظ":"thaa'.mp3","ع":"àyn.mp3","غ":"ghayn.mp3","ف":"faa.mp3",
  "ق":"qaaf.mp3","ك":"kaaf.mp3","ل":"laam.mp3","م":"miim.mp3","ن":"nuun.mp3",
  "ه":"haa.mp3","و":"waaw.mp3","ي":"yaa.mp3"
 };
-const FERHAN_LETTER_AUDIO_BASE="https://cdn.jsdelivr.net/gh/razunatmohammed88-cyber/arabic-alphabet-audio@main/";
-const ferhanLetterAudio=new Audio();ferhanLetterAudio.preload="auto";
-let ferhanLetterQueue=[],ferhanLetterQueueIndex=0,ferhanLetterButton=null;
-function playRecordedLetterSequence(letters){
- if(!Array.isArray(letters)||!letters.length)return false;
- ferhanLetterQueue=letters.slice();ferhanLetterQueueIndex=0;
+const FERHAN_LETTER_AUDIO_BASES=[
+ "https://cdn.jsdelivr.net/gh/razunatmohammed88-cyber/arabic-alphabet-audio@main/",
+ "https://raw.githubusercontent.com/razunatmohammed88-cyber/arabic-alphabet-audio/main/"
+];
+let ferhanLetterAudio=null,ferhanLetterQueue=[],ferhanLetterQueueIndex=0,ferhanLetterButton=null;
+function ferhanLetterStatus(message){
+ const status=document.getElementById("letterAudioStatus");
+ if(status)status.textContent=message;
+}
+function ferhanResetLetterButton(){
  if(ferhanLetterButton){ferhanLetterButton.disabled=false;ferhanLetterButton.textContent="▶";}
  ferhanLetterButton=null;
- const status=document.getElementById("letterAudioStatus");
- if(status)status.textContent=`Playing ${ferhanLetterQueue.length} separate letter sounds…`;
- playNextRecordedLetter();return true;
+}
+function playRecordedLetterSequence(letters,button){
+ if(!Array.isArray(letters)||!letters.length)return false;
+ if(ferhanLetterAudio){ferhanLetterAudio.pause();ferhanLetterAudio.onended=null;ferhanLetterAudio.onerror=null;}
+ ferhanResetLetterButton();
+ ferhanLetterQueue=letters.map(x=>String(x||"").replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,"")).filter(Boolean);
+ ferhanLetterQueueIndex=0;
+ ferhanLetterButton=button||null;
+ if(ferhanLetterButton){ferhanLetterButton.disabled=true;ferhanLetterButton.textContent="…";}
+ ferhanLetterStatus(`Playing ${ferhanLetterQueue.length} letter sound${ferhanLetterQueue.length===1?"":"s"}…`);
+ playNextRecordedLetter();
+ return true;
 }
 function playNextRecordedLetter(){
  if(ferhanLetterQueueIndex>=ferhanLetterQueue.length){
-  const status=document.getElementById("letterAudioStatus");if(status)status.textContent="Letter sounds finished. Each letter was played separately.";
+  ferhanResetLetterButton();
+  ferhanLetterStatus("Pronunciation finished. Choose another letter to practise again.");
   return;
  }
- const letter=ferhanLetterQueue[ferhanLetterQueueIndex++],file=FERHAN_LETTER_AUDIO[letter];
- if(!file){playNextRecordedLetter();return;}
- ferhanLetterAudio.pause();ferhanLetterAudio.currentTime=0;
- ferhanLetterAudio.src=FERHAN_LETTER_AUDIO_BASE+file;
- ferhanLetterAudio.onended=()=>{window.setTimeout(playNextRecordedLetter,420);};
- ferhanLetterAudio.onerror=()=>{const status=document.getElementById("letterAudioStatus");if(status)status.textContent=`Could not load the recording for ${letter}. Check your connection and try again.`;};
- ferhanLetterAudio.play().catch(()=>{const status=document.getElementById("letterAudioStatus");if(status)status.textContent="Tap Listen again to allow audio playback, and check your internet connection.";});
+ const letter=ferhanLetterQueue[ferhanLetterQueueIndex++];
+ const file=FERHAN_LETTER_AUDIO[letter];
+ if(!file){ferhanLetterStatus(`No recording is mapped for ${letter}.`);playNextRecordedLetter();return;}
+ const playFromSource=(sourceIndex)=>{
+  const url=FERHAN_LETTER_AUDIO_BASES[sourceIndex]+encodeURIComponent(file);
+  ferhanLetterAudio=new Audio(url);
+  ferhanLetterAudio.preload="auto";
+  ferhanLetterAudio.onended=()=>window.setTimeout(playNextRecordedLetter,420);
+  ferhanLetterAudio.onerror=()=>{
+   if(sourceIndex+1<FERHAN_LETTER_AUDIO_BASES.length){playFromSource(sourceIndex+1);return;}
+   ferhanResetLetterButton();
+   ferhanLetterStatus(`The recording for ${letter} could not be loaded from either audio source. Check your internet connection and try again.`);
+  };
+  const attempt=ferhanLetterAudio.play();
+  if(attempt&&typeof attempt.catch==="function"){
+   attempt.catch(()=>{
+    ferhanResetLetterButton();
+    ferhanLetterStatus("Your browser blocked the letter recording. Tap the speaker again and make sure silent mode is off.");
+   });
+  }
+ };
+ playFromSource(0);
 }
 function playLetterSound(letter,button){
  const base=String(letter||"").replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,"");
- if(button){button.disabled=true;button.textContent="…";}
- const ok=playRecordedLetterSequence([base]);
- if(button){ferhanLetterButton=button;ferhanLetterAudio.onended=()=>{button.disabled=false;button.textContent="▶";};window.setTimeout(()=>{if(button){button.disabled=false;button.textContent="▶";}},7000);}
- return ok;
+ return playRecordedLetterSequence([base],button);
 }
-
+window.playLetterSound=playLetterSound;
+window.playRecordedLetterSequence=playRecordedLetterSequence;
 
 // Local-only bookmark: no login, server, or cloud account.
 let activeSection="home";
@@ -1402,7 +1429,7 @@ function exportMemorisation(){const blob=new Blob([JSON.stringify(readHifz(),nul
           <span><b>${medial}</b><small>Medial</small></span>
           <span><b>${final}</b><small>Final</small></span>
         </div>
-        <div class="letter-vowels" dir="rtl"><span>${ar}َ</span><span>${ar}ِ</span><span>${ar}ُ</span></div>
+        <div class="letter-vowels" dir="rtl" aria-label="Listen to the letter with short vowels"><button type="button" onclick="playLetterSound(${JSON.stringify(ar)},this)" aria-label="Hear ${name} with fatḥah">${ar}َ</button><button type="button" onclick="playLetterSound(${JSON.stringify(ar)},this)" aria-label="Hear ${name} with kasrah">${ar}ِ</button><button type="button" onclick="playLetterSound(${JSON.stringify(ar)},this)" aria-label="Hear ${name} with ḍammah">${ar}ُ</button></div>
         <p>${note}</p>
        </article>`;
      }).join("");
@@ -1565,6 +1592,7 @@ main{max-width:1160px;padding:24px 22px 100px}
 .letter-forms small{display:block;font-size:8px;color:var(--muted)}
 .letter-vowels{display:flex;justify-content:center;gap:7px;margin:10px 0 4px}
 .letter-vowels span{padding:3px 8px;border-radius:8px;background:color-mix(in srgb,var(--lamp) 22%,var(--surface));font:22px var(--ar);color:var(--arabic)}
+.letter-vowels button{padding:3px 8px;border:0;border-radius:8px;background:color-mix(in srgb,var(--lamp) 22%,var(--surface));font:22px var(--ar);color:var(--arabic);cursor:pointer;min-width:40px;min-height:48px;touch-action:manipulation}.letter-vowels button:active{transform:scale(.96)}.letter-vowels button:disabled{opacity:.65}
 .letter-card p{font-size:10px;line-height:1.4;color:var(--muted);margin:7px 0 0;min-height:29px}
 /* API audio player */
 .ferhan-api-panel{margin:16px 0 20px;padding:20px}
