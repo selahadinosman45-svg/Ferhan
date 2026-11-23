@@ -613,15 +613,72 @@ function updateAcademyProgress(){const label=document.getElementById("academyPro
 function loadAcademyProgress(){try{academyDone=new Set(JSON.parse(localStorage.getItem("ferhanAcademyDone")||"[]"));}catch(e){academyDone=new Set();}updateAcademyProgress();}
 
 function renderAyahs(){const host=document.getElementById("ayahList");if(!host)return;host.innerHTML=fatiha.map((v,i)=>`<div class="word" style="text-align:left"><div class="row" style="display:flex;justify-content:space-between;align-items:center"><strong>Ayah ${i+1}</strong><span><button class="btn secondary" onclick="playAyah(${i})">▶ Listen & repeat</button> <a class="btn secondary" style="display:inline-block;text-decoration:none" href="https://quran.com/1/${i+1}" target="_blank" rel="noopener">Quran.com ↗</a></span></div><div class="arabic" translate="no" style="text-align:right">${v[0]}</div><div class="translit">${v[1]}</div><p class="amharic">${v[2]}</p></div>`).join("")}
-function playAyah(i,seekTo=0){ayahIndex=i;saveBookmark(false);const n=String(i+1).padStart(3,"0");ayahAudio.pause();ayahAudio.src=`https://everyayah.com/data/Alafasy_128kbps/001${n}.mp3`;ayahAudio.playbackRate=voiceRate;ayahAudio.onloadedmetadata=()=>{if(seekTo>0&&Number.isFinite(ayahAudio.duration))ayahAudio.currentTime=Math.min(seekTo,Math.max(0,ayahAudio.duration-0.5));};document.getElementById("ayahStatus").textContent=`Playing Al-Fatihah, ayah ${i+1} · Mishary Rashid Alafasy`;ayahAudio.play().catch(()=>document.getElementById("ayahStatus").textContent="Audio could not start. Check your internet connection and press play again.");}
-function playAllFatiha(){playAyah(0);ayahAudio.onended=()=>{if(ayahIndex<6)playAyah(ayahIndex+1);else document.getElementById("ayahStatus").textContent="Al-Fatihah listening completed. Repeat each verse aloud."}}
-function stopAyahAudio(){ayahAudio.pause();ayahAudio.currentTime=0;ayahAudio.onended=null;document.getElementById("ayahStatus").textContent="Playback stopped."}
+function playAyah(i,seekTo=0){ayahIndex=i;saveBookmark(false);playFoundationAyah(1,i+1,seekTo).catch(error=>{const el=document.getElementById("ayahStatus");if(el)el.textContent=`Quran Foundation audio unavailable: ${error.message}`;});}
+function playAllFatiha(){let nextIndex=0;const next=()=>{if(nextIndex>=7){const el=document.getElementById("ayahStatus");if(el)el.textContent="Al-Fatihah listening completed · Mishary Rashid Alafasy.";return;}const current=nextIndex++;ayahIndex=current;playFoundationAyah(1,current+1,0,next).catch(error=>{const el=document.getElementById("ayahStatus");if(el)el.textContent=`Quran Foundation audio unavailable: ${error.message}`;});};next();}
+function stopAyahAudio(){ayahAudio.pause();ayahAudio.currentTime=0;ayahAudio.onended=null;if(typeof ferhanFeedQFAudio!=="undefined"){ferhanFeedQFAudio.pause();ferhanFeedQFAudio.currentTime=0;ferhanFeedQFAudio.onended=null;ferhanFeedQFAudio.ontimeupdate=null;}document.getElementById("ayahStatus").textContent="Playback stopped."}
 function setVoiceRate(v){voiceRate=Number(v);ayahAudio.playbackRate=voiceRate}
 function loadSavedProgress(){try{const raw=JSON.parse(localStorage.getItem("ferhanProgress")||"{}");done=new Set(raw.done||[]);updateProgress()}catch(e){}}
 const originalMarkComplete=markComplete;
 markComplete=function(){done.add(currentLesson);updateProgress();try{localStorage.setItem("ferhanProgress",JSON.stringify({done:[...done]}))}catch(e){}alert("Lesson progress saved on this device.")};
 const originalSpeak=speak;
-speak=function(txt){if(!("speechSynthesis"in window)){alert("Speech synthesis is not supported by this browser.");return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(txt);u.lang="ar-SA";u.rate=voiceRate;let voices=speechSynthesis.getVoices();let v=voices.find(x=>x.lang.toLowerCase().startsWith("ar"));if(v)u.voice=v;speechSynthesis.speak(u)};
+speak=function(txt){
+ const value=String(txt||"").trim();
+ if(!value)return false;
+ // A single Arabic letter (with or without a harakah) uses a recorded letter-name clip.
+ const tokens=value.split(/\s+/).filter(Boolean);
+ const clean=t=>t.replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,"");
+ const bases=tokens.map(clean);
+ if(bases.length&&bases.every(ch=>Array.from(ch).length===1&&FERHAN_LETTER_AUDIO[ch])){
+   return playRecordedLetterSequence(bases);
+ }
+ // Whole words and sentences use the original Arabic TTS path; it is not used for letter drills.
+ if(typeof originalSpeak==="function")return originalSpeak(value);
+ return false;
+};
+
+// Recorded Arabic letter-name audio (MIT-licensed source repository; see attribution below).
+// Audio is streamed from jsDelivr and cached by the browser; the Quran Foundation player remains separate.
+const FERHAN_LETTER_AUDIO={
+ "ا":"alif.mp3","ب":"baa.mp3","ت":"taa.mp3","ث":"thaa.mp3","ج":"jiim.mp3",
+ "ح":"haa%27.mp3","خ":"khaa.mp3","د":"daal.mp3","ذ":"thaal.mp3","ر":"raa.mp3",
+ "ز":"zaay.mp3","س":"siin.mp3","ش":"shiin.mp3","ص":"saad.mp3","ض":"daad.mp3",
+ "ط":"taa%27.mp3","ظ":"thaa%27.mp3","ع":"%C3%A0yn.mp3","غ":"ghayn.mp3","ف":"faa.mp3",
+ "ق":"qaaf.mp3","ك":"kaaf.mp3","ل":"laam.mp3","م":"miim.mp3","ن":"nuun.mp3",
+ "ه":"haa.mp3","و":"waaw.mp3","ي":"yaa.mp3"
+};
+const FERHAN_LETTER_AUDIO_BASE="https://cdn.jsdelivr.net/gh/razunatmohammed88-cyber/arabic-alphabet-audio@main/";
+const ferhanLetterAudio=new Audio();ferhanLetterAudio.preload="auto";
+let ferhanLetterQueue=[],ferhanLetterQueueIndex=0,ferhanLetterButton=null;
+function playRecordedLetterSequence(letters){
+ if(!Array.isArray(letters)||!letters.length)return false;
+ ferhanLetterQueue=letters.slice();ferhanLetterQueueIndex=0;
+ if(ferhanLetterButton){ferhanLetterButton.disabled=false;ferhanLetterButton.textContent="▶";}
+ ferhanLetterButton=null;
+ const status=document.getElementById("letterAudioStatus");
+ if(status)status.textContent=`Playing ${ferhanLetterQueue.length} separate letter sounds…`;
+ playNextRecordedLetter();return true;
+}
+function playNextRecordedLetter(){
+ if(ferhanLetterQueueIndex>=ferhanLetterQueue.length){
+  const status=document.getElementById("letterAudioStatus");if(status)status.textContent="Letter sounds finished. Each letter was played separately.";
+  return;
+ }
+ const letter=ferhanLetterQueue[ferhanLetterQueueIndex++],file=FERHAN_LETTER_AUDIO[letter];
+ if(!file){playNextRecordedLetter();return;}
+ ferhanLetterAudio.pause();ferhanLetterAudio.currentTime=0;
+ ferhanLetterAudio.src=FERHAN_LETTER_AUDIO_BASE+file;
+ ferhanLetterAudio.onended=()=>{window.setTimeout(playNextRecordedLetter,420);};
+ ferhanLetterAudio.onerror=()=>{const status=document.getElementById("letterAudioStatus");if(status)status.textContent=`Could not load the recording for ${letter}. Check your connection and try again.`;};
+ ferhanLetterAudio.play().catch(()=>{const status=document.getElementById("letterAudioStatus");if(status)status.textContent="Tap Listen again to allow audio playback, and check your internet connection.";});
+}
+function playLetterSound(letter,button){
+ const base=String(letter||"").replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,"");
+ if(button){button.disabled=true;button.textContent="…";}
+ const ok=playRecordedLetterSequence([base]);
+ if(button){ferhanLetterButton=button;ferhanLetterAudio.onended=()=>{button.disabled=false;button.textContent="▶";};window.setTimeout(()=>{if(button){button.disabled=false;button.textContent="▶";}},7000);}
+ return ok;
+}
+
 
 // Local-only bookmark: no login, server, or cloud account.
 let activeSection="home";
@@ -833,7 +890,7 @@ async function configureTimingService(){
   if(select){select.innerHTML='<option value="default">Configured reciter (offline catalogue)</option>';select.disabled=true;}
  }
 }
-async function playSyncedChapter(chapter){chapter=Number(chapter);if(!Number.isInteger(chapter)||chapter<1||chapter>114){alert("Choose a surah from 1 to 114.");return;}const status=document.getElementById("syncStatus");if(status)status.textContent=`Loading verified audio and word timings for surah ${chapter}…`;try{if(!quranBundle)await initQuranReader();if(!quranBundle)throw new Error("The full Qur’an text could not be loaded.");if(!ferhanReciterManifest)await configureTimingService();const response=await fetch(foundationChapterFile(chapter),{headers:{Accept:"application/json"},cache:"no-store"});if(!response.ok)throw new Error("No published Quran Foundation timing file for this surah and selected reciter. Update the secure recitation-data workflow.");const data=await response.json();if(!data.available||!data.audioUrl||!Array.isArray(data.timestamps)||!data.timestamps.some(v=>Array.isArray(v.segments)&&v.segments.length))throw new Error(data.reason||"This reciter has no verified word-level segments for this chapter.");ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);clearSyncHighlights();ferhanSyncData=data;ferhanSyncChapter=chapter;ferhanSyncVerse=null;ferhanLastWord=null;ferhanLoopVerse=false;const loop=document.getElementById("syncLoopVerse");if(loop)loop.checked=false;const surahSel=document.getElementById("syncSurahSelect");if(surahSel)surahSel.value=String(chapter);updateSyncVerseSelect(chapter,1);renderSyncedVerse(1);ferhanSyncAudio.src=data.audioUrl;ferhanSyncAudio.currentTime=0;ferhanSyncAudio.playbackRate=Number(document.getElementById("syncSpeed")?.value||1);ferhanSyncAudio.ontimeupdate=syncWordsAtTime;ferhanSyncAudio.ondurationchange=updateSyncTransport;ferhanSyncAudio.onplay=updateSyncTransport;ferhanSyncAudio.onpause=updateSyncTransport;ferhanSyncAudio.onended=()=>{clearInterval(ferhanSyncTick);clearSyncHighlights();updateSyncTransport();if(status)status.textContent=`Surah ${chapter} finished. Replay or choose another surah to continue.`;};ferhanSyncAudio.onerror=()=>{if(status)status.textContent="The audio stream could not be loaded. Check your connection and try again.";};show("recitation");await ferhanSyncAudio.play();clearInterval(ferhanSyncTick);ferhanSyncTick=setInterval(syncWordsAtTime,70);if(status)status.textContent=`Synchronized recitation playing · ${data.reciterName||selectedFoundationReciter()?.name||ferhanReciterManifest?.reciterName||"Quran Foundation reciter"} · verified word timing active`;updateSyncTransport();}catch(error){if(status)status.textContent=`Synchronized playback unavailable: ${error.message}`;}}
+async function playSyncedChapter(chapter){chapter=Number(chapter);if(!Number.isInteger(chapter)||chapter<1||chapter>114){alert("Choose a surah from 1 to 114.");return;}const status=document.getElementById("syncStatus");if(status)status.textContent=`Loading verified audio and word timings for surah ${chapter}…`;try{if(!quranBundle)await initQuranReader();if(!quranBundle)throw new Error("The full Qur’an text could not be loaded.");if(!ferhanReciterManifest)await configureTimingService();const response=await fetch(foundationChapterFile(chapter),{headers:{Accept:"application/json"},cache:"no-store"});if(!response.ok)throw new Error("No published Quran Foundation timing file for this surah and selected reciter. Update the secure recitation-data workflow.");const data=await response.json();const actualReciter=data.reciterName||selectedFoundationReciter()?.name||ferhanReciterManifest?.reciterName||"";if(!/mishary|alafasy/i.test(actualReciter))throw new Error(`Expected Mishary Rashid Alafasy, but the published file identifies ${actualReciter||"an unknown reciter"}.`);if(!data.available||!data.audioUrl||!Array.isArray(data.timestamps)||!data.timestamps.some(v=>Array.isArray(v.segments)&&v.segments.length))throw new Error(data.reason||"This reciter has no verified word-level segments for this chapter.");ferhanSyncAudio.pause();clearInterval(ferhanSyncTick);clearSyncHighlights();ferhanSyncData=data;ferhanSyncChapter=chapter;ferhanSyncVerse=null;ferhanLastWord=null;ferhanLoopVerse=false;const loop=document.getElementById("syncLoopVerse");if(loop)loop.checked=false;const surahSel=document.getElementById("syncSurahSelect");if(surahSel)surahSel.value=String(chapter);updateSyncVerseSelect(chapter,1);renderSyncedVerse(1);ferhanSyncAudio.src=data.audioUrl;ferhanSyncAudio.currentTime=0;ferhanSyncAudio.playbackRate=Number(document.getElementById("syncSpeed")?.value||1);ferhanSyncAudio.ontimeupdate=syncWordsAtTime;ferhanSyncAudio.ondurationchange=updateSyncTransport;ferhanSyncAudio.onplay=updateSyncTransport;ferhanSyncAudio.onpause=updateSyncTransport;ferhanSyncAudio.onended=()=>{clearInterval(ferhanSyncTick);clearSyncHighlights();updateSyncTransport();if(status)status.textContent=`Surah ${chapter} finished. Replay or choose another surah to continue.`;};ferhanSyncAudio.onerror=()=>{if(status)status.textContent="The audio stream could not be loaded. Check your connection and try again.";};show("recitation");await ferhanSyncAudio.play();clearInterval(ferhanSyncTick);ferhanSyncTick=setInterval(syncWordsAtTime,70);if(status)status.textContent=`Synchronized recitation playing · ${data.reciterName||selectedFoundationReciter()?.name||ferhanReciterManifest?.reciterName||"Quran Foundation reciter"} · verified word timing active`;updateSyncTransport();}catch(error){if(status)status.textContent=`Synchronized playback unavailable: ${error.message}`;}}
 function seekSyncedVerse(value){if(!ferhanSyncData||!ferhanSyncChapter)return;const v=syncVerseRecord(Number(value));if(!v)return;ferhanSyncAudio.currentTime=Math.max(0,Number(v.timestamp_from||v.segments?.[0]?.[1]||0)/1000);syncWordsAtTime();}
 function seekSyncedWord(wordIndex){const verse=syncVerseRecord(ferhanSyncVerse||1);const segment=verse?.segments?.find(s=>Number(s[0])===Number(wordIndex));if(!segment)return;ferhanSyncAudio.currentTime=Math.max(0,Number(segment[1])/1000);syncWordsAtTime();if(ferhanSyncAudio.paused)ferhanSyncAudio.play().then(()=>{ferhanSyncTick=setInterval(syncWordsAtTime,70);}).catch(()=>{});}
 function previewSyncedSeek(value){const d=ferhanSyncAudio.duration||0,t=d*Number(value)/1000;const label=document.getElementById("syncTimeLabel");if(label)label.textContent=`${syncFmtTime(t)} / ${syncFmtTime(d)}`;}
@@ -1090,7 +1147,38 @@ function toggleFeedAuto(){
  feedAutoTimer=setInterval(()=>{if(feedIndex>=readingFeed.length-1){toggleFeedAuto();return;}feedNext()},8500);
  if(b)b.textContent="Ⅱ";
 }
-function speakFeedItem(i){const x=readingFeed[i];if(x?.ar)speak(x.ar)}
+const ferhanFeedQFAudio=new Audio();let ferhanFeedQFStopAt=0;
+async function playFoundationAyah(chapter,verseNo,offset=0,onEnded=null){
+ if(!ferhanReciterManifest)await configureTimingService();
+ const reciterName=selectedFoundationReciter()?.name||ferhanReciterManifest?.reciterName||"";
+ if(!/mishary|alafasy/i.test(reciterName))throw new Error("The configured Quran Foundation reciter is not identified as Mishary Alafasy.");
+ const response=await fetch(foundationChapterFile(Number(chapter)),{cache:"no-store"});
+ if(!response.ok)throw new Error("No published Quran Foundation audio/timing file for this surah.");
+ const data=await response.json();
+ if(!data.available||!data.audioUrl)throw new Error(data.reason||"Verified Mishary audio is unavailable for this surah.");
+ const verse=data.timestamps?.find(v=>v.verse_key===`${chapter}:${verseNo}`);
+ if(!verse)throw new Error("No verified word timing was found for this ayah.");
+ const start=Number(verse.timestamp_from??verse.segments?.[0]?.[1]??0)/1000;
+ const end=Number(verse.timestamp_to??verse.segments?.at(-1)?.[2]??0)/1000;
+ if(!(end>start))throw new Error("The ayah timing range is incomplete.");
+ ferhanFeedQFAudio.pause();ferhanFeedQFAudio.src=data.audioUrl;ferhanFeedQFAudio.currentTime=start+Math.max(0,Number(offset)||0);ferhanFeedQFStopAt=end;
+ ferhanFeedQFAudio.ontimeupdate=()=>{if(ferhanFeedQFAudio.currentTime>=ferhanFeedQFStopAt){ferhanFeedQFAudio.pause();ferhanFeedQFAudio.ontimeupdate=null;if(typeof onEnded==="function")onEnded();}};
+ await ferhanFeedQFAudio.play();
+ const label=`Mishary Rashid Alafasy · Surah ${chapter}, ayah ${verseNo} · Quran Foundation`;
+ const status=document.getElementById("ayahStatus");if(status)status.textContent=label;
+ const syncStatus=document.getElementById("syncStatus");if(syncStatus)syncStatus.textContent=label;
+ return true;
+}
+async function speakFeedItem(i){
+ const x=readingFeed[i];if(!x)return;
+ if(x.kind==="quran"&&Number(x.chapter)>0&&Number(x.ayah)>0){
+  const status=document.getElementById("syncStatus");
+  try{await playFoundationAyah(Number(x.chapter),Number(x.ayah));}
+  catch(error){if(status)status.textContent=`Quran Foundation verse audio unavailable: ${error.message}`;}
+  return;
+ }
+ if(x.ar)speak(x.ar);
+}
 function revealFeed(i){
  const x=readingFeed[i],el=document.getElementById("feedAnswer-"+i);
  if(el)el.textContent=x?.answer||"Listen once more, then compare your recitation with a trusted reciter or teacher.";
@@ -1157,7 +1245,7 @@ function renderQuranReader(){
    translations.append(en,amEl);article.appendChild(translations);
   }
   const actions=document.createElement("div");actions.className="ayah-actions";
-  const listen=document.createElement("button");listen.type="button";listen.textContent="▶ Listen";listen.onclick=()=>speak(words.map(w=>w[0]).join(" "));
+  const listen=document.createElement("button");listen.type="button";listen.textContent="▶ Listen";listen.onclick=()=>playFoundationAyah(quranChapter,i+1).catch(error=>{const el=document.getElementById("syncStatus");if(el)el.textContent=`Quran Foundation ayah audio unavailable: ${error.message}`;});
   const recall=document.createElement("button");recall.type="button";recall.textContent="◉ Recall";recall.onclick=()=>{article.classList.toggle("recall-hidden");recall.textContent=article.classList.contains("recall-hidden")?"Reveal ayah":"◉ Recall"};
   const save=document.createElement("button");save.type="button";save.textContent="☆ Save";save.onclick=()=>saveMemorisationAyah(key);
   actions.append(listen,recall,save);article.appendChild(actions);page.appendChild(article);
@@ -1578,4 +1666,4 @@ main{max-width:1160px;padding:24px 22px 100px}
 
 </style>
 
-</body></html>
+<!-- Letter-name recordings: razunatmohammed88-cyber/arabic-alphabet-audio, MIT License. Quran recitation remains Quran Foundation data. -->\n</body></html>
