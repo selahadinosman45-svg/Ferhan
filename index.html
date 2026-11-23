@@ -285,6 +285,281 @@ footer{text-align:center;padding:28px 22px;color:var(--muted);font-size:13px}
  .mobile-tabbar button:nth-child(3).active .tab-icon{color:var(--night)}
 }
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* =========================================================
+   FERHAN V12 — warm editorial Qur'an app redesign
+   Presentation layer only: all existing IDs, markup, handlers,
+   data sources, storage and integrations remain unchanged.
+   ========================================================= */
+:root{
+ --bg:#f7f2e9;
+ --surface:#fffdf8;
+ --surface2:#f0e8d9;
+ --ink:#24352d;
+ --muted:#788078;
+ --line:#e8dfd0;
+ --primary:#356b50;
+ --primary2:#244b39;
+ --night:#183b2d;
+ --night2:#285640;
+ --lamp:#d8ae62;
+ --lamp2:#edcc8b;
+ --arabic:#244b39;
+ --paper:#fffaf0;
+ --paper-line:#e8d9bd;
+ --ok:#397c5b;
+ --bad:#b85c48;
+ --r-lg:25px;
+ --r-md:19px;
+ --r-sm:13px;
+ --shadow:0 8px 28px rgba(45,61,48,.075);
+ --ui:"SF Pro Display","Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+ --ar:"Ferhan Uthmani","Noto Naskh Arabic","Amiri",serif;
+}
+@media(prefers-color-scheme:dark){
+ :root{
+  --bg:#101b16;--surface:#19271f;--surface2:#22352a;--ink:#f1eee5;
+  --muted:#aab5aa;--line:#314338;--primary:#8db99a;--primary2:#b5d2b9;
+  --night:#10271d;--night2:#1d4933;--arabic:#e4eddf;
+  --paper:#1b2920;--paper-line:#405044;--shadow:0 8px 28px rgba(0,0,0,.22);
+ }
+}
+html{scroll-padding-top:90px}
+body{background:var(--bg);color:var(--ink);font-size:15px}
+h1,h2,h3{letter-spacing:-.035em}
+.tag,.kicker,.section-eyebrow{color:var(--primary);letter-spacing:.12em}
+.muted{color:var(--muted)}
+/* Top navigation */
+header{
+ padding:10px max(22px,calc((100% - 1160px)/2));
+ background:color-mix(in srgb,var(--surface) 91%,transparent);
+ border-bottom:1px solid var(--line);
+ box-shadow:0 3px 18px rgba(38,54,43,.035);
+}
+.brand{font-size:17px;letter-spacing:-.04em;color:var(--ink)}
+.brandmark{
+ width:39px;height:39px;border-radius:13px;
+ background:linear-gradient(145deg,#e8c77f,#d3a653);
+ color:#234333;box-shadow:0 5px 14px rgba(178,139,68,.2)
+}
+header>nav{gap:3px}
+header>nav button{padding:9px 12px;color:var(--muted);font-size:12px}
+header>nav button.active{background:var(--night);color:#f5e8c9}
+main{max-width:1160px;padding:28px 24px 90px}
+.section{margin-top:34px}
+.section-head{margin-bottom:18px}
+.section-head h2,.section h2{font-weight:760}
+.section-mark{background:var(--night);color:var(--lamp);border-radius:15px}
+/* Hero: quieter, editorial and premium */
+.hero{
+ min-height:300px;grid-template-columns:1.35fr .8fr;
+ border-radius:27px;padding:clamp(28px,4.5vw,52px);
+ background:
+  radial-gradient(circle at 82% 25%,rgba(224,190,119,.2),transparent 24%),
+  linear-gradient(125deg,#183b2d 0%,#285640 70%,#356b50 100%);
+ box-shadow:0 18px 42px rgba(29,65,46,.17);
+}
+.hero:before{
+ width:138px;height:138px;right:12%;top:15%;
+ box-shadow:inset -27px 8px 0 0 #e6c77f;
+ filter:drop-shadow(0 0 25px rgba(230,199,127,.25));
+}
+.hero:after{opacity:.045;background-size:38px 38px}
+.hero .pill{background:rgba(255,255,255,.09);border-color:rgba(239,218,172,.32);color:#f3e7c9}
+.hero .kicker{color:#e7c77f}
+.hero h1{font-size:clamp(38px,5.8vw,64px);letter-spacing:-.055em}
+.hero p,.hero-minimal{color:#e1e9df!important}
+.hero-art{color:#e9cb86;text-shadow:0 0 25px rgba(233,203,134,.22)}
+.hero-art small{color:#d6e0d4}
+.pill{border-radius:999px}
+/* Surfaces */
+.card,.panel{
+ background:var(--surface);border:1px solid var(--line);
+ border-radius:var(--r-md);box-shadow:var(--shadow)
+}
+.card{padding:20px}
+.card:before{width:74px;height:74px;top:-30px;right:-25px;background:var(--surface2);opacity:.85}
+.card h3{font-size:17px;font-weight:750}
+.card p{line-height:1.6}
+.panel{padding:clamp(18px,2.8vw,27px)}
+.grid{gap:13px}
+.ferhan-dashboard .card:nth-child(1):before{background:#eadbb9}
+.ferhan-dashboard .card:nth-child(2):before{background:#d8e6d9}
+.ferhan-dashboard .card:nth-child(3):before{background:#e8dfcb}
+/* Buttons and controls */
+.btn{
+ background:linear-gradient(135deg,#356b50,#244b39);
+ color:#fffdf5;box-shadow:0 6px 15px rgba(39,83,57,.16);
+ font-weight:720;border-radius:13px;min-height:43px
+}
+.btn.gold{
+ background:linear-gradient(135deg,#e9c77f,#d7ad61);
+ color:#263b2e;box-shadow:0 6px 15px rgba(185,145,70,.18)
+}
+.btn.secondary{background:var(--surface2);color:var(--primary2);box-shadow:none}
+.btn:hover{filter:brightness(1.04)}
+select,input:not([type=checkbox]):not([type=range]),textarea{
+ border-color:var(--line)!important;border-radius:12px!important
+}
+.tabs button{background:var(--surface2);color:var(--primary2)}
+.tabs button.active{background:var(--night);color:#f2d99e}
+.progress{height:8px;background:var(--surface2)}
+.progress span{background:linear-gradient(90deg,#356b50,#d8ae62)}
+/* Learning and practice */
+.word,.wbw-word,.sync-word{background:var(--surface);border-color:var(--line)}
+.word .arabic,.wbw-word .arabic,.sync-word .arabic{color:var(--arabic)}
+.wbw-word.active{border-color:var(--lamp);background:#f7eedb}
+.quiz-option{border-color:var(--line);border-radius:13px}
+.quiz-option:hover{border-color:var(--primary)}
+.notice{background:#f5edda;border-color:#e7d4a9;color:#4c4a3e}
+@media(prefers-color-scheme:dark){.notice{background:#29372b;border-color:#536346;color:var(--ink)}}
+.stage-number{background:var(--surface2);color:var(--primary2)}
+/* Vertical reading practice — calm green lesson cards */
+.feed-shell{max-width:690px}
+.feed-top{padding:8px 3px 15px}
+.feed-progress{background:var(--line)}
+.feed-progress span{background:var(--lamp)}
+.icon-btn{background:var(--surface2);color:var(--primary2)}
+.tool-pill{background:var(--night);color:#f0d99e}
+.feed-track{
+ height:min(78dvh,820px);min-height:540px;
+ border-radius:25px;background:#e9e5d9;
+ box-shadow:0 10px 28px rgba(38,54,43,.09)
+}
+.feed-card{
+ padding:clamp(24px,5vw,42px);
+ border-radius:25px;
+ background:
+  radial-gradient(circle at 88% 10%,rgba(225,194,130,.17),transparent 25%),
+  linear-gradient(155deg,#173c2c,#28563e 70%,#356b50);
+}
+.feed-card:nth-child(3n+2){
+ background:radial-gradient(circle at 12% 8%,rgba(229,202,148,.16),transparent 28%),linear-gradient(155deg,#234c39,#376b4e)
+}
+.feed-card:nth-child(3n){
+ background:radial-gradient(circle at 90% 90%,rgba(224,190,119,.2),transparent 30%),linear-gradient(155deg,#1b3b2d,#315e45)
+}
+.feed-meta{color:#d8e3d8}
+.feed-kind{background:rgba(232,204,145,.13);border-color:rgba(232,204,145,.4);color:#f0d99e}
+.feed-ar{color:#fffaf0;text-shadow:none}
+.feed-hint,.feed-bottom{color:#d1dfd2}
+.translation-panel{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.17)}
+.translation-panel span{color:#f0d99e}
+.translation-panel p{color:#fffaf0}
+.feed-actions button{border-radius:12px}
+.feed-actions button.primary{background:linear-gradient(135deg,#e9c77f,#d7ad61);color:#263b2e}
+.feed-link{color:#f0d99e!important}
+.feed-dots button.active{background:var(--primary)}
+/* Mushaf reader */
+.reader-toolbar{background:var(--surface2);border:1px solid var(--line)}
+.mushaf-page{
+ background:var(--paper);border:1px solid var(--paper-line);
+ border-radius:14px 14px 14px 32px;
+ box-shadow:0 10px 28px rgba(61,52,34,.08),inset 0 0 0 6px var(--paper),inset 0 0 0 7px var(--paper-line)
+}
+.mushaf-surah-plate{background:var(--night);color:#efd69a;border-radius:13px}
+.mushaf-surah-arabic{color:#f8e9c8!important}
+.mushaf-ayah-label{background:#eee5d3;color:#365943}
+.reader-word .arabic{color:#294b37}
+.ayah-end-mark,.mushaf-ornament{color:#b88d48}
+.mushaf-translations{background:#f1eadc;border-left-color:#c99e55}
+.mushaf-english{color:#485449!important}
+.mushaf-amharic{color:#356b50!important}
+.ayah-actions button{background:#eee7d9;color:#315b42}
+.reader-ayah.active-ayah{outline-color:#d2a95d}
+.mushaf-progress span{background:linear-gradient(90deg,#356b50,#d8ae62)}
+/* Recitation player */
+.sync-player{
+ background:radial-gradient(circle at 90% 0,rgba(231,199,127,.2),transparent 35%),linear-gradient(145deg,#173b2b,#28563e);
+ box-shadow:0 12px 28px rgba(29,65,46,.16)
+}
+.sync-player-top strong{color:#f0d99e}
+.sync-player .muted,.sync-player-top .muted{color:#d4e0d3}
+.sync-live-dot{background:#e9c77f;box-shadow:0 0 0 5px rgba(233,199,127,.18)}
+.sync-play-btn{background:linear-gradient(135deg,#e9c77f,#d7ad61);color:#243b2d;box-shadow:0 0 0 6px rgba(233,199,127,.16)}
+.sync-icon-btn{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.09)}
+.sync-setting{color:#e0e9df}
+.sync-setting select{background:rgba(255,255,255,.12);color:#fff}
+.sync-verse-nav .btn{background:rgba(255,255,255,.1);color:#fff}
+/* Modals and footer */
+.modal-backdrop{background:rgba(13,29,20,.72)}
+.modal-card{border-radius:22px;background:var(--surface)}
+footer{color:var(--muted)}
+/* Mobile-first polish */
+.mobile-tabbar{background:var(--surface);border:1px solid var(--line);box-shadow:0 10px 32px rgba(31,55,39,.18)}
+.mobile-tabbar button{color:#7b887c}
+.mobile-tabbar button .tab-icon{color:#718174}
+.mobile-tabbar button.active,.mobile-tabbar button.active .tab-icon{color:var(--primary)}
+@media(max-width:760px){
+ body{background:var(--bg)}
+ header{padding:9px 15px;background:color-mix(in srgb,var(--surface) 95%,transparent)}
+ .brand{font-size:16px}
+ .brandmark{width:36px;height:36px;border-radius:12px}
+ main{padding:13px 13px calc(112px + env(safe-area-inset-bottom))}
+ .hero{
+  min-height:265px;grid-template-columns:1fr;gap:4px;
+  padding:25px 21px;border-radius:22px;
+  background:radial-gradient(circle at 90% 12%,rgba(230,199,127,.17),transparent 25%),linear-gradient(145deg,#183b2d,#2c6045)
+ }
+ .hero h1{font-size:39px;max-width:340px}
+ .hero .kicker{font-size:10px}
+ .hero-art{font-size:58px;line-height:1.1;text-align:right;padding-right:14px;margin-top:-4px}
+ .hero-art small{font-size:9px}
+ .hero:before{width:82px;height:82px;right:12%;top:9%;box-shadow:inset -17px 5px 0 0 #e6c77f}
+ .section{margin-top:26px}
+ .section-head{align-items:flex-start}
+ .section-head h2,.section h2{font-size:23px}
+ .section-head .btn{font-size:11px;padding:9px 12px;min-height:38px}
+ .grid,.ferhan-dashboard>.grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}
+ .ferhan-dashboard .grid .card:last-child{grid-column:1/-1}
+ .card{padding:15px;border-radius:16px}
+ .card h3{font-size:15px}
+ .card p{font-size:12px;line-height:1.5;margin-bottom:10px}
+ .card .btn{font-size:11px;padding:9px 11px;min-height:37px}
+ .panel{padding:16px;border-radius:17px}
+ .section-mark{width:40px;height:40px;flex-basis:40px}
+ .lesson-layout{grid-template-columns:1fr}
+ .word-by-word{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .feed-track{height:calc(100dvh - 205px);min-height:480px;border-radius:21px}
+ .feed-card{padding:21px 17px;border-radius:21px}
+ .feed-ar{min-height:125px;font-size:clamp(38px,9vw,58px)}
+ .feed-reveal{grid-template-columns:1fr;max-height:28vh}
+ .feed-actions{gap:7px}
+ .feed-actions button{font-size:11px;min-height:43px}
+ .reader-toolbar{padding:9px}
+ .mushaf-page{padding:29px 17px 26px;border-radius:10px 10px 10px 26px}
+ .reader-word .arabic{font-size:clamp(29px,7.8vw,38px)}
+ .sync-player{margin-left:0;margin-right:0;border-radius:17px;padding:15px}
+ .sync-word{min-width:74px}
+ .mobile-tabbar{
+  left:12px;right:12px;bottom:calc(9px + env(safe-area-inset-bottom));
+  height:66px;padding:6px 7px 5px;border-radius:21px;
+  background:color-mix(in srgb,var(--surface) 95%,transparent);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid rgba(210,199,177,.8);
+  box-shadow:0 9px 28px rgba(28,49,34,.17)
+ }
+ .mobile-tabbar button{height:52px;font-size:9px;gap:4px}
+ .mobile-tabbar button .tab-icon{font-size:20px}
+ .mobile-tabbar button:nth-child(3){top:-17px}
+ .mobile-tabbar button:nth-child(3) .tab-icon{
+  width:54px;height:54px;font-size:22px;
+  background:linear-gradient(145deg,#e9c77f,#d7ad61);
+  color:#254333;box-shadow:0 0 0 5px var(--bg),0 8px 18px rgba(171,132,62,.28)
+ }
+ .mobile-tabbar button:nth-child(3).active .tab-icon{color:#254333}
+ .notice{font-size:12px}
+}
+@media(max-width:390px){
+ .grid,.ferhan-dashboard>.grid{grid-template-columns:1fr!important}
+ .ferhan-dashboard .grid .card:last-child{grid-column:auto}
+ .hero h1{font-size:35px}
+ .feed-track{min-height:455px}
+}
+@media(prefers-reduced-motion:reduce){
+ .card:hover{transform:none}
+}
+
 </style>
 </head>
 <body>
