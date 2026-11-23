@@ -285,281 +285,6 @@ footer{text-align:center;padding:28px 22px;color:var(--muted);font-size:13px}
  .mobile-tabbar button:nth-child(3).active .tab-icon{color:var(--night)}
 }
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
-
-/* =========================================================
-   FERHAN V12 — warm editorial Qur'an app redesign
-   Presentation layer only: all existing IDs, markup, handlers,
-   data sources, storage and integrations remain unchanged.
-   ========================================================= */
-:root{
- --bg:#f7f2e9;
- --surface:#fffdf8;
- --surface2:#f0e8d9;
- --ink:#24352d;
- --muted:#788078;
- --line:#e8dfd0;
- --primary:#356b50;
- --primary2:#244b39;
- --night:#183b2d;
- --night2:#285640;
- --lamp:#d8ae62;
- --lamp2:#edcc8b;
- --arabic:#244b39;
- --paper:#fffaf0;
- --paper-line:#e8d9bd;
- --ok:#397c5b;
- --bad:#b85c48;
- --r-lg:25px;
- --r-md:19px;
- --r-sm:13px;
- --shadow:0 8px 28px rgba(45,61,48,.075);
- --ui:"SF Pro Display","Inter","Segoe UI",system-ui,-apple-system,sans-serif;
- --ar:"Ferhan Uthmani","Noto Naskh Arabic","Amiri",serif;
-}
-@media(prefers-color-scheme:dark){
- :root{
-  --bg:#101b16;--surface:#19271f;--surface2:#22352a;--ink:#f1eee5;
-  --muted:#aab5aa;--line:#314338;--primary:#8db99a;--primary2:#b5d2b9;
-  --night:#10271d;--night2:#1d4933;--arabic:#e4eddf;
-  --paper:#1b2920;--paper-line:#405044;--shadow:0 8px 28px rgba(0,0,0,.22);
- }
-}
-html{scroll-padding-top:90px}
-body{background:var(--bg);color:var(--ink);font-size:15px}
-h1,h2,h3{letter-spacing:-.035em}
-.tag,.kicker,.section-eyebrow{color:var(--primary);letter-spacing:.12em}
-.muted{color:var(--muted)}
-/* Top navigation */
-header{
- padding:10px max(22px,calc((100% - 1160px)/2));
- background:color-mix(in srgb,var(--surface) 91%,transparent);
- border-bottom:1px solid var(--line);
- box-shadow:0 3px 18px rgba(38,54,43,.035);
-}
-.brand{font-size:17px;letter-spacing:-.04em;color:var(--ink)}
-.brandmark{
- width:39px;height:39px;border-radius:13px;
- background:linear-gradient(145deg,#e8c77f,#d3a653);
- color:#234333;box-shadow:0 5px 14px rgba(178,139,68,.2)
-}
-header>nav{gap:3px}
-header>nav button{padding:9px 12px;color:var(--muted);font-size:12px}
-header>nav button.active{background:var(--night);color:#f5e8c9}
-main{max-width:1160px;padding:28px 24px 90px}
-.section{margin-top:34px}
-.section-head{margin-bottom:18px}
-.section-head h2,.section h2{font-weight:760}
-.section-mark{background:var(--night);color:var(--lamp);border-radius:15px}
-/* Hero: quieter, editorial and premium */
-.hero{
- min-height:300px;grid-template-columns:1.35fr .8fr;
- border-radius:27px;padding:clamp(28px,4.5vw,52px);
- background:
-  radial-gradient(circle at 82% 25%,rgba(224,190,119,.2),transparent 24%),
-  linear-gradient(125deg,#183b2d 0%,#285640 70%,#356b50 100%);
- box-shadow:0 18px 42px rgba(29,65,46,.17);
-}
-.hero:before{
- width:138px;height:138px;right:12%;top:15%;
- box-shadow:inset -27px 8px 0 0 #e6c77f;
- filter:drop-shadow(0 0 25px rgba(230,199,127,.25));
-}
-.hero:after{opacity:.045;background-size:38px 38px}
-.hero .pill{background:rgba(255,255,255,.09);border-color:rgba(239,218,172,.32);color:#f3e7c9}
-.hero .kicker{color:#e7c77f}
-.hero h1{font-size:clamp(38px,5.8vw,64px);letter-spacing:-.055em}
-.hero p,.hero-minimal{color:#e1e9df!important}
-.hero-art{color:#e9cb86;text-shadow:0 0 25px rgba(233,203,134,.22)}
-.hero-art small{color:#d6e0d4}
-.pill{border-radius:999px}
-/* Surfaces */
-.card,.panel{
- background:var(--surface);border:1px solid var(--line);
- border-radius:var(--r-md);box-shadow:var(--shadow)
-}
-.card{padding:20px}
-.card:before{width:74px;height:74px;top:-30px;right:-25px;background:var(--surface2);opacity:.85}
-.card h3{font-size:17px;font-weight:750}
-.card p{line-height:1.6}
-.panel{padding:clamp(18px,2.8vw,27px)}
-.grid{gap:13px}
-.ferhan-dashboard .card:nth-child(1):before{background:#eadbb9}
-.ferhan-dashboard .card:nth-child(2):before{background:#d8e6d9}
-.ferhan-dashboard .card:nth-child(3):before{background:#e8dfcb}
-/* Buttons and controls */
-.btn{
- background:linear-gradient(135deg,#356b50,#244b39);
- color:#fffdf5;box-shadow:0 6px 15px rgba(39,83,57,.16);
- font-weight:720;border-radius:13px;min-height:43px
-}
-.btn.gold{
- background:linear-gradient(135deg,#e9c77f,#d7ad61);
- color:#263b2e;box-shadow:0 6px 15px rgba(185,145,70,.18)
-}
-.btn.secondary{background:var(--surface2);color:var(--primary2);box-shadow:none}
-.btn:hover{filter:brightness(1.04)}
-select,input:not([type=checkbox]):not([type=range]),textarea{
- border-color:var(--line)!important;border-radius:12px!important
-}
-.tabs button{background:var(--surface2);color:var(--primary2)}
-.tabs button.active{background:var(--night);color:#f2d99e}
-.progress{height:8px;background:var(--surface2)}
-.progress span{background:linear-gradient(90deg,#356b50,#d8ae62)}
-/* Learning and practice */
-.word,.wbw-word,.sync-word{background:var(--surface);border-color:var(--line)}
-.word .arabic,.wbw-word .arabic,.sync-word .arabic{color:var(--arabic)}
-.wbw-word.active{border-color:var(--lamp);background:#f7eedb}
-.quiz-option{border-color:var(--line);border-radius:13px}
-.quiz-option:hover{border-color:var(--primary)}
-.notice{background:#f5edda;border-color:#e7d4a9;color:#4c4a3e}
-@media(prefers-color-scheme:dark){.notice{background:#29372b;border-color:#536346;color:var(--ink)}}
-.stage-number{background:var(--surface2);color:var(--primary2)}
-/* Vertical reading practice — calm green lesson cards */
-.feed-shell{max-width:690px}
-.feed-top{padding:8px 3px 15px}
-.feed-progress{background:var(--line)}
-.feed-progress span{background:var(--lamp)}
-.icon-btn{background:var(--surface2);color:var(--primary2)}
-.tool-pill{background:var(--night);color:#f0d99e}
-.feed-track{
- height:min(78dvh,820px);min-height:540px;
- border-radius:25px;background:#e9e5d9;
- box-shadow:0 10px 28px rgba(38,54,43,.09)
-}
-.feed-card{
- padding:clamp(24px,5vw,42px);
- border-radius:25px;
- background:
-  radial-gradient(circle at 88% 10%,rgba(225,194,130,.17),transparent 25%),
-  linear-gradient(155deg,#173c2c,#28563e 70%,#356b50);
-}
-.feed-card:nth-child(3n+2){
- background:radial-gradient(circle at 12% 8%,rgba(229,202,148,.16),transparent 28%),linear-gradient(155deg,#234c39,#376b4e)
-}
-.feed-card:nth-child(3n){
- background:radial-gradient(circle at 90% 90%,rgba(224,190,119,.2),transparent 30%),linear-gradient(155deg,#1b3b2d,#315e45)
-}
-.feed-meta{color:#d8e3d8}
-.feed-kind{background:rgba(232,204,145,.13);border-color:rgba(232,204,145,.4);color:#f0d99e}
-.feed-ar{color:#fffaf0;text-shadow:none}
-.feed-hint,.feed-bottom{color:#d1dfd2}
-.translation-panel{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.17)}
-.translation-panel span{color:#f0d99e}
-.translation-panel p{color:#fffaf0}
-.feed-actions button{border-radius:12px}
-.feed-actions button.primary{background:linear-gradient(135deg,#e9c77f,#d7ad61);color:#263b2e}
-.feed-link{color:#f0d99e!important}
-.feed-dots button.active{background:var(--primary)}
-/* Mushaf reader */
-.reader-toolbar{background:var(--surface2);border:1px solid var(--line)}
-.mushaf-page{
- background:var(--paper);border:1px solid var(--paper-line);
- border-radius:14px 14px 14px 32px;
- box-shadow:0 10px 28px rgba(61,52,34,.08),inset 0 0 0 6px var(--paper),inset 0 0 0 7px var(--paper-line)
-}
-.mushaf-surah-plate{background:var(--night);color:#efd69a;border-radius:13px}
-.mushaf-surah-arabic{color:#f8e9c8!important}
-.mushaf-ayah-label{background:#eee5d3;color:#365943}
-.reader-word .arabic{color:#294b37}
-.ayah-end-mark,.mushaf-ornament{color:#b88d48}
-.mushaf-translations{background:#f1eadc;border-left-color:#c99e55}
-.mushaf-english{color:#485449!important}
-.mushaf-amharic{color:#356b50!important}
-.ayah-actions button{background:#eee7d9;color:#315b42}
-.reader-ayah.active-ayah{outline-color:#d2a95d}
-.mushaf-progress span{background:linear-gradient(90deg,#356b50,#d8ae62)}
-/* Recitation player */
-.sync-player{
- background:radial-gradient(circle at 90% 0,rgba(231,199,127,.2),transparent 35%),linear-gradient(145deg,#173b2b,#28563e);
- box-shadow:0 12px 28px rgba(29,65,46,.16)
-}
-.sync-player-top strong{color:#f0d99e}
-.sync-player .muted,.sync-player-top .muted{color:#d4e0d3}
-.sync-live-dot{background:#e9c77f;box-shadow:0 0 0 5px rgba(233,199,127,.18)}
-.sync-play-btn{background:linear-gradient(135deg,#e9c77f,#d7ad61);color:#243b2d;box-shadow:0 0 0 6px rgba(233,199,127,.16)}
-.sync-icon-btn{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.09)}
-.sync-setting{color:#e0e9df}
-.sync-setting select{background:rgba(255,255,255,.12);color:#fff}
-.sync-verse-nav .btn{background:rgba(255,255,255,.1);color:#fff}
-/* Modals and footer */
-.modal-backdrop{background:rgba(13,29,20,.72)}
-.modal-card{border-radius:22px;background:var(--surface)}
-footer{color:var(--muted)}
-/* Mobile-first polish */
-.mobile-tabbar{background:var(--surface);border:1px solid var(--line);box-shadow:0 10px 32px rgba(31,55,39,.18)}
-.mobile-tabbar button{color:#7b887c}
-.mobile-tabbar button .tab-icon{color:#718174}
-.mobile-tabbar button.active,.mobile-tabbar button.active .tab-icon{color:var(--primary)}
-@media(max-width:760px){
- body{background:var(--bg)}
- header{padding:9px 15px;background:color-mix(in srgb,var(--surface) 95%,transparent)}
- .brand{font-size:16px}
- .brandmark{width:36px;height:36px;border-radius:12px}
- main{padding:13px 13px calc(112px + env(safe-area-inset-bottom))}
- .hero{
-  min-height:265px;grid-template-columns:1fr;gap:4px;
-  padding:25px 21px;border-radius:22px;
-  background:radial-gradient(circle at 90% 12%,rgba(230,199,127,.17),transparent 25%),linear-gradient(145deg,#183b2d,#2c6045)
- }
- .hero h1{font-size:39px;max-width:340px}
- .hero .kicker{font-size:10px}
- .hero-art{font-size:58px;line-height:1.1;text-align:right;padding-right:14px;margin-top:-4px}
- .hero-art small{font-size:9px}
- .hero:before{width:82px;height:82px;right:12%;top:9%;box-shadow:inset -17px 5px 0 0 #e6c77f}
- .section{margin-top:26px}
- .section-head{align-items:flex-start}
- .section-head h2,.section h2{font-size:23px}
- .section-head .btn{font-size:11px;padding:9px 12px;min-height:38px}
- .grid,.ferhan-dashboard>.grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}
- .ferhan-dashboard .grid .card:last-child{grid-column:1/-1}
- .card{padding:15px;border-radius:16px}
- .card h3{font-size:15px}
- .card p{font-size:12px;line-height:1.5;margin-bottom:10px}
- .card .btn{font-size:11px;padding:9px 11px;min-height:37px}
- .panel{padding:16px;border-radius:17px}
- .section-mark{width:40px;height:40px;flex-basis:40px}
- .lesson-layout{grid-template-columns:1fr}
- .word-by-word{grid-template-columns:repeat(2,minmax(0,1fr))}
- .feed-track{height:calc(100dvh - 205px);min-height:480px;border-radius:21px}
- .feed-card{padding:21px 17px;border-radius:21px}
- .feed-ar{min-height:125px;font-size:clamp(38px,9vw,58px)}
- .feed-reveal{grid-template-columns:1fr;max-height:28vh}
- .feed-actions{gap:7px}
- .feed-actions button{font-size:11px;min-height:43px}
- .reader-toolbar{padding:9px}
- .mushaf-page{padding:29px 17px 26px;border-radius:10px 10px 10px 26px}
- .reader-word .arabic{font-size:clamp(29px,7.8vw,38px)}
- .sync-player{margin-left:0;margin-right:0;border-radius:17px;padding:15px}
- .sync-word{min-width:74px}
- .mobile-tabbar{
-  left:12px;right:12px;bottom:calc(9px + env(safe-area-inset-bottom));
-  height:66px;padding:6px 7px 5px;border-radius:21px;
-  background:color-mix(in srgb,var(--surface) 95%,transparent);
-  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  border:1px solid rgba(210,199,177,.8);
-  box-shadow:0 9px 28px rgba(28,49,34,.17)
- }
- .mobile-tabbar button{height:52px;font-size:9px;gap:4px}
- .mobile-tabbar button .tab-icon{font-size:20px}
- .mobile-tabbar button:nth-child(3){top:-17px}
- .mobile-tabbar button:nth-child(3) .tab-icon{
-  width:54px;height:54px;font-size:22px;
-  background:linear-gradient(145deg,#e9c77f,#d7ad61);
-  color:#254333;box-shadow:0 0 0 5px var(--bg),0 8px 18px rgba(171,132,62,.28)
- }
- .mobile-tabbar button:nth-child(3).active .tab-icon{color:#254333}
- .notice{font-size:12px}
-}
-@media(max-width:390px){
- .grid,.ferhan-dashboard>.grid{grid-template-columns:1fr!important}
- .ferhan-dashboard .grid .card:last-child{grid-column:auto}
- .hero h1{font-size:35px}
- .feed-track{min-height:455px}
-}
-@media(prefers-reduced-motion:reduce){
- .card:hover{transform:none}
-}
-
 </style>
 </head>
 <body>
@@ -1438,4 +1163,404 @@ function exportMemorisation(){const blob=new Blob([JSON.stringify(readHifz(),nul
 })();
 
 </script>
+
+<script>
+/* FERHAN V13 — learning expansion, explicit themes and API audio.
+   All pre-existing fetch URLs and storage keys are intentionally retained. */
+(function(){
+ "use strict";
+ const FERHAN_THEME_KEY="ferhanThemeModeV1";
+ const alphabetGroups=[[["ا", "Alif", "አሊፍ", "a", "Does not join to the following letter", "ا", "ا", "ـا", "ـا"], ["ب", "Bā", "ባ", "b", "Lips meet gently", "بـ", "ـبـ", "ـب", "ب"], ["ت", "Tā", "ታ", "t", "Tongue tip behind upper teeth", "تـ", "ـتـ", "ـت", "ت"], ["ث", "Thā", "ሳ", "th", "Tongue tip lightly between the teeth", "ثـ", "ـثـ", "ـث", "ث"]], [["ج", "Jīm", "ጂም", "j", "Middle of the tongue", "جـ", "ـجـ", "ـج", "ج"], ["ح", "Ḥā", "ሐ", "ḥ", "Breathy throat sound; learn with a teacher", "حـ", "ـحـ", "ـح", "ح"], ["خ", "Khā", "ኻ", "kh", "Upper throat sound", "خـ", "ـخـ", "ـخ", "خ"], ["د", "Dāl", "ዳል", "d", "Does not join to the following letter", "د", "ـد", "ـد", "د"]], [["ذ", "Dhāl", "ዛል", "dh", "Tongue tip lightly between the teeth", "ذ", "ـذ", "ـذ", "ذ"], ["ر", "Rā", "ራ", "r", "Light tongue-tip sound", "ر", "ـر", "ـر", "ر"], ["ز", "Zāy", "ዛይ", "z", "Voiced sibilant", "ز", "ـز", "ـز", "ز"], ["س", "Sīn", "ሲን", "s", "Clear s sound", "سـ", "ـسـ", "ـس", "س"]], [["ش", "Shīn", "ሺን", "sh", "Sh sound", "شـ", "ـشـ", "ـش", "ش"], ["ص", "Ṣād", "ሷድ", "ṣ", "Emphatic s; teacher feedback helps", "صـ", "ـصـ", "ـص", "ص"], ["ض", "Ḍād", "ዷድ", "ḍ", "Emphatic d; teacher feedback helps", "ضـ", "ـضـ", "ـض", "ض"], ["ط", "Ṭā", "ጧ", "ṭ", "Emphatic t; teacher feedback helps", "طـ", "ـطـ", "ـط", "ط"]], [["ظ", "Ẓā", "ዟ", "ẓ", "Emphatic dh; teacher feedback helps", "ظـ", "ـظـ", "ـظ", "ظ"], ["ع", "ʿAyn", "ዐይን", "ʿ", "Deep throat articulation; practise with teacher", "عـ", "ـعـ", "ـع", "ع"], ["غ", "Ghayn", "ገይን", "gh", "Voiced throat articulation", "غـ", "ـغـ", "ـغ", "غ"], ["ف", "Fā", "ፋ", "f", "Lower lip meets upper teeth", "فـ", "ـفـ", "ـف", "ف"]], [["ق", "Qāf", "ቃፍ", "q", "Back of tongue; distinct from ك", "قـ", "ـقـ", "ـق", "ق"], ["ك", "Kāf", "ካፍ", "k", "Back/middle tongue contact", "كـ", "ـكـ", "ـك", "ك"], ["ل", "Lām", "ላም", "l", "Tongue tip contact", "لـ", "ـلـ", "ـل", "ل"], ["م", "Mīm", "ሚም", "m", "Lips close; nasal resonance when required", "مـ", "ـمـ", "ـم", "م"]], [["ن", "Nūn", "ኑን", "n", "Tongue tip; nasal resonance in some rules", "نـ", "ـنـ", "ـن", "ن"], ["ه", "Hā", "ሃ", "h", "Light breath from the throat", "هـ", "ـهـ", "ـه", "ه"], ["و", "Wāw", "ዋው", "w", "Does not join to the following letter", "و", "ـو", "ـو", "و"], ["ي", "Yā", "ያ", "y", "Front of the tongue", "يـ", "ـيـ", "ـي", "ي"]]];
+ const themeRoot=document.documentElement;
+ function applyTheme(mode){
+   const chosen=mode==="light"||mode==="dark"?mode:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+   themeRoot.setAttribute("data-theme",chosen);
+   const meta=document.querySelector('meta[name="theme-color"]');
+   if(meta)meta.content=chosen==="dark"?"#10251b":"#f7f3e9";
+   const btn=document.getElementById("ferhanThemeToggle");
+   if(btn){btn.textContent=chosen==="dark"?"☀":"☾";btn.setAttribute("aria-label",chosen==="dark"?"Switch to light theme":"Switch to dark theme");btn.title=chosen==="dark"?"Light theme":"Dark theme";}
+ }
+ let savedTheme=null;try{savedTheme=localStorage.getItem(FERHAN_THEME_KEY)}catch(e){}
+ applyTheme(savedTheme||"auto");
+ window.toggleFerhanTheme=function(){
+   const next=themeRoot.getAttribute("data-theme")==="dark"?"light":"dark";
+   try{localStorage.setItem(FERHAN_THEME_KEY,next)}catch(e){}
+   applyTheme(next);
+ };
+
+ // Replace the limited seven-letter starter lesson with seven complete alphabet units.
+ const amharicNames=alphabetGroups.map(g=>g.map(x=>x[2]));
+ const lessonTitles=[
+  "Letters 01–04 · ا ب ت ث","Letters 05–08 · ج ح خ د",
+  "Letters 09–12 · ذ ر ز س","Letters 13–16 · ش ص ض ط",
+  "Letters 17–20 · ظ ع غ ف","Letters 21–24 · ق ك ل م",
+  "Letters 25–28 · ن ه و ي"
+ ];
+ const groupExplanations=[
+  "Start with the first four letters. Notice their dots and the way each shape changes when it joins another letter.",
+  "Compare the three similar-looking ج ح خ carefully: the dots change the letter and sound. Then learn د.",
+  "These letters do not all join to the next letter. Watch how the word connection stops after ذ، ر، ز.",
+  "Compare س and ش, then learn the emphatic ص ض ط. Keep the sound distinction clear with a qualified teacher.",
+  "Practise ظ ع غ ف slowly. The throat sounds ع and غ need patient listening and teacher feedback.",
+  "Compare ق and ك, then practise the connected forms of ل and م.",
+  "Finish the full alphabet with ن ه و ي. Remember و does not join to the next letter."
+ ];
+ const latinNames=alphabetGroups.map(g=>g.map(x=>x[1]).join(" · "));
+ const arabicLetters=alphabetGroups.map(g=>g.map(x=>x[0]).join("   "));
+ if(typeof lessons!=="undefined"){
+   const originalNonAlphabet=lessons.slice(1);
+   lessons.length=0;
+   alphabetGroups.forEach((group,i)=>{
+     const words=group.map(x=>[x[0],x[1],x[2]]);
+     lessons.push({
+       title:lessonTitles[i],am:"የዚህን ቡድን ፊደላት ቅርጽ፣ ስም እና ድምፅ ይለማመዱ። "+groupExplanations[i],
+       ar:arabicLetters[i],latin:latinNames[i],words,letterSet:group,groupIndex:i
+     });
+   });
+   originalNonAlphabet.forEach(x=>lessons.push(x));
+ }
+ const oldRenderLesson=window.renderLesson;
+ if(typeof oldRenderLesson==="function"){
+   window.renderLesson=function(){
+     oldRenderLesson();
+     const l=lessons[currentLesson];
+     const grid=document.getElementById("letterGrid");
+     if(!grid||!l||!l.letterSet)return;
+     grid.classList.add("alphabet-grid");
+     grid.innerHTML=l.letterSet.map((x,i)=>{
+       const [ar,name,am,latin,note,initial,medial,final,isolated]=x;
+       return `<article class="letter-card">
+        <div class="letter-card-top"><span class="letter-index">${String((l.groupIndex*4)+i+1).padStart(2,"0")}</span><button type="button" class="letter-sound" onclick="speak(${JSON.stringify(ar+"َ")})" aria-label="Hear ${name}">▶</button></div>
+        <div class="letter-glyph arabic" lang="ar" translate="no">${ar}</div>
+        <strong>${name}</strong><span class="letter-am" lang="am">${am}</span>
+        <div class="letter-forms" dir="rtl">
+          <span><b>${isolated}</b><small>Isolated</small></span>
+          <span><b>${initial}</b><small>Initial</small></span>
+          <span><b>${medial}</b><small>Medial</small></span>
+          <span><b>${final}</b><small>Final</small></span>
+        </div>
+        <div class="letter-vowels" dir="rtl"><span>${ar}َ</span><span>${ar}ِ</span><span>${ar}ُ</span></div>
+        <p>${note}</p>
+       </article>`;
+     }).join("");
+     const tag=document.getElementById("lessonTag");
+     if(tag)tag.textContent=`ALPHABET · UNIT ${l.groupIndex+1} OF 7 · LETTERS ${(l.groupIndex*4)+1}–${(l.groupIndex*4)+4}`;
+     const title=document.getElementById("lessonTitle");
+     if(title)title.textContent=l.title;
+     const tabs=document.getElementById("lessonTabs");
+     if(tabs){
+       tabs.innerHTML=lessons.map((x,i)=>`<button class="${i===currentLesson?'active':''}" onclick="loadLesson(${i})" aria-label="Open ${x.title}">${i<7?`ا${i+1}`:`${i-5}`}</button>`).join("");
+     }
+   };
+   window.renderLesson();
+ }
+ if(typeof updateProgress==="function"){
+   window.updateProgress=function(){
+     const label=document.getElementById("progressLabel"),bar=document.getElementById("progressBar");
+     if(label)label.textContent=`${done.size} of ${lessons.length} lessons completed`;
+     if(bar)bar.style.width=(done.size/Math.max(1,lessons.length)*100)+"%";
+   };
+   window.updateProgress();
+ }
+ // Make the lessons experience a structured course, with the original six
+ // non-alphabet topics retained after the seven alphabet units.
+ const lessonIntro=document.querySelector("#lessons .section-head .sub");
+ if(lessonIntro)lessonIntro.textContent="A complete 28-letter course, followed by vowels, joining, long vowels, sukūn, shaddah and reading practice. Each letter includes joining forms and vowel drills.";
+ const homeLessonCard=document.querySelector("#homeDashboard .card:nth-child(2) h3");
+ if(homeLessonCard)homeLessonCard.textContent="28 letters · guided course";
+
+ // Add a persistent, explicit theme control without changing the existing header or navigation.
+ const header=document.querySelector("header");
+ if(header&&!document.getElementById("ferhanThemeToggle")){
+   const actions=document.createElement("div");actions.className="ferhan-header-actions";
+   actions.innerHTML='<button type="button" id="ferhanThemeToggle" class="ferhan-theme-toggle" onclick="toggleFerhanTheme()" aria-label="Switch theme">☾</button>';
+   header.appendChild(actions);applyTheme(savedTheme||"auto");
+ }
+
+ // Quran API fallback player: public audio endpoint, no API secret in the browser.
+ // Quran Foundation's existing GitHub-published word-timing player remains untouched.
+ const apiPanel=document.createElement("section");
+ apiPanel.className="panel ferhan-api-panel";
+ apiPanel.id="ferhanApiReciter";
+ apiPanel.innerHTML=`
+  <div class="api-panel-heading"><div><div class="tag">QURAN AUDIO API · 114 SURAHS</div><h3>Listen to a full surah</h3><p class="muted">Verse-by-verse streaming. The synchronized Quran Foundation player above remains available when verified timing data is published.</p></div><span class="api-live">API AUDIO</span></div>
+  <div class="api-controls">
+   <label>Surah <select id="ferhanApiSurah"></select></label>
+   <label>Reciter <select id="ferhanApiEdition"><option value="ar.alafasy">Mishary Rashid Alafasy</option></select></label>
+  </div>
+  <div class="api-now"><div class="api-now-label">NOW PLAYING</div><div id="ferhanApiNow" class="api-now-title">Choose a surah and press play</div><div id="ferhanApiAyah" class="api-now-sub">Audio loads directly from the Quran API</div></div>
+  <div class="api-transport"><button type="button" class="api-transport-btn" id="ferhanApiPrev">↶ Previous</button><button type="button" class="api-play" id="ferhanApiPlay">▶</button><button type="button" class="api-transport-btn" id="ferhanApiNext">Next ↷</button></div>
+  <div class="api-progress"><span id="ferhanApiProgress"></span></div>
+  <div class="api-foot"><span id="ferhanApiStatus" role="status">Connecting to Quran audio API…</span><label>Repeat <select id="ferhanApiRepeat"><option value="1">Off</option><option value="2">2×</option><option value="3">3×</option><option value="5">5×</option></select></label></div>
+  <audio id="ferhanApiAudio" preload="none"></audio>
+ `;
+ const syncPanel=document.getElementById("fullQuranSyncPanel");
+ if(syncPanel&&!document.getElementById("ferhanApiReciter"))syncPanel.insertAdjacentElement("afterend",apiPanel);
+ const apiSurahNames=[
+ "Al-Fātiḥah","Al-Baqarah","Āl ʿImrān","An-Nisāʾ","Al-Māʾidah","Al-Anʿām","Al-Aʿrāf","Al-Anfāl","At-Tawbah","Yūnus","Hūd","Yūsuf","Ar-Raʿd","Ibrāhīm","Al-Ḥijr","An-Naḥl","Al-Isrāʾ","Al-Kahf","Maryam","Ṭā Hā","Al-Anbiyāʾ","Al-Ḥajj","Al-Muʾminūn","An-Nūr","Al-Furqān","Ash-Shuʿarāʾ","An-Naml","Al-Qaṣaṣ","Al-ʿAnkabūt","Ar-Rūm","Luqmān","As-Sajdah","Al-Aḥzāb","Sabaʾ","Fāṭir","Yā Sīn","Aṣ-Ṣāffāt","Ṣād","Az-Zumar","Ghāfir","Fuṣṣilat","Ash-Shūrā","Az-Zukhruf","Ad-Dukhān","Al-Jāthiyah","Al-Aḥqāf","Muḥammad","Al-Fatḥ","Al-Ḥujurāt","Qāf","Adh-Dhāriyāt","Aṭ-Ṭūr","An-Najm","Al-Qamar","Ar-Raḥmān","Al-Wāqiʿah","Al-Ḥadīd","Al-Mujādilah","Al-Ḥashr","Al-Mumtaḥanah","Aṣ-Ṣaff","Al-Jumuʿah","Al-Munāfiqūn","At-Taghābun","Aṭ-Ṭalāq","At-Taḥrīm","Al-Mulk","Al-Qalam","Al-Ḥāqqah","Al-Maʿārij","Nūḥ","Al-Jinn","Al-Muzzammil","Al-Muddaththir","Al-Qiyāmah","Al-Insān","Al-Mursalāt","An-Nabaʾ","An-Nāziʿāt","ʿAbasa","At-Takwīr","Al-Infiṭār","Al-Muṭaffifīn","Al-Inshiqāq","Al-Burūj","Aṭ-Ṭāriq","Al-Aʿlā","Al-Ghāshiyah","Al-Fajr","Al-Balad","Ash-Shams","Al-Layl","Aḍ-Ḍuḥā","Ash-Sharḥ","At-Tīn","Al-ʿAlaq","Al-Qadr","Al-Bayyinah","Az-Zalzalah","Al-ʿĀdiyāt","Al-Qāriʿah","At-Takāthur","Al-ʿAṣr","Al-Humazah","Al-Fīl","Quraysh","Al-Māʿūn","Al-Kawthar","Al-Kāfirūn","An-Naṣr","Al-Masad","Al-Ikhlāṣ","Al-Falaq","An-Nās"
+ ];
+ const surahSelect=document.getElementById("ferhanApiSurah");
+ if(surahSelect)surahSelect.innerHTML=apiSurahNames.map((n,i)=>`<option value="${i+1}">${String(i+1).padStart(3,"0")} · ${n}</option>`).join("");
+ const apiAudio=document.getElementById("ferhanApiAudio");
+ let apiAyahs=[],apiIndex=0,apiRepeat=1,apiRepeatDone=0,apiBusy=false,apiEdition="ar.alafasy";
+ const apiStatus=document.getElementById("ferhanApiStatus");
+ function apiStatusText(t){if(apiStatus)apiStatus.textContent=t}
+ function apiDisplay(){
+   const surah=Number(surahSelect?.value||1),name=apiSurahNames[surah-1]||"Qur’an";
+   const now=document.getElementById("ferhanApiNow"),ayah=document.getElementById("ferhanApiAyah"),progress=document.getElementById("ferhanApiProgress");
+   if(now)now.textContent=`${name} · ${apiEdition==="ar.alafasy"?"Mishary Alafasy":apiEdition}`;
+   if(ayah)ayah.textContent=apiAyahs.length?`Ayah ${apiIndex+1} of ${apiAyahs.length}`:"Choose a surah and press play";
+   if(progress)progress.style.width=apiAyahs.length?`${((apiIndex+1)/apiAyahs.length)*100}%`:"0%";
+ }
+ async function loadApiSurah(){
+   const surah=Number(surahSelect?.value||1);
+   apiEdition=document.getElementById("ferhanApiEdition")?.value||"ar.alafasy";
+   apiStatusText("Loading audio list from Quran API…");
+   try{
+     const url=`https://api.alquran.cloud/v1/surah/${surah}/${encodeURIComponent(apiEdition)}`;
+     const response=await fetch(url,{headers:{Accept:"application/json"},cache:"no-store"});
+     if(!response.ok)throw new Error(`API request failed (${response.status})`);
+     const payload=await response.json();
+     if(payload.code!==200||!Array.isArray(payload.data?.ayahs))throw new Error(payload.status||"Audio data is unavailable.");
+     apiAyahs=payload.data.ayahs;apiIndex=0;apiRepeatDone=0;
+     apiDisplay();apiStatusText(`Ready · ${apiAyahs.length} ayahs · ${apiEdition} · Audio via AlQuran Cloud`);
+     return true;
+   }catch(error){apiAyahs=[];apiDisplay();apiStatusText("Could not load API audio: "+error.message);return false;}
+ }
+ async function playApiIndex(index){
+   if(!apiAyahs.length&&!await loadApiSurah())return;
+   apiIndex=Math.max(0,Math.min(apiAyahs.length-1,index));apiRepeatDone=0;
+   const ayah=apiAyahs[apiIndex],src=ayah.audio||ayah.audioSecondary?.[0];
+   if(!src){apiStatusText("This ayah has no audio URL in the selected edition.");return;}
+   apiAudio.src=src;apiAudio.playbackRate=1;
+   apiDisplay();apiStatusText(`Playing ayah ${ayah.numberInSurah||apiIndex+1}…`);
+   try{await apiAudio.play();document.getElementById("ferhanApiPlay").textContent="Ⅱ";}
+   catch(e){apiStatusText("Tap Play again to allow audio playback in your browser.");}
+ }
+ document.getElementById("ferhanApiPlay")?.addEventListener("click",async()=>{
+   if(!apiAyahs.length){await loadApiSurah();if(apiAyahs.length)await playApiIndex(0);return;}
+   if(apiAudio.paused){try{await apiAudio.play();document.getElementById("ferhanApiPlay").textContent="Ⅱ";}catch(e){apiStatusText("Tap Play again to start audio.");}}
+   else{apiAudio.pause();document.getElementById("ferhanApiPlay").textContent="▶";apiStatusText("Paused.");}
+ });
+ document.getElementById("ferhanApiPrev")?.addEventListener("click",()=>playApiIndex(apiIndex-1));
+ document.getElementById("ferhanApiNext")?.addEventListener("click",()=>playApiIndex(apiIndex+1));
+ surahSelect?.addEventListener("change",async()=>{apiAudio.pause();await loadApiSurah();});
+ document.getElementById("ferhanApiEdition")?.addEventListener("change",async()=>{apiAudio.pause();await loadApiSurah();});
+ document.getElementById("ferhanApiRepeat")?.addEventListener("change",e=>{apiRepeat=Number(e.target.value)||1;});
+ apiAudio.addEventListener("ended",()=>{
+   apiRepeatDone++;
+   if(apiRepeatDone<apiRepeat){apiAudio.currentTime=0;apiAudio.play().catch(()=>apiStatusText("Tap Play to continue the repeat."));return;}
+   apiRepeatDone=0;
+   if(apiIndex<apiAyahs.length-1)playApiIndex(apiIndex+1);
+   else{document.getElementById("ferhanApiPlay").textContent="▶";apiStatusText("Surah complete. Select another surah or replay.");}
+ });
+ apiAudio.addEventListener("timeupdate",()=>{
+   const progress=document.getElementById("ferhanApiProgress");
+   if(progress&&apiAyahs.length){const within=apiAudio.duration?apiAudio.currentTime/apiAudio.duration:0;progress.style.width=`${((apiIndex+within)/apiAyahs.length)*100}%`;}
+ });
+ // Populate editions from the API; retain Alafasy as a graceful default.
+ (async()=>{
+   try{
+     const r=await fetch("https://api.alquran.cloud/v1/edition/format/audio",{headers:{Accept:"application/json"},cache:"force-cache"});
+     if(!r.ok)throw new Error("edition list unavailable");
+     const d=await r.json();
+     const preferred=(d.data||[]).filter(x=>x.identifier&&x.language==="ar"&&x.type==="versebyverse");
+     const select=document.getElementById("ferhanApiEdition");
+     if(select&&preferred.length){
+       const unique=new Map(preferred.map(x=>[x.identifier,x]));
+       select.innerHTML=[...unique.values()].map(x=>`<option value="${String(x.identifier).replace(/"/g,"&quot;")}">${String(x.englishName||x.name||x.identifier).replace(/[<>&"]/g,"")}</option>`).join("");
+       if([...select.options].some(o=>o.value==="ar.alafasy"))select.value="ar.alafasy";
+     }
+     await loadApiSurah();
+   }catch(e){apiStatusText("Audio API is available when online. Alafasy remains selected as the default.");}
+ })();
+
+ // Improve the first visit experience by showing the alphabet as the first lesson.
+ const oldLessonLoad=window.loadLesson;
+ window.loadLesson=function(i){oldLessonLoad(i);if(typeof window.renderLesson==="function")window.renderLesson();};
+})();
+</script>
+<style>
+/* FERHAN V13 visual system — redesigned as a calm, editorial learning product. */
+:root{
+ --bg:#f7f3e9;--surface:#fffdf8;--surface2:#efe8d9;--ink:#24372d;--muted:#748078;--line:#e4dac8;
+ --primary:#356d50;--primary2:#28543e;--night:#173b2b;--night2:#28563e;--lamp:#e5bd70;--lamp2:#f0d59d;
+ --arabic:#244b36;--paper:#fffaf0;--paper-line:#e5d4b2;--ok:#397c5b;--bad:#b85c48;
+ --shadow:0 9px 26px rgba(37,62,44,.075);
+}
+:root[data-theme="light"]{
+ color-scheme:light;
+ --bg:#f7f3e9;--surface:#fffdf8;--surface2:#efe8d9;--ink:#24372d;--muted:#748078;--line:#e4dac8;
+ --primary:#356d50;--primary2:#28543e;--night:#173b2b;--night2:#28563e;--lamp:#e5bd70;--lamp2:#f0d59d;
+ --arabic:#244b36;--paper:#fffaf0;--paper-line:#e5d4b2;--ok:#397c5b;--bad:#b85c48;
+ --shadow:0 9px 26px rgba(37,62,44,.075);
+}
+:root[data-theme="dark"]{
+ color-scheme:dark;
+ --bg:#0d1b14;--surface:#17271e;--surface2:#21372a;--ink:#edf2e9;--muted:#a9b9aa;--line:#33483a;
+ --primary:#91bd9d;--primary2:#b5d2b9;--night:#10281c;--night2:#1b4931;--lamp:#e7c477;--lamp2:#f1d89f;
+ --arabic:#f1e7ce;--paper:#17271e;--paper-line:#455b48;--ok:#82c49a;--bad:#e49a83;
+ --shadow:0 10px 28px rgba(0,0,0,.22);
+}
+html{scroll-padding-top:88px}
+body{background:var(--bg);color:var(--ink);font-family:var(--ui)}
+header{
+ padding:10px max(18px,calc((100% - 1160px)/2));
+ background:color-mix(in srgb,var(--surface) 93%,transparent);
+ border-bottom:1px solid var(--line);box-shadow:0 4px 18px rgba(30,52,37,.045)
+}
+.brand{color:var(--ink);font-weight:850}
+.brandmark{background:linear-gradient(145deg,var(--lamp2),var(--lamp));color:var(--night);box-shadow:0 6px 16px rgba(187,145,67,.22)}
+header>nav button.active{background:var(--night);color:#f5e8c8}
+.ferhan-header-actions{display:flex;align-items:center;gap:8px;margin-left:auto}
+.ferhan-theme-toggle{width:42px;height:42px;border:1px solid var(--line);border-radius:14px;background:var(--surface2);color:var(--primary2);font-size:21px;font-weight:800;cursor:pointer}
+main{max-width:1160px;padding:24px 22px 100px}
+.hero{min-height:300px;border-radius:28px;background:radial-gradient(circle at 84% 20%,rgba(230,194,121,.22),transparent 25%),linear-gradient(130deg,#173b2b,#28563e 72%,#397451);box-shadow:0 18px 42px rgba(27,66,44,.17)}
+.hero:before{box-shadow:inset -26px 8px 0 0 #e5bd70;filter:drop-shadow(0 0 22px rgba(229,189,112,.28))}
+.hero:after{opacity:.035}
+.hero h1{font-size:clamp(40px,6vw,66px)}
+.hero .kicker{color:#f0d59d}
+.hero p,.hero-minimal{color:#e1eadf!important}
+.hero-art{color:#f0d59d;text-shadow:0 0 28px rgba(240,213,157,.2)}
+.hero-art small{color:#d5e1d4}
+.card,.panel{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:20px}
+.card{padding:20px}
+.card:before{background:var(--surface2)}
+.card h3{font-weight:780}
+.btn{border-radius:13px;background:linear-gradient(135deg,#397451,#28543e);box-shadow:0 6px 15px rgba(40,84,62,.17)}
+.btn.gold{background:linear-gradient(135deg,#f0d18f,#d9b36b);color:#263b2d;box-shadow:0 6px 15px rgba(185,145,70,.18)}
+.btn.secondary{background:var(--surface2);color:var(--primary2);box-shadow:none}
+.tabs button.active{background:var(--night);color:#f0d59d}
+.progress{background:var(--surface2)}
+.progress span{background:linear-gradient(90deg,#397451,#e5bd70)}
+.word,.wbw-word,.sync-word{background:var(--surface);border-color:var(--line)}
+.word .arabic,.wbw-word .arabic,.sync-word .arabic{color:var(--arabic)}
+.notice{background:color-mix(in srgb,var(--lamp) 15%,var(--surface));border-color:color-mix(in srgb,var(--lamp) 55%,var(--line))}
+.quiz-option{border-color:var(--line);border-radius:13px}
+.academy-stage.done{border-color:var(--ok)}
+/* Reader: deep green page in dark mode, warm ivory Mushaf in light mode. */
+#quranReader>.panel{background:var(--surface);padding:clamp(15px,3vw,27px)}
+.reader-toolbar,.mushaf-tools{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.reader-toolbar{padding:10px;background:var(--surface2);border-radius:16px;margin-bottom:12px}
+.mushaf-tools{padding:12px 0}
+.mushaf-tools .btn{font-size:12px;min-height:39px;padding:9px 12px}
+.reader-font-control{display:flex;align-items:center;gap:10px;padding:9px 13px;border-radius:13px;background:var(--surface2)}
+.mushaf-page{
+ background:var(--paper);color:var(--ink);border:1px solid var(--paper-line);
+ border-radius:14px 14px 14px 28px;padding:30px clamp(16px,4vw,40px);
+ box-shadow:0 12px 30px rgba(43,52,36,.07),inset 0 0 0 5px var(--paper),inset 0 0 0 6px var(--paper-line)
+}
+:root[data-theme="dark"] .mushaf-page{background:#14271d;color:#eef0df;border-color:#50664d;box-shadow:inset 0 0 0 5px #14271d,inset 0 0 0 6px #50664d}
+.mushaf-surah-plate{background:linear-gradient(120deg,#173b2b,#28563e);color:#f0d59d;border-radius:15px;padding:18px}
+.mushaf-surah-name{color:#f0d59d;font-weight:800}
+.mushaf-surah-arabic{color:#fff0ce!important}
+.mushaf-page-range{color:var(--muted);font-weight:800;letter-spacing:.09em}
+.mushaf-ayah-label{background:#efe6d5;color:#315c43;border-radius:999px}
+:root[data-theme="dark"] .mushaf-ayah-label{background:#314b37;color:#f0d59d}
+.reader-word{background:transparent;border:1px solid transparent;border-radius:10px}
+.reader-word .arabic{color:var(--arabic)}
+:root[data-theme="dark"] .reader-word .arabic{color:#f4e8cc}
+.reader-word:active,.reader-word:focus-visible{background:var(--surface2);border-color:var(--lamp)}
+.mushaf-translations{background:#f2eadb;border-left:4px solid #d2aa61;border-radius:0 18px 18px 0;padding:15px 17px}
+:root[data-theme="dark"] .mushaf-translations{background:#24392b;border-left-color:#e5bd70}
+.mushaf-english{color:#46564a!important}
+:root[data-theme="dark"] .mushaf-english{color:#e0e9dc!important}
+.mushaf-amharic{color:#356d50!important}
+:root[data-theme="dark"] .mushaf-amharic{color:#a9d1b1!important}
+.ayah-actions button{background:var(--surface2);color:var(--primary2);border-radius:999px}
+.mushaf-progress{height:7px;border-radius:99px;background:var(--surface2);overflow:hidden}
+.mushaf-progress span{background:linear-gradient(90deg,#397451,#e5bd70)}
+.reader-pagination{padding:12px 0}
+.sync-player{background:radial-gradient(circle at 90% 0,rgba(231,196,119,.18),transparent 35%),linear-gradient(145deg,#173b2b,#28563e);border-radius:20px;box-shadow:0 12px 28px rgba(29,65,46,.16)}
+.sync-player-top strong{color:#f0d59d}
+.sync-player .muted,.sync-player-top .muted{color:#d4e0d3}
+.sync-live-dot{background:#e5bd70;box-shadow:0 0 0 5px rgba(229,189,112,.18)}
+.sync-play-btn{background:linear-gradient(135deg,#f0d18f,#d9b36b);color:#243b2d;box-shadow:0 0 0 6px rgba(229,189,112,.16)}
+.sync-icon-btn{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.09)}
+.sync-setting{color:#e0e9df}
+.sync-setting select{background:rgba(255,255,255,.12);color:#fff}
+.sync-word.sync-active,.sync-word[aria-current="true"]{background:#e8c778!important;border-color:#d6ae60!important;color:#263b2d!important;box-shadow:0 0 0 4px rgba(231,196,119,.18)!important}
+.sync-word.sync-active *,.sync-word[aria-current="true"] *{color:#263b2d!important}
+/* Full alphabet cards */
+.alphabet-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}
+.letter-card{min-width:0;padding:13px;border:1px solid var(--line);border-radius:17px;background:var(--surface);text-align:center;box-shadow:0 4px 12px rgba(35,55,41,.045)}
+.letter-card-top{display:flex;align-items:center;justify-content:space-between}
+.letter-index{font-size:10px;font-weight:850;color:var(--muted);letter-spacing:.1em}
+.letter-sound{width:30px;height:30px;border:0;border-radius:10px;background:var(--surface2);color:var(--primary2);font-weight:800}
+.letter-glyph{font-size:54px;line-height:1.4;margin:0;color:var(--arabic)}
+.letter-card strong{display:block;font-size:15px;color:var(--ink)}
+.letter-am{display:block;color:var(--muted);font-size:12px}
+.letter-forms{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:12px;padding:7px 3px;background:var(--surface2);border-radius:11px}
+.letter-forms span{min-width:0}
+.letter-forms b{display:block;font:24px/1.45 var(--ar);color:var(--arabic)}
+.letter-forms small{display:block;font-size:8px;color:var(--muted)}
+.letter-vowels{display:flex;justify-content:center;gap:7px;margin:10px 0 4px}
+.letter-vowels span{padding:3px 8px;border-radius:8px;background:color-mix(in srgb,var(--lamp) 22%,var(--surface));font:22px var(--ar);color:var(--arabic)}
+.letter-card p{font-size:10px;line-height:1.4;color:var(--muted);margin:7px 0 0;min-height:29px}
+/* API audio player */
+.ferhan-api-panel{margin:16px 0 20px;padding:20px}
+.api-panel-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}
+.api-panel-heading h3{margin:3px 0;font-size:21px}
+.api-panel-heading p{margin:4px 0}
+.api-live{white-space:nowrap;padding:7px 10px;border-radius:999px;background:#e5f0e5;color:#356d50;font-size:9px;font-weight:900;letter-spacing:.1em}
+:root[data-theme="dark"] .api-live{background:#294534;color:#b5d2b9}
+.api-controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.api-controls label,.api-foot label{display:grid;gap:5px;color:var(--muted);font-size:11px;font-weight:800}
+.api-controls select,.api-foot select{width:100%;min-width:0}
+.api-now{padding:17px;border-radius:16px;background:linear-gradient(130deg,#173b2b,#28563e);color:#fff}
+.api-now-label{font-size:9px;letter-spacing:.15em;color:#e5bd70;font-weight:900}
+.api-now-title{font-size:18px;font-weight:800;color:#fff;margin-top:4px}
+.api-now-sub{font-size:12px;color:#d8e4d7}
+.api-transport{display:flex;align-items:center;justify-content:center;gap:13px;margin:15px 0}
+.api-transport-btn{border:1px solid var(--line);border-radius:12px;background:var(--surface2);color:var(--primary2);padding:11px 13px;font-weight:750}
+.api-play{width:55px;height:55px;border:0;border-radius:50%;background:linear-gradient(135deg,#f0d18f,#d9b36b);color:#263b2d;font-size:21px;font-weight:900;box-shadow:0 6px 18px rgba(190,150,70,.22)}
+.api-progress{height:6px;border-radius:99px;background:var(--surface2);overflow:hidden}
+.api-progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,#397451,#e5bd70);transition:width .15s}
+.api-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+.api-foot #ferhanApiStatus{font-size:11px;color:var(--muted)}
+.api-foot label{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.api-foot select{width:auto}
+/* Scroll lessons and mobile */
+.mobile-tabbar{background:var(--surface);border:1px solid var(--line);box-shadow:0 10px 32px rgba(31,55,39,.18)}
+.mobile-tabbar button{color:var(--muted)}
+.mobile-tabbar button.active,.mobile-tabbar button.active .tab-icon{color:var(--primary)}
+@media(max-width:760px){
+ header{padding:9px 13px;gap:9px}
+ .brand{font-size:15px;gap:8px}
+ .brandmark{width:36px;height:36px}
+ .ferhan-theme-toggle{width:38px;height:38px}
+ main{padding:13px 13px calc(112px + env(safe-area-inset-bottom))}
+ .hero{min-height:260px;grid-template-columns:1fr;gap:4px;padding:24px 20px;border-radius:22px}
+ .hero h1{font-size:39px}
+ .hero-art{font-size:62px;text-align:right;padding-right:15px;margin-top:-4px}
+ .section{margin-top:25px}
+ .section-head h2,.section h2{font-size:23px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .card{padding:15px;border-radius:16px}
+ .card h3{font-size:15px}
+ .card p{font-size:12px;line-height:1.5}
+ .panel{padding:15px;border-radius:17px}
+ .lesson-layout{grid-template-columns:1fr}
+ .alphabet-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .letter-card{padding:10px}
+ .letter-glyph{font-size:48px}
+ .letter-forms b{font-size:21px}
+ .mushaf-page{padding:24px 14px;border-radius:12px 12px 12px 24px}
+ .reader-word .arabic{font-size:clamp(28px,7.5vw,38px)}
+ .api-controls{grid-template-columns:1fr}
+ .api-panel-heading{align-items:flex-start}
+ .api-foot{align-items:flex-start;flex-direction:column}
+ .mobile-tabbar{left:11px;right:11px;bottom:calc(9px + env(safe-area-inset-bottom));height:66px;padding:6px 7px 5px;border-radius:21px;background:color-mix(in srgb,var(--surface) 95%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);box-shadow:0 9px 28px rgba(28,49,34,.17)}
+ .mobile-tabbar button{height:52px;font-size:9px;gap:4px}
+ .mobile-tabbar button .tab-icon{font-size:20px}
+ .mobile-tabbar button:nth-child(3) .tab-icon{background:linear-gradient(145deg,#f0d18f,#d9b36b);color:#254333;box-shadow:0 0 0 5px var(--bg),0 8px 18px rgba(171,132,62,.24)}
+ .mobile-tabbar button:nth-child(3).active .tab-icon{color:#254333}
+}
+@media(max-width:360px){
+ .alphabet-grid{grid-template-columns:1fr!important}
+ .letter-forms small{font-size:7px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+
 </body></html>
