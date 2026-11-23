@@ -3,9 +3,18 @@
 <head>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="UTF-8"><meta name="description" content="FERHAN is a Quran learning app for guided Arabic letter practice, Quran reading, recitation support, Tajweed lessons, quizzes and learning progress. Learn at your own pace.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FERHAN — Quran Learning App">
+<meta property="og:description" content="FERHAN is a Quran learning app for guided Arabic letter practice, Quran reading, recitation support, Tajweed lessons, quizzes and learning progress. Learn at your own pace.">
+<meta property="og:image" content="https://selahadinosman45-svg.github.io/Ferhan/ferhan-quran-learning-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FERHAN — Quran Learning App">
+<meta name="twitter:description" content="FERHAN is a Quran learning app for guided Arabic letter practice, Quran reading, recitation support, Tajweed lessons, quizzes and learning progress. Learn at your own pace.">
+<meta name="twitter:image" content="https://selahadinosman45-svg.github.io/Ferhan/ferhan-quran-learning-preview.png">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#140a33"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png"><meta name="google" content="notranslate">
-<title>FERHAN — Qur’an Learning</title>
+<title>FERHAN — Quran Learning App</title>
 <style>
 @font-face{font-family:"Ferhan Uthmani";src:url("./assets/fonts/Uthmani.woff2") format("woff2"),url("./assets/fonts/Uthmani.woff") format("woff");font-display:swap}
 /* FERHAN · Night-lamp redesign — indigo night, lavender paper, amber lamp light */
@@ -318,6 +327,34 @@ body.ferhan-intro-active{overflow:hidden}
 .foundation-letters-art img{max-width:280px}
 #ferhanIntroSplash .intro-art{width:min(78vw,310px);height:min(48vh,310px);object-fit:contain;filter:drop-shadow(0 14px 28px rgba(0,0,0,.16))}
 @media(max-width:520px){.feature-illustration{height:104px!important}.foundation-letters-art{height:90px!important}}
+</style>
+
+
+<style id="ferhan-practice-mobile-fix">
+@media(max-width:760px){
+#scrollLearn{padding-bottom:calc(112px + env(safe-area-inset-bottom))}
+#scrollLearn .feed-shell{width:100%;max-width:760px}
+#scrollLearn .feed-top{align-items:center;gap:8px;padding:4px 0 10px}
+#scrollLearn .feed-toolbar{gap:6px;flex-wrap:nowrap}
+#scrollLearn .icon-btn{width:38px;height:38px;flex:0 0 38px}
+#scrollLearn .tool-pill{padding:10px 11px;white-space:nowrap}
+#scrollLearn .feed-track{height:clamp(350px,calc(100dvh - 360px - env(safe-area-inset-bottom)),590px);min-height:350px;max-height:590px;border-radius:22px}
+#scrollLearn .feed-card{min-height:100%;height:100%;padding:16px 15px calc(18px + env(safe-area-inset-bottom));gap:8px;border-radius:22px;overflow-y:auto;overscroll-behavior:contain;justify-content:flex-start}
+#scrollLearn .feed-meta{font-size:10px}
+#scrollLearn .feed-kind{padding:6px 11px;font-size:10px}
+#scrollLearn .feed-title{font-size:clamp(17px,4.5vw,22px)}
+#scrollLearn .feed-ar{min-height:clamp(82px,12vh,120px);font-size:clamp(36px,8vw,56px);line-height:1.7}
+#scrollLearn .feed-hint{font-size:11px}
+#scrollLearn .feed-reveal{grid-template-columns:1fr;gap:7px;max-height:min(23vh,165px);overflow-y:auto;overscroll-behavior:contain}
+#scrollLearn .translation-panel{padding:10px 12px;min-width:0}
+#scrollLearn .translation-panel p{font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+#scrollLearn .feed-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:auto}
+#scrollLearn .feed-actions button{min-width:0;min-height:42px;padding:8px 7px;font-size:11px;white-space:normal}
+#scrollLearn .feed-bottom{font-size:9px;flex-wrap:wrap;padding-top:3px}
+#scrollLearn .feed-dots{margin:8px 0 2px}
+}
+@media(max-width:390px){#scrollLearn .feed-track{height:clamp(330px,calc(100dvh - 350px - env(safe-area-inset-bottom)),540px);min-height:330px}#scrollLearn .feed-card{padding:13px 12px 16px}}
+@media(max-height:740px) and (max-width:760px){#scrollLearn .feed-track{height:calc(100dvh - 315px - env(safe-area-inset-bottom));min-height:300px}}
 </style>
 
 </head>
