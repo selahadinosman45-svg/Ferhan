@@ -14,7 +14,7 @@ concurrency:
 jobs:
   update-recitation:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
@@ -32,7 +32,6 @@ jobs:
           QF_CLIENT_ID: ${{ secrets.QF_CLIENT_ID }}
           QF_CLIENT_SECRET: ${{ secrets.QF_CLIENT_SECRET }}
           QF_CHAPTER_RECITER_ID: ${{ vars.QF_CHAPTER_RECITER_ID }}
-          QF_RECITER_NAME: ${{ vars.QF_RECITER_NAME }}
         run: |
           test -n "$QF_CLIENT_ID" || {
             echo "::error::Missing QF_CLIENT_ID secret"
@@ -50,24 +49,59 @@ jobs:
             echo "::error::scripts/update-recitation.mjs is missing"
             exit 1
           }
-          echo "Configuration checks passed."
+          echo "Single-reciter configuration checks passed."
 
-      - name: Update recitation data
+      - name: Update the configured reciter's recitation data
         env:
           QF_CLIENT_ID: ${{ secrets.QF_CLIENT_ID }}
           QF_CLIENT_SECRET: ${{ secrets.QF_CLIENT_SECRET }}
           QF_CHAPTER_RECITER_ID: ${{ vars.QF_CHAPTER_RECITER_ID }}
           QF_RECITER_NAME: ${{ vars.QF_RECITER_NAME }}
+          QF_SCOPE: content.audio.read
         run: node scripts/update-recitation.mjs
+
+      - name: Validate published manifest
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile } from "node:fs/promises";
+
+          const manifest = JSON.parse(
+            await readFile("data/recitation/index.json", "utf8")
+          );
+
+          if (!Array.isArray(manifest.reciters) || manifest.reciters.length !== 1) {
+            throw new Error("Expected exactly one configured reciter in the manifest.");
+          }
+
+          if (
+            !Array.isArray(manifest.availableChapters) ||
+            manifest.availableChapters.length === 0
+          ) {
+            throw new Error("No chapters with verified word timings were published.");
+          }
+
+          if (
+            manifest.reciters[0].chapterPath !==
+            "./data/recitation/{chapter}.json"
+          ) {
+            throw new Error("Unexpected chapterPath; it must match the FERHAN V14 data layout.");
+          }
+
+          console.log(
+            `Manifest valid: ${manifest.reciters[0].name}, ` +
+            `${manifest.availableChapters.length}/114 chapters available.`
+          );
+          NODE
 
       - name: Save updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
+          git add data/recitation
+
           if git diff --cached --quiet; then
             echo "No data changes to commit."
           else
-            git commit -m "Update Quran recitation data"
+            git commit -m "Update Quran Foundation recitation data"
             git push
           fi
