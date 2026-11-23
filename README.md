@@ -1,6 +1,6 @@
 # FERHAN — Quran Learning Academy
 
-A mobile-friendly, installable Quran and Arabic learning academy with English and Amharic support.
+A mobile-friendly, installable Quran and Arabic learning academy with English and Amharic support. The refreshed interface uses a modern violet/lavender visual system inspired by the supplied mobile-app references, with rounded surfaces, a focused Quran dashboard and a persistent mobile tab bar.
 
 FERHAN is a static Arabic and Amharic Quran-learning website. It is hosted on GitHub Pages. Quran Foundation chapter audio and word-level timing data are retrieved by GitHub Actions and published as static JSON files.
 
@@ -13,9 +13,13 @@ FERHAN is a static Arabic and Amharic Quran-learning website. It is hosted on Gi
 - Complete Qur’an reader: all 114 surahs and 6,236 ayahs, with word-by-word Arabic, transliteration, English glosses and Amharic verse translations; toggle tashkīl on/off.
 - Browser speech synthesis for Arabic words and phrases where an Arabic voice is available.
 - Al-Fatihah word-by-word study and short-surah lessons.
-- Synchronized chapter playback and word highlighting are configured for chapters 1, 112, 113 and 114. The complete 114-surah text reader is separate from this limited synchronized-audio feature.
+- Quran Foundation synchronized chapter playback and word highlighting are supported across all 114 surahs when the configured chapter reciter returns a playable audio URL and valid word-level timing segments. The generated coverage manifest distinguishes available from unavailable chapters; no timing is fabricated.
 - Local bookmarks, lesson completion, memorisation checklists and JSON backup/restore.
 - No learner account is required. Progress remains in the learner's browser.
+
+## Interface refresh
+
+The current release replaces the earlier green/cream styling with a violet and lavender app experience based on the supplied references. It includes a purple recitation hero, a simplified daily dashboard, softer card surfaces, updated buttons and tabs, and a floating safe-area-aware mobile navigation bar. Existing lesson, Quran, Tajweed, quiz, bookmark, memorisation, and Quran Foundation data workflows are retained.
 
 ## Architecture
 

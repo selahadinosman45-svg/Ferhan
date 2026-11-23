@@ -1,6 +1,6 @@
 # FERHAN integrated learning academy
 
-This folder is the deployable static website.
+This folder is the deployable static website. The latest UI uses a violet/lavender mobile-app design inspired by the supplied references, while retaining the existing learning and Quran data features.
 
 ## Main learning areas
 - Home dashboard and learner progress
