@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Quran & Flight Roster · November 2026</title>
-<style>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#0b1411"><title>Quran & Flight Roster · 2026</title><style>
 :root{--bg:#f4f6f5;--card:#fff;--ink:#0f1f1a;--sub:#5b6b64;--line:#e3e9e6;--free:#16a34a;--flight:#2563eb;--lay:#f59e0b;--ground:#8b5cf6;--duty:#e11d48;--rest:#94a3b8;--sleep:#cbd5e1;--shadow:0 6px 24px -10px rgba(15,31,26,.2);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1411;--card:#13201b;--ink:#eaf3ef;--sub:#93a69d;--line:#233630;--free:#22c55e;--flight:#3b82f6;--lay:#fbbf24;--ground:#a78bfa;--duty:#fb7185;--rest:#64748b;--sleep:#2a3b44;--shadow:none}}
 
@@ -126,36 +120,41 @@ footer{margin-top:28px;font-size:12px;color:var(--sub);text-align:center}
 .tr .eth-time{font-size:11px}
 .today .eth-time{color:rgba(255,255,255,.88)}
 
-</style>
-</head>
-<body>
+
+.month-nav{display:flex;align-items:center;gap:8px;margin-top:12px}
+.month-nav button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 12px;font:700 13px system-ui;cursor:pointer}
+.month-nav strong{flex:1;text-align:center;font-size:15px}
+.day.vac{outline:2px solid var(--ground)}
+.cal-day.vac{border-color:var(--ground)}
+</style></head><body>
 <div class="wrap">
   <div class="hero">
     <div class="hero-top">
-      <small>November 2026 · Ethiopian time (EAT)</small>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme">☀️ Light</button>
+      <small id="monthLabel">December 2026 · Ethiopian time (EAT)</small>
+      <button class="theme-toggle" id="themeToggle" type="button">🌙 Dark</button>
     </div>
     <h1>Quran & Flight Roster</h1>
     <p>Tap any bar to see its total time.</p>
     <div class="today" id="today"></div>
   </div>
-
+  <div class="month-nav">
+    <button id="prevMonth" type="button">‹ Previous</button>
+    <strong id="monthTitle">December 2026</strong>
+    <button id="nextMonth" type="button">Next ›</button>
+  </div>
   <section class="calendar-section" aria-label="Monthly calendar">
     <div class="calendar-heading">
-      <div><h2>November 2026</h2><p class="hint">Monthly overview · Select a date to jump to its roster</p></div>
+      <div><h2 id="calendarTitle">December 2026</h2><p class="hint">Monthly overview · Select a date to jump to its roster</p></div>
       <div class="calendar-key"><span><i class="key-free"></i>Quran</span><span><i class="key-flight"></i>Flight / duty</span><span><i class="key-lay"></i>Layover</span><span><i class="key-ground"></i>Ground</span></div>
     </div>
     <div class="calendar" id="calendar"></div>
   </section>
-
   <div class="grid" id="stats"></div>
-
   <h2>Next Quran windows</h2>
   <p class="hint">Free time of 1 hour or more. Tap one for details.</p>
   <div class="chips" id="next"></div>
-
   <h2>Month timeline</h2>
-  <p class="hint">Scroll sideways for the full day. Each row is one day, 12 AM to 12 AM.</p>
+  <p class="hint">Each row is one day, midnight to midnight. Tap a coloured bar for details.</p>
   <div class="legend">
     <span><i style="background:var(--free)"></i>Quran available</span>
     <span><i style="background:var(--lay)"></i>Layover (3h+)</span>
@@ -166,21 +165,17 @@ footer{margin-top:28px;font-size:12px;color:var(--sub);text-align:center}
     <span><i style="background:var(--sleep)"></i>Sleep</span>
   </div>
   <div class="tl" id="tl"><div class="tlin" id="tlin"></div></div>
-
   <h2>Daily roster</h2>
   <p class="hint">Report, flights and release for each day, in Ethiopian time.</p>
   <div class="days" id="days"></div>
-
-  <footer>Airport times from the roster are converted to Ethiopian time (EAT, UTC+3). Sleep is 11 PM to 7 AM. Quran time excludes duty, layovers, 8 hours of rest before and after duty, and sleep.</footer>
+  <footer>Airport times are converted to Ethiopian time (EAT, UTC+3). Sleep is 11 PM to 7 AM. Quran time excludes duty, layovers, 8 hours of rest before and after duty, and sleep. VAC days are shown as vacation.</footer>
 </div>
-
 <div id="bd"><div id="sh"></div></div>
-
 <script>
-var CUR=20, WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-var OFF={ADD:3,EBB:3,DAR:3,LOS:1,MXP:1,ZRH:1,BGF:1,MPM:2,LUN:2,DAC:6};
-var GDO=[5,6,13,18,28,29,30];
-var DUTIES=[
+var WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var OFF={ADD:3,EBB:3,DAR:3,LOS:1,MXP:1,ZRH:1,BGF:1,MPM:2,LUN:2,DAC:6,JRO:3,ZNZ:3,FIH:1,NOS:3,FRA:1,PZU:3,DXB:4,NBO:3,ICN:9,NRT:9};
+var MONTHS=[
+{year:2026,month:10,name:'November',days:30,gdo:[5,6,13,18,28,29,30],vac:[],duties:[
 {r:[2,'11:00','ADD'],sb:1,f:[['SBA','ADD',2,'11:00','ADD',2,'15:00']],l:[2,'15:00','ADD']},
 {r:[7,'07:30','ADD'],f:[['ET332','ADD',7,'13:10','EBB',7,'15:09'],['ET333','EBB',7,'16:45','ADD',7,'18:51']],l:[7,'18:51','ADD']},
 {r:[9,'07:00','ADD'],f:[['ET901','ADD',9,'08:58','LOS',9,'12:17']],l:[9,'12:17','LOS']},
@@ -192,182 +187,90 @@ var DUTIES=[
 {r:[21,'09:00','ADD'],f:[['ET959','ADD',21,'10:40','BGF',21,'12:20'],['ET958','BGF',21,'13:20','ADD',21,'19:00']],l:[21,'19:00','ADD']},
 {r:[22,'20:30','ADD'],f:[['ET891','ADD',22,'22:10','LUN',23,'01:20'],['ET890','LUN',23,'02:30','ADD',23,'07:55']],l:[23,'07:55','ADD']},
 {r:[25,'15:55','ADD'],f:[['ET8804','ADD',25,'17:35','DAC',26,'04:15']],l:[26,'04:15','DAC']},
-{r:[27,'13:20','DAC'],f:[['DH','DAC',27,'14:20','ADD',27,'19:05']],l:[27,'19:05','ADD']}];
-
-var TOT=30*1440, grid=new Int16Array(TOT).fill(-1), iv=[], dayItems={};
-function T(a){var h=a[1].split(':');return (a[0]-1)*1440+(+h[0])*60+(+h[1])+(3-OFF[a[2]])*60}
-function mk(t,s,e,title,sub,short){iv.push({t:t,s:s,e:e,title:title,sub:sub||'',short:short||''});return iv.length-1}
-function paint(id,only){var o=iv[id];for(var m=Math.max(0,o.s);m<Math.min(TOT,o.e);m++){if(!only||grid[m]<0)grid[m]=id}}
-function addItem(abs,t,c){var d=Math.floor(abs/1440)+1;(dayItems[d]=dayItems[d]||[]).push({a:abs,t:t,c:c})}
-
-var sleepL=[],restL=[],awayL=[],dutyL=[],turnL=[],flL=[];
-for(var d=0;d<=30;d++){sleepL.push(mk('sleep',d*1440-60,d*1440+420,'Sleep','11:00 PM to 7:00 AM'))}
-DUTIES.forEach(function(D,i){
-  var rep=D.r, repA=T(D.r), relA=T(D.l), first=D.f[0], last=D.f[D.f.length-1];
-  var dep0=T([first[2],first[3],first[1]]), arrN=T([last[5],last[6],last[4]]);
-  restL.push(mk('rest',repA-480,repA,'Rest before duty','8 hours before report'));
-  restL.push(mk('rest',relA,relA+480,'Rest after duty','8 hours after release'));
-  if(D.sb){dutyL.push(mk('duty',repA,relA,'Standby (SBA)','At ADD, report to release'));
-    addItem(repA,'Report','duty');addItem(relA,'Release','duty');addItem(repA,'Standby SBA until '+fmtT(relA),'duty');return}
-  dutyL.push(mk('duty',repA,dep0,'Pre-flight duty','Report to first departure'));
-  dutyL.push(mk('duty',arrN,relA,'Post-flight duty','Landing to release'));
-  addItem(repA,'Report at '+rep[2],'duty');
-  D.f.forEach(function(f,k){
-    var s=T([f[2],f[3],f[1]]),e=T([f[5],f[6],f[4]]);
-    flL.push(mk('flight',s,e,f[0]+' · '+f[1]+' → '+f[4],'Flight',f[0]));
-    addItem(s,f[0]+' '+f[1]+' → '+f[4],'flight');
-    if(D.f[k+1]){
-      var n=D.f[k+1], gapEnd=T([n[2],n[3],n[1]]), gap=gapEnd-e;
-      if(gap>0){
-        var isGround=gap<180;
-        turnL.push(mk(isGround?'ground':'lay',e,gapEnd,isGround?'Ground time in '+f[4]:'Layover in '+f[4],isGround?'Short connection between flights (under 3 hours)':'Between flights, same duty',isGround?'Ground':'Layover'));
-      }
-    }
-  });
-  addItem(relA,'Release at '+D.l[2],'duty');
-  var nx=DUTIES[i+1];
-  if(nx&&D.l[2]!=='ADD'){awayL.push(mk('lay',relA,T(nx.r),'Layover in '+D.l[2],'Away from Addis between duties','Layover'))}
-});
-sleepL.forEach(function(i){paint(i)});
-restL.forEach(function(i){paint(i,true)});
-awayL.forEach(function(i){paint(i)});
-dutyL.forEach(function(i){paint(i)});
-turnL.forEach(function(i){paint(i)});
-flL.forEach(function(i){paint(i)});
-(function(){var m=0;while(m<TOT){if(grid[m]<0){var s=m;while(m<TOT&&grid[m]<0)m++;var id=mk('free',s,m,'Quran available','Free to study','Quran');for(var k=s;k<m;k++)grid[k]=id}else m++}})();
-
-var COL={free:'var(--free)',flight:'var(--flight)',lay:'var(--lay)',ground:'var(--ground)',duty:'var(--duty)',rest:'var(--rest)',sleep:'var(--rest)'};
-function per(h){return h>=5&&h<12?'Morning':h>=12&&h<17?'Afternoon':h>=17&&h<21?'Evening':'Night'}
-function parts(a){var m=((a%1440)+1440)%1440,h=Math.floor(m/60),mi=m%60,dd=Math.floor(a/1440)+1;
-  return{time:(h%12||12)+':'+(mi<10?'0':'')+mi+' '+(h>=12?'PM':'AM'),per:per(h),date:WD[(dd-1+70)%7]+' '+dd+' Nov'}}
-
-function fmtT(a){var p=parts(a);return p.time+' ('+p.per+')'}
-function ethParts(a){
-  var m=((a%1440)+1440)%1440,h=Math.floor(m/60),mi=m%60;
-  var eh=(h+6)%12;if(eh===0)eh=12;
-  var period=h>=6&&h<12?'ጠዋት':h>=12&&h<18?'ከሰዓት':h>=18?'ምሽት':'ለሊት';
-  return 'ከ'+period+' '+eh+':'+(mi<10?'0':'')+mi+' ሰዓት';
-}
-function ethRange(s,e){return ethParts(s)+' እስከ '+ethParts(e)}
-function ethLine(s,e){return '<span class="eth-time">'+(s===e?ethParts(s):ethRange(s,e))+'</span>'}
-
+{r:[27,'13:20','DAC'],f:[['DH','DAC',27,'14:20','ADD',27,'19:05']],l:[27,'19:05','ADD']}
+]},
+{year:2026,month:11,name:'December',days:31,gdo:[3,4,13,19,29,30,31],vac:[14,15,16,17,18],duties:[
+{r:[1,'21:05','ADD'],f:[['ET855','ADD',1,'22:45','JRO',2,'01:05'],['ET855','JRO',2,'01:55','ZNZ',2,'03:15'],['ET855','ZNZ',2,'04:05','ADD',2,'06:45']],l:[2,'06:45','ADD']},
+{r:[5,'07:30','ADD'],f:[['ET332','ADD',5,'09:10','EBB',5,'11:15'],['ET333','EBB',5,'12:10','ADD',5,'14:20']],l:[5,'14:20','ADD']},
+{r:[6,'14:50','ADD'],f:[['ET865','ADD',6,'16:30','FIH',6,'19:00']],l:[6,'19:00','FIH']},
+{r:[7,'21:25','FIH'],f:[['ET842','FIH',7,'22:25','ADD',8,'05:05']],l:[8,'05:05','ADD']},
+{r:[9,'08:55','ADD'],f:[['ET837','ADD',9,'10:35','NOS',9,'13:45'],['ET836','NOS',9,'14:35','ADD',9,'19:35']],l:[9,'19:35','ADD']},
+{r:[10,'22:40','ADD'],f:[['ET706','ADD',11,'00:20','FRA',11,'05:45']],l:[11,'05:45','FRA']},
+{r:[11,'20:35','FRA'],f:[['ET707','FRA',11,'21:35','ADD',12,'06:25']],l:[12,'06:25','ADD']},
+{r:[20,'09:50','ADD'],f:[['ET348','ADD',20,'11:30','PZU',20,'12:45'],['ET349','PZU',20,'14:00','ADD',20,'17:15']],l:[20,'17:15','ADD']},
+{r:[21,'20:00','ADD'],f:[['ET600','ADD',21,'21:40','DXB',22,'02:55'],['ET601','DXB',22,'04:25','ADD',22,'07:35']],l:[22,'07:35','ADD']},
+{r:[23,'09:05','ADD'],f:[['ET318','ADD',23,'10:45','NBO',23,'13:10'],['ET319','NBO',23,'17:25','ADD',23,'19:25']],l:[23,'19:25','ADD']},
+{r:[24,'20:55','ADD'],f:[['ET672','ADD',24,'22:35','ICN',25,'15:45']],l:[25,'15:45','ICN']},
+{r:[26,'16:00','ICN'],f:[['ET672','ICN',26,'17:00','NRT',26,'19:25'],['ET673','NRT',26,'20:30','ICN',26,'22:55']],l:[26,'22:55','ICN']},
+{r:[27,'23:10','ICN'],f:[['ET673','ICN',28,'00:10','ADD',28,'07:20']],l:[28,'07:20','ADD']}
+]}
+];
+var now=new Date(), selected=now.getFullYear()===2026&&now.getMonth()===10?0:1;
+var currentMonth,iv,grid,dayItems,frees,flL,dayCount,TOT,monthStart;
+function pad(n){return n<10?'0'+n:n}
 function dur(m){var h=Math.floor(m/60),r=m%60;return h?(h+'h'+(r?' '+r+'m':'')):r+'m'}
-function dn(d){return WD[(d-1)%7]}
-
-
-// Explicit light/dark theme switch (light is the default).
-(function(){
-  var root=document.documentElement,btn=document.getElementById('themeToggle');
-  var saved='dark';
-  try{saved=localStorage.getItem('roster-theme')||'dark'}catch(e){}
-  function apply(theme){
-    root.setAttribute('data-theme',theme);
-    btn.textContent=theme==='dark'?'🌙 Dark':'☀️ Light';
-    btn.setAttribute('aria-label','Switch to '+(theme==='dark'?'light':'dark')+' theme');
-  }
-  apply(saved);
-  btn.addEventListener('click',function(){
-    var next=root.getAttribute('data-theme')==='dark'?'light':'dark';
-    apply(next);
-    try{localStorage.setItem('roster-theme',next)}catch(e){}
-  });
-})();
-
-// stats
-var cnt={free:0,flight:0,lay:0,ground:0};for(var m=0;m<TOT;m++){var t=iv[grid[m]].t;if(cnt[t]!==undefined)cnt[t]++}
-document.getElementById('stats').innerHTML=
- [['Quran time',Math.round(cnt.free/60)+' h','var(--free)'],['Layover (3h+)',Math.round(cnt.lay/60)+' h','var(--lay)'],['Ground time (<3h)',Math.round(cnt.ground/60)+' h','var(--ground)'],['Flying',Math.round(cnt.flight/60)+' h','var(--flight)'],['Days off (GDO)',GDO.length+' days','var(--duty)']]
- .map(function(s){return '<div class="stat" style="--c:'+s[2]+'"><b>'+s[1]+'</b><span>'+s[0]+'</span></div>'}).join('');
-
-// today + next windows
-var frees=iv.filter(function(o){return o.t==='free'});
-var nowStart=(CUR-1)*1440, todayF=frees.filter(function(o){return o.s<CUR*1440&&o.e>nowStart});
-var tEl=document.getElementById('today');
-tEl.innerHTML='<b>Today · '+dn(CUR)+' '+CUR+' Nov</b><div style="font-size:13px;margin-top:3px;opacity:.95">'+
- (todayF.length?'Quran time: '+todayF.map(function(o){return '<span>'+parts(o.s).time+' to '+parts(o.e).time+' ('+dur(o.e-o.s)+')</span>'+ethLine(o.s,o.e)}).join('<span style="display:block;margin-top:5px"></span>'):'No Quran window today.')+'</div>';
-document.getElementById('next').innerHTML=frees.filter(function(o){return o.e>nowStart&&o.e-o.s>=60}).slice(0,10).map(function(o){
- var id=iv.indexOf(o);return '<button class="chip" onclick="openIv('+id+')"><b>'+parts(o.s).date+' · '+dur(o.e-o.s)+'</b><span>'+parts(o.s).time+' to '+parts(o.e).time+'</span>'+ethLine(o.s,o.e)+'</button>'}).join('');
-
-// timeline
-var h='<div class="row hdr"><div class="dl">Day</div><div class="hrs">';
-for(var i=0;i<24;i++)h+='<span>'+(i%12||12)+(i%12===0?(i<12?'a':'p'):'')+'</span>';
-h+='</div></div>';
-for(var d=1;d<=30;d++){
-  h+='<div class="row'+(d===CUR?' now':'')+'" id="r'+d+'"><div class="dl"><b>'+d+'</b>'+dn(d)+'</div><div class="track">';
-  var base=(d-1)*1440,i2=base;
-  while(i2<base+1440){var id=grid[i2],j=i2;while(j<base+1440&&grid[j]===id)j++;
-    var o=iv[id];
-    {
-      var txt=(j-i2)>=100&&o.short?o.short:'';
-      h+='<button class="bar t-'+o.t+'" style="left:'+((i2-base)/14.4)+'%;width:'+((j-i2)/14.4)+'%" onclick="openIv('+id+','+i2+','+j+')" aria-label="'+o.title+'">'+txt+'</button>'}
-    i2=j}
-  h+='</div></div>'}
-document.getElementById('tlin').innerHTML=h;
-
-// daily roster
-var dh='';
-for(var d=1;d<=30;d++){
-  var items=(dayItems[d]||[]).sort(function(a,b){return a.a-b.a}),isG=GDO.indexOf(d)>-1;
-  var dayFree=frees.filter(function(o){return o.s<d*1440&&o.e>(d-1)*1440&&o.e-o.s>=30});
-  var hasFl=items.some(function(x){return x.c==='flight'});
-  var away=iv.some(function(o){return o.t==='lay'&&o.s<=(d-1)*1440+720&&o.e>(d-1)*1440+720});
-  var badge=isG?['GDO','var(--duty)']:hasFl?['Flight day','var(--flight)']:away?['Layover','var(--lay)']:items.length?['Duty','var(--duty)']:['Free day','var(--free)'];
-  dh+='<div class="day'+(d===CUR?' now':'')+'"><div class="dh"><div class="dn"><b>'+d+'</b>'+dn(d).toUpperCase()+'</div><div><b>'+dn(d)+', '+d+' Nov</b></div><span class="badge" style="--c:'+badge[1]+'">'+badge[0]+'</span></div>';
-  if(items.length){dh+='<ul class="items">'+items.map(function(x){return '<li><i style="background:'+COL[x.c]+'"></i><span><b>'+parts(x.a).time+'</b> '+parts(x.a).per.toLowerCase()+' · '+x.t+ethLine(x.a,x.a)+'</span></li>'}).join('')+'</ul>'}
-  if(dayFree.length){dh+='<div class="wins">'+dayFree.map(function(o){var id=iv.indexOf(o);var s=Math.max(o.s,(d-1)*1440),e=Math.min(o.e,d*1440);return '<button class="win" onclick="openIv('+id+')">Quran '+parts(s).time+' to '+parts(e).time+ethLine(s,e)+'</button>'}).join('')+'</div>'}
-  dh+='</div>'}
-document.getElementById('days').innerHTML=dh;
-
-
-// Monthly calendar overview: date cells summarize the roster and jump to the selected day.
-(function(){
-  var el=document.getElementById('calendar');
-  var labels=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  var firstOffset=new Date(2026,10,1).getDay();
-  var out=labels.map(function(x){return '<div class="cal-weekday">'+x+'</div>'}).join('');
-  for(var blank=0;blank<firstOffset;blank++)out+='<div class="cal-day empty" aria-hidden="true"></div>';
-  for(var d=1;d<=30;d++){
-    var dayStart=(d-1)*1440,dayEnd=d*1440;
-    var hasFree=frees.some(function(o){return o.s<dayEnd&&o.e>dayStart});
-    var hasFlight=flL.some(function(id){return iv[id].s<dayEnd&&iv[id].e>dayStart});
-    var hasLay=iv.some(function(o){return o.t==='lay'&&o.s<dayEnd&&o.e>dayStart});
-    var hasGround=iv.some(function(o){return o.t==='ground'&&o.s<dayEnd&&o.e>dayStart});
-    var items=dayItems[d]||[];
-    var note=GDO.indexOf(d)>-1?'GDO':hasFlight?'Flight':hasLay?'Layover':items.length?'Duty':'Free';
-    var dots=(hasFree?'<i style="background:var(--free)"></i>':'')+
-      (hasFlight?'<i style="background:var(--flight)"></i>':'')+
-      (hasLay?'<i style="background:var(--lay)"></i>':'')+(hasGround?'<i style="background:var(--ground)"></i>':'');
-    out+='<button class="cal-day'+(d===CUR?' today selected':'')+'" data-day="'+d+'" aria-label="'+labels[(firstOffset+d-1)%7]+' '+d+' November 2026, '+note+'">'+
-      '<span class="cal-num">'+d+'</span><span class="cal-status">'+dots+'</span><span class="cal-note">'+note+'</span></button>';
-  }
-  el.innerHTML=out;
-  el.addEventListener('click',function(e){
-    var b=e.target.closest('[data-day]');if(!b)return;
-    var d=+b.getAttribute('data-day');
-    el.querySelectorAll('.cal-day.selected').forEach(function(x){x.classList.remove('selected')});
-    b.classList.add('selected');
-    var row=document.getElementById('r'+d),card=document.querySelectorAll('.day')[d-1];
-    if(row){row.scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('tl').scrollLeft=0}
-    if(card)setTimeout(function(){card.scrollIntoView({behavior:'smooth',block:'start'})},180);
-  });
-})();
-
-// sheet
-var bd=document.getElementById('bd'),sh=document.getElementById('sh');
-function openIv(id,rs,re){
-  var o=iv[id],s=o.s,e=o.e;if(o.t==='rest'&&rs!==undefined){s=rs;e=re}
-  var a=parts(s),b=parts(e),c=COL[o.t];
-  sh.style.setProperty('--c',c);
-  sh.innerHTML='<div class="sk"><i></i><span>'+o.title+'</span></div><div class="big">'+dur(e-s)+'</div><div class="sub2">'+(o.t==='free'?'Total Quran time in this window':'Total time')+(o.sub?' · '+o.sub:'')+'</div>'+
-  '<div class="tr"><div><small>From</small><b>'+a.time+'</b><span>'+a.per+' · '+a.date+'</span>'+ethLine(s,s)+'</div><div><small>Until</small><b>'+b.time+'</b><span>'+b.per+' · '+b.date+'</span>'+ethLine(e,e)+'</div></div>'+
-  '<button class="x" onclick="closeSh()">Close</button>';
-  bd.classList.add('on')}
-function closeSh(){bd.classList.remove('on')}
-bd.addEventListener('click',function(e){if(e.target===bd)closeSh()});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSh()});
-
-// scroll timeline to today, around 6 AM
-(function(){var tl=document.getElementById('tl'),r=document.getElementById('r'+CUR);tl.scrollTop=Math.max(0,r.offsetTop-90);tl.scrollLeft=0})();
-</script>
-</body>
-</html>
+function per(h){return h>=5&&h<12?'Morning':h>=12&&h<17?'Afternoon':h>=17&&h<21?'Evening':'Night'}
+function airportOffset(a){return OFF[a]===undefined?3:OFF[a]}
+function T(a){var z=a[1].split(':');return (a[0]-1)*1440+(+z[0])*60+(+z[1])+(3-airportOffset(a[2]))*60}
+function parts(a){var m=((a%1440)+1440)%1440,h=Math.floor(m/60),mi=m%60,day=Math.floor(a/1440)+1;return{time:(h%12||12)+':'+pad(mi)+' '+(h>=12?'PM':'AM'),per:per(h),date:WD[new Date(currentMonth.year,currentMonth.month,day).getDay()]+' '+day+' '+currentMonth.name.slice(0,3)}}
+function ethParts(a){var m=((a%1440)+1440)%1440,h=Math.floor(m/60),mi=m%60,eh=(h+6)%12;if(!eh)eh=12;var period=h>=6&&h<12?'ጠዋት':h>=12&&h<18?'ከሰዓት':h>=18?'ምሽት':'ለሊት';return 'ከ'+period+' '+eh+':'+pad(mi)+' ሰዓት'}
+function ethLine(s,e){return '<span class="eth-time">'+(s===e?ethParts(s):ethParts(s)+' እስከ '+ethParts(e))+'</span>'}
+function dn(d){return WD[new Date(currentMonth.year,currentMonth.month,d).getDay()]}
+function build(){
+ currentMonth=MONTHS[selected];dayCount=currentMonth.days;TOT=dayCount*1440;iv=[];grid=new Int32Array(TOT).fill(-1);dayItems={};flL=[];
+ function mk(t,s,e,title,sub,short){iv.push({t,s,e,title,sub:sub||'',short:short||''});return iv.length-1}
+ function paint(id,only){var o=iv[id];for(var m=Math.max(0,o.s);m<Math.min(TOT,o.e);m++)if(!only||grid[m]<0)grid[m]=id}
+ function addItem(abs,t,c){var d=Math.floor(abs/1440)+1;if(d>=1&&d<=dayCount)(dayItems[d]=dayItems[d]||[]).push({a:abs,t,c})}
+ var sleepL=[],restL=[],awayL=[],dutyL=[],turnL=[];
+ for(var d=0;d<=dayCount;d++)sleepL.push(mk('sleep',d*1440-60,d*1440+420,'Sleep','11:00 PM to 7:00 AM'));
+ currentMonth.duties.forEach(function(D,i){
+   var repA=T(D.r),relA=T(D.l),first=D.f[0],last=D.f[D.f.length-1],dep0=T([first[2],first[3],first[1]]),arrN=T([last[5],last[6],last[4]]);
+   restL.push(mk('rest',repA-480,repA,'Rest before duty','8 hours before report'));restL.push(mk('rest',relA,relA+480,'Rest after duty','8 hours after release'));
+   if(D.sb){dutyL.push(mk('duty',repA,relA,'Standby (SBA)','At ADD, report to release'));addItem(repA,'Report','duty');addItem(relA,'Release','duty');addItem(repA,'Standby SBA until '+parts(relA).time,'duty');return}
+   dutyL.push(mk('duty',repA,dep0,'Pre-flight duty','Report to first departure'));dutyL.push(mk('duty',arrN,relA,'Post-flight duty','Landing to release'));
+   addItem(repA,'Report at '+D.r[2],'duty');
+   D.f.forEach(function(f,k){var s=T([f[2],f[3],f[1]]),e=T([f[5],f[6],f[4]]);flL.push(mk('flight',s,e,f[0]+' · '+f[1]+' → '+f[4],'Flight',f[0]));addItem(s,f[0]+' '+f[1]+' → '+f[4],'flight');
+    if(D.f[k+1]){var n=D.f[k+1],ns=T([n[2],n[3],n[1]]),gap=ns-e;if(gap>0)turnL.push(mk(gap<180?'ground':'lay',e,ns,gap<180?'Ground time in '+f[4]:'Layover in '+f[4],gap<180?'Short connection under 3 hours':'Between flights, same duty',gap<180?'Ground':'Layover'))}
+   });
+   addItem(relA,'Release at '+D.l[2],'duty');
+   var nx=currentMonth.duties[i+1];if(nx&&D.l[2]!=='ADD')awayL.push(mk('lay',relA,T(nx.r),'Layover in '+D.l[2],'Away from Addis between duties','Layover'));
+ });
+ sleepL.forEach(id=>paint(id));restL.forEach(id=>paint(id,true));awayL.forEach(id=>paint(id));dutyL.forEach(id=>paint(id));turnL.forEach(id=>paint(id));flL.forEach(id=>paint(id));
+ for(var m=0;m<TOT;){if(grid[m]<0){var s=m;while(m<TOT&&grid[m]<0)m++;var id=mk('free',s,m,'Quran available','Free to study','Quran');for(var k=s;k<m;k++)grid[k]=id}else m++}
+ frees=iv.filter(o=>o.t==='free');
+ render();
+}
+var COL={free:'var(--free)',flight:'var(--flight)',lay:'var(--lay)',ground:'var(--ground)',duty:'var(--duty)',rest:'var(--rest)',sleep:'var(--rest)'};
+function render(){
+ var name=currentMonth.name+' '+currentMonth.year;
+ ['monthTitle','calendarTitle'].forEach(id=>document.getElementById(id).textContent=name);
+ document.getElementById('monthLabel').textContent=name+' · Ethiopian time (EAT)';
+ var realToday=new Date(),isThisMonth=realToday.getFullYear()===currentMonth.year&&realToday.getMonth()===currentMonth.month,todayDay=isThisMonth?realToday.getDate():-1;
+ var todayStart=(todayDay-1)*1440,todayF=todayDay>0?frees.filter(o=>o.s<todayDay*1440&&o.e>todayStart):[];
+ document.getElementById('today').innerHTML=todayDay>0?'<b>Today · '+dn(todayDay)+' '+todayDay+' '+currentMonth.name.slice(0,3)+'</b><div style="font-size:13px;margin-top:3px">Tomorrow · '+(todayDay<dayCount?dn(todayDay+1)+' '+(todayDay+1)+' '+currentMonth.name.slice(0,3):'Next month')+'<br>'+(todayF.length?'Quran time: '+todayF.map(o=>parts(o.s).time+' to '+parts(o.e).time+' ('+dur(o.e-o.s)+')'+ethLine(o.s,o.e)).join('<br>'):'No Quran window today.')+'</div>':'<b>'+name+'</b><div style="font-size:13px">Today’s date is outside this displayed month. The current date is highlighted automatically when its month is selected.</div>';
+ var cnt={free:0,flight:0,lay:0,ground:0};for(var m=0;m<TOT;m++){var t=iv[grid[m]].t;if(cnt[t]!==undefined)cnt[t]++}
+ document.getElementById('stats').innerHTML=[['Quran time',Math.round(cnt.free/60)+' h','var(--free)'],['Layover (3h+)',Math.round(cnt.lay/60)+' h','var(--lay)'],['Ground time (<3h)',Math.round(cnt.ground/60)+' h','var(--ground)'],['Flying',Math.round(cnt.flight/60)+' h','var(--flight)'],['GDO',currentMonth.gdo.length+' days','var(--duty)'],['Vacation',currentMonth.vac.length+' days','var(--ground)']].map(s=>'<div class="stat" style="--c:'+s[2]+'"><b>'+s[1]+'</b><span>'+s[0]+'</span></div>').join('');
+ document.getElementById('next').innerHTML=frees.filter(o=>o.e>(todayDay>0?todayStart:0)&&o.e-o.s>=60).slice(0,10).map(o=>'<button class="chip" onclick="openIv('+iv.indexOf(o)+')"><b>'+parts(o.s).date+' · '+dur(o.e-o.s)+'</b><span>'+parts(o.s).time+' to '+parts(o.e).time+'</span>'+ethLine(o.s,o.e)+'</button>').join('');
+ var h='<div class="row hdr"><div class="dl">Day</div><div class="hrs">';for(var i=0;i<24;i++)h+='<span>'+(i%12||12)+(i%12===0?(i<12?'a':'p'):'')+'</span>';h+='</div></div>';
+ for(var d=1;d<=dayCount;d++){h+='<div class="row'+(d===todayDay?' now':'')+'" id="r'+d+'"><div class="dl"><b>'+d+'</b>'+dn(d)+'</div><div class="track">';var base=(d-1)*1440,pos=base;while(pos<base+1440){var id=grid[pos],j=pos;while(j<base+1440&&grid[j]===id)j++;var o=iv[id],txt=(j-pos)>=100&&o.short?o.short:'';h+='<button class="bar t-'+o.t+'" style="left:'+((pos-base)/14.4)+'%;width:'+((j-pos)/14.4)+'%" onclick="openIv('+id+','+pos+','+j+')" aria-label="'+o.title+'">'+txt+'</button>';pos=j}h+='</div></div>'}
+ document.getElementById('tlin').innerHTML=h;
+ var dh='';for(var d=1;d<=dayCount;d++){var items=(dayItems[d]||[]).sort((a,b)=>a.a-b.a),isG=currentMonth.gdo.includes(d),isV=currentMonth.vac.includes(d),dayFree=frees.filter(o=>o.s<d*1440&&o.e>(d-1)*1440&&o.e-o.s>=30),hasFl=items.some(x=>x.c==='flight'),away=iv.some(o=>o.t==='lay'&&o.s<=(d-1)*1440+720&&o.e>(d-1)*1440+720),badge=isV?['Vacation','var(--ground)']:isG?['GDO','var(--duty)']:hasFl?['Flight day','var(--flight)']:away?['Layover','var(--lay)']:items.length?['Duty','var(--duty)']:['Free day','var(--free)'];
+ dh+='<div class="day'+(d===todayDay?' now':'')+(isV?' vac':'')+'"><div class="dh"><div class="dn"><b>'+d+'</b>'+dn(d).toUpperCase()+'</div><div><b>'+dn(d)+', '+d+' '+currentMonth.name.slice(0,3)+'</b></div><span class="badge" style="--c:'+badge[1]+'">'+badge[0]+'</span></div>';
+ if(items.length)dh+='<ul class="items">'+items.map(x=>'<li><i style="background:'+COL[x.c]+'"></i><span><b>'+parts(x.a).time+'</b> '+parts(x.a).per.toLowerCase()+' · '+x.t+ethLine(x.a,x.a)+'</span></li>').join('')+'</ul>';
+ if(isV)dh+='<p class="hint" style="margin-top:10px">Vacation</p>';
+ if(dayFree.length)dh+='<div class="wins">'+dayFree.map(o=>{var s=Math.max(o.s,(d-1)*1440),e=Math.min(o.e,d*1440);return '<button class="win" onclick="openIv('+iv.indexOf(o)+')">Quran '+parts(s).time+' to '+parts(e).time+ethLine(s,e)+'</button>'}).join('')+'</div>';
+ dh+='</div>'}document.getElementById('days').innerHTML=dh;
+ var firstOffset=new Date(currentMonth.year,currentMonth.month,1).getDay(),labels=WD,out=labels.map(x=>'<div class="cal-weekday">'+x+'</div>').join('');for(var b=0;b<firstOffset;b++)out+='<div class="cal-day empty"></div>';
+ for(var d=1;d<=dayCount;d++){var st=(d-1)*1440,en=d*1440,hasFree=frees.some(o=>o.s<en&&o.e>st),hasFlight=flL.some(id=>iv[id].s<en&&iv[id].e>st),hasLay=iv.some(o=>o.t==='lay'&&o.s<en&&o.e>st),hasGround=iv.some(o=>o.t==='ground'&&o.s<en&&o.e>st),items=dayItems[d]||[],isG=currentMonth.gdo.includes(d),isV=currentMonth.vac.includes(d),note=isV?'VAC':isG?'GDO':hasFlight?'Flight':hasLay?'Layover':items.length?'Duty':'Free',dots=(hasFree?'<i style="background:var(--free)"></i>':'')+(hasFlight?'<i style="background:var(--flight)"></i>':'')+(hasLay?'<i style="background:var(--lay)"></i>':'')+(hasGround?'<i style="background:var(--ground)"></i>':'');out+='<button class="cal-day'+(d===todayDay?' today':'')+'" data-day="'+d+'"><span class="cal-num">'+d+'</span><span class="cal-status">'+dots+'</span><span class="cal-note">'+note+'</span></button>'}
+ var cal=document.getElementById('calendar');cal.innerHTML=out;cal.onclick=function(e){var b=e.target.closest('[data-day]');if(!b)return;var d=+b.dataset.day;document.getElementById('r'+d).scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>document.querySelectorAll('.day')[d-1].scrollIntoView({behavior:'smooth',block:'start'}),150)};
+ if(todayDay>0){var r=document.getElementById('r'+todayDay);if(r)setTimeout(()=>{document.getElementById('tl').scrollTop=Math.max(0,r.offsetTop-90)},0)}
+}
+function openIv(id,rs,re){var o=iv[id],s=o.s,e=o.e;if(o.t==='rest'&&rs!==undefined){s=rs;e=re}var a=parts(s),b=parts(e),c=COL[o.t],sh=document.getElementById('sh');sh.style.setProperty('--c',c);sh.innerHTML='<div class="sk"><i></i><span>'+o.title+'</span></div><div class="big">'+dur(e-s)+'</div><div class="sub2">'+(o.t==='free'?'Total Quran time in this window':'Total time')+(o.sub?' · '+o.sub:'')+'</div><div class="tr"><div><small>From</small><b>'+a.time+'</b><span>'+a.per+' · '+a.date+'</span>'+ethLine(s,s)+'</div><div><small>Until</small><b>'+b.time+'</b><span>'+b.per+' · '+b.date+'</span>'+ethLine(e,e)+'</div></div><button class="x" onclick="closeSh()">Close</button>';document.getElementById('bd').classList.add('on')}
+function closeSh(){document.getElementById('bd').classList.remove('on')}
+document.getElementById('bd').addEventListener('click',e=>{if(e.target.id==='bd')closeSh()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSh()});
+document.getElementById('prevMonth').onclick=()=>{selected=Math.max(0,selected-1);build()};
+document.getElementById('nextMonth').onclick=()=>{selected=Math.min(MONTHS.length-1,selected+1);build()};
+(function(){var root=document.documentElement,btn=document.getElementById('themeToggle'),saved='dark';try{saved=localStorage.getItem('roster-theme')||'dark'}catch(e){}function apply(t){root.setAttribute('data-theme',t);btn.textContent=t==='dark'?'🌙 Dark':'☀️ Light'}apply(saved);btn.onclick=()=>{var t=root.getAttribute('data-theme')==='dark'?'light':'dark';apply(t);try{localStorage.setItem('roster-theme',t)}catch(e){}}})();
+build();
+</script></body></html>
